@@ -1,0 +1,12 @@
+.DS_Store
+Thumbs.db
+*.log
+
+# Local Claude Code tooling
+.claude/
+
+# Site.pro builder data: blocked from the web by sitepro/.htaccess and unused by the
+# new router. Kept off this public repo; the copies on the server are left untouched.
+public_html/sitepro/data.json
+public_html/sitepro/data.json.lock
+public_html/sitepro/dat/
