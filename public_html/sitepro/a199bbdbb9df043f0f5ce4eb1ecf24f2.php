@@ -36,18 +36,17 @@ $cwcSlideDecks = array(
 );
 ?>
 
-<section class="page-hero">
+<section class="page-band band">
 	<canvas class="particles" aria-hidden="true"></canvas>
-	<div class="hero__orb hero__orb--a" aria-hidden="true"></div>
 	<div class="container">
-		<h1 class="display page-hero__title reveal">Docs &amp; Presentations</h1>
-		<div class="page-hero__actions reveal" data-delay="1">
-			<a class="btn btn--primary btn--lg btn--glow" href="https://drive.google.com/file/d/1EBpNM_azFYX58_hiET7rSiJ2orIfdnXC/view?usp=sharing"><?php echo cwc_icon('download'); ?><span>Download the CWC Report!</span></a>
+		<h1 class="page-band__title reveal">Docs &amp; Presentations</h1>
+		<div class="page-band__actions reveal" data-delay="1">
+			<a class="btn btn--light" href="https://drive.google.com/file/d/1EBpNM_azFYX58_hiET7rSiJ2orIfdnXC/view?usp=sharing"><?php echo cwc_icon('download'); ?><span>Download the CWC Report!</span></a>
 		</div>
 	</div>
 </section>
 
-<section class="section section--tight decks">
+<section class="section decks">
 	<div class="container">
 		<div class="deck-grid">
 			<?php foreach ($cwcPublishedDecks as $i => $embed): ?>

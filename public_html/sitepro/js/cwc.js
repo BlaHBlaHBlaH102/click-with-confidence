@@ -11,7 +11,6 @@
 
 	var html = document.documentElement;
 	var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-	var finePointer = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
 
 	function $(sel, ctx) { return (ctx || document).querySelector(sel); }
 	function $$(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); }
@@ -148,43 +147,12 @@
 	}
 
 	/* ------------------------------------------------------------------ */
-	/* Word-by-word reading highlight (text itself is unchanged)            */
-	/* ------------------------------------------------------------------ */
-
-	var wordBlocks = $$('[data-words]').map(function (el) {
-		var words = [];
-		var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
-		var nodes = [];
-		while (walker.nextNode()) { nodes.push(walker.currentNode); }
-		nodes.forEach(function (node) {
-			var parts = node.nodeValue.split(/(\s+)/);
-			var frag = document.createDocumentFragment();
-			parts.forEach(function (part) {
-				if (!part) { return; }
-				if (/^\s+$/.test(part)) {
-					frag.appendChild(document.createTextNode(part));
-				} else {
-					var span = document.createElement('span');
-					span.className = 'w';
-					span.textContent = part;
-					frag.appendChild(span);
-					words.push(span);
-				}
-			});
-			node.parentNode.replaceChild(frag, node);
-		});
-		return { el: el, words: words, lit: -1 };
-	});
-
-	/* ------------------------------------------------------------------ */
 	/* Scroll-linked effects: parallax, scale-in, words, story spine        */
 	/* ------------------------------------------------------------------ */
 
 	var parallaxEls = $$('[data-parallax]');
-	var scaleEls = $$('[data-scale-in]');
 	var storyBody = $('.story__body');
 	var storySpine = $('.story__spine');
-	var progressBar = $('.scroll-progress');
 	var ticking = false;
 
 	function onScroll() {
@@ -200,10 +168,6 @@
 		var y = window.pageYOffset || document.documentElement.scrollTop;
 
 		if (header) { header.classList.toggle('is-scrolled', y > 8); }
-		if (progressBar) {
-			var max = document.documentElement.scrollHeight - vh;
-			progressBar.style.setProperty('--scroll', max > 0 ? clamp(y / max, 0, 1).toFixed(4) : 0);
-		}
 
 		if (!isInteractive() || reduceMotion) { return; }
 
@@ -217,22 +181,6 @@
 			el.style.setProperty('--parallax', offset.toFixed(1) + 'px');
 		});
 
-		scaleEls.forEach(function (el) {
-			var r = el.getBoundingClientRect();
-			var p = clamp((vh - r.top) / (vh * 0.75), 0, 1);
-			el.style.setProperty('--p', p.toFixed(3));
-		});
-
-		wordBlocks.forEach(function (block) {
-			var r = block.el.getBoundingClientRect();
-			var start = vh * 0.88;
-			var p = clamp((start - r.top) / (r.height + vh * 0.3), 0, 1);
-			var lit = Math.ceil(p * block.words.length);
-			if (lit === block.lit) { return; }
-			block.words.forEach(function (w, i) { w.classList.toggle('on', i < lit); });
-			block.lit = lit;
-		});
-
 		if (storyBody && storySpine) {
 			var sr = storyBody.getBoundingClientRect();
 			var sp = clamp((vh * 0.6 - sr.top) / sr.height, 0, 1);
@@ -242,11 +190,6 @@
 
 	function resetScrollEffects() {
 		parallaxEls.forEach(function (el) { el.style.removeProperty('--parallax'); });
-		scaleEls.forEach(function (el) { el.style.removeProperty('--p'); });
-		wordBlocks.forEach(function (block) {
-			block.words.forEach(function (w) { w.classList.add('on'); });
-			block.lit = block.words.length;
-		});
 		if (storySpine) { storySpine.style.setProperty('--story', 1); }
 	}
 
@@ -297,34 +240,12 @@
 	}
 
 	/* ------------------------------------------------------------------ */
-	/* Card tilt                                                           */
-	/* ------------------------------------------------------------------ */
-
-	if (finePointer && !reduceMotion) {
-		$$('[data-tilt]').forEach(function (card) {
-			card.addEventListener('pointermove', function (e) {
-				if (!isInteractive()) { return; }
-				var r = card.getBoundingClientRect();
-				var x = (e.clientX - r.left) / r.width - 0.5;
-				var y = (e.clientY - r.top) / r.height - 0.5;
-				card.style.setProperty('--ry', (x * 6).toFixed(2) + 'deg');
-				card.style.setProperty('--rx', (-y * 6).toFixed(2) + 'deg');
-			});
-			card.addEventListener('pointerleave', function () {
-				card.style.removeProperty('--rx');
-				card.style.removeProperty('--ry');
-			});
-		});
-	}
-
-	/* ------------------------------------------------------------------ */
 	/* Particle network                                                    */
 	/* ------------------------------------------------------------------ */
 
 	function ParticleField(canvas) {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext('2d');
-		this.dark = canvas.classList.contains('particles--light') || canvas.classList.contains('particles--footer');
 		this.points = [];
 		this.pointer = { x: -9999, y: -9999 };
 		this.visible = false;
@@ -352,14 +273,14 @@
 		this.canvas.width = Math.round(r.width * dpr);
 		this.canvas.height = Math.round(r.height * dpr);
 		this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-		var count = Math.round(clamp((r.width * r.height) / 15000, 18, 90));
+		var count = Math.round(clamp((r.width * r.height) / 16000, 14, 64));
 		while (this.points.length < count) {
 			this.points.push({
 				x: Math.random() * r.width,
 				y: Math.random() * r.height,
-				vx: (Math.random() - 0.5) * 0.32,
-				vy: (Math.random() - 0.5) * 0.32,
-				r: Math.random() * 1.6 + 0.8
+				vx: (Math.random() - 0.5) * 0.22,
+				vy: (Math.random() - 0.5) * 0.22,
+				r: Math.random() * 1.2 + 0.7
 			});
 		}
 		this.points.length = count;
@@ -368,8 +289,8 @@
 
 	ParticleField.prototype.draw = function () {
 		var ctx = this.ctx, pts = this.points, n = pts.length, w = this.w, h = this.h;
-		var link = Math.min(150, Math.max(90, w / 9));
-		var rgb = this.dark ? '159,208,255' : '31,128,255';
+		var link = Math.min(140, Math.max(90, w / 10));
+		var rgb = '170,205,255';
 		ctx.clearRect(0, 0, w, h);
 		for (var i = 0; i < n; i++) {
 			var a = pts[i];
@@ -378,7 +299,7 @@
 				var dx = a.x - b.x, dy = a.y - b.y;
 				var d2 = dx * dx + dy * dy;
 				if (d2 < link * link) {
-					var alpha = (1 - Math.sqrt(d2) / link) * (this.dark ? 0.32 : 0.28);
+					var alpha = (1 - Math.sqrt(d2) / link) * 0.22;
 					ctx.strokeStyle = 'rgba(' + rgb + ',' + alpha.toFixed(3) + ')';
 					ctx.lineWidth = 1;
 					ctx.beginPath();
@@ -389,14 +310,14 @@
 			}
 			var px = a.x - this.pointer.x, py = a.y - this.pointer.y;
 			var pd2 = px * px + py * py;
-			if (pd2 < 180 * 180) {
-				ctx.strokeStyle = 'rgba(' + rgb + ',' + ((1 - Math.sqrt(pd2) / 180) * 0.5).toFixed(3) + ')';
+			if (pd2 < 160 * 160) {
+				ctx.strokeStyle = 'rgba(' + rgb + ',' + ((1 - Math.sqrt(pd2) / 160) * 0.3).toFixed(3) + ')';
 				ctx.beginPath();
 				ctx.moveTo(a.x, a.y);
 				ctx.lineTo(this.pointer.x, this.pointer.y);
 				ctx.stroke();
 			}
-			ctx.fillStyle = 'rgba(' + rgb + ',' + (this.dark ? 0.85 : 0.6) + ')';
+			ctx.fillStyle = 'rgba(' + rgb + ',0.55)';
 			ctx.beginPath();
 			ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
 			ctx.fill();
@@ -584,7 +505,6 @@
 		if (isInteractive()) {
 			initParticles();
 			fields.forEach(function (f) { f.resize(); f.update(); });
-			wordBlocks.forEach(function (b) { b.lit = -1; });
 			updateScroll();
 		} else {
 			fields.forEach(function (f) { f.update(); });

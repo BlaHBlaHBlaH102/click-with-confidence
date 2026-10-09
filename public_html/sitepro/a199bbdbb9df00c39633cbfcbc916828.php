@@ -10,15 +10,14 @@ cwc_page_start(array(
 ));
 ?>
 
-<section class="page-hero page-hero--compact">
+<section class="page-band band">
 	<canvas class="particles" aria-hidden="true"></canvas>
-	<div class="hero__orb hero__orb--a" aria-hidden="true"></div>
 	<div class="container">
-		<h1 class="display page-hero__title reveal">PRIVACY POLICY</h1>
+		<h1 class="page-band__title reveal">PRIVACY POLICY</h1>
 	</div>
 </section>
 
-<section class="section section--tight">
+<section class="section">
 	<div class="container container--narrow">
 		<div class="doc">
 			<div class="doc__meta">

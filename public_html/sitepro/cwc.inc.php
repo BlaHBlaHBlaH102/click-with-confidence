@@ -44,22 +44,21 @@ function cwc_icon($name) {
 		'card'     => '<rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6.5 15h4"/>',
 		'download' => '<path d="M12 4v11M7 10.5l5 5 5-5M4.5 19.5h15"/>',
 		'play'     => '<path d="M8 5.5v13l11-6.5z"/>',
-		'spark'    => '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.5 2.5M15.2 15.2l2.5 2.5M6.3 17.7l2.5-2.5M15.2 8.8l2.5-2.5"/>',
-		'text'     => '<path d="M4 18 8.5 6h1L14 18M5.6 14h6.8M15.5 18v-5.2a2.6 2.6 0 0 1 5 0V18M15.5 15.2h5"/>',
-		'eye'      => '<path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
-		'people'   => '<circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.6-3.4 3-5.3 6-5.3s5.4 1.9 6 5.3"/><circle cx="17" cy="9" r="2.4"/><path d="M16.5 14.3c2.4.2 4 1.8 4.5 4.6"/>',
-		'heart'    => '<path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/>',
-		'close'    => '<path d="M6 6l12 12M18 6 6 18"/>',
-		'prev'     => '<path d="M15 5l-7 7 7 7"/>',
-		'next'     => '<path d="M9 5l7 7-7 7"/>',
-		'shield'   => '<path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.2 7.5 9.5 4.3-1.3 7.5-4.9 7.5-9.5V6z"/><path d="m8.8 12 2.2 2.2 4.4-4.4"/>',
-		'book'     => '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5zM4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/>',
-		'hand'     => '<path d="M7 11V6.5a1.5 1.5 0 0 1 3 0V11m0-1.5v-5a1.5 1.5 0 0 1 3 0v5m0 0V6a1.5 1.5 0 0 1 3 0v6m0-2.5a1.5 1.5 0 0 1 3 0V15a7 7 0 0 1-7 7h-1a7 7 0 0 1-5.6-2.8L3.3 15a1.6 1.6 0 0 1 2.4-2L7 14.3"/>',
 	);
 	if (!isset($icons[$name])) {
 		return '';
 	}
 	return '<svg class="icon icon--' . $name . '" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' . $icons[$name] . '</svg>';
+}
+
+/** Text-size buttons (shown in Readable mode). */
+function cwc_text_size_control() {
+	return '<div class="text-size" role="group" aria-label="Text size">'
+		. '<span class="text-size__label" aria-hidden="true">Text size</span>'
+		. '<button type="button" class="text-size__btn" data-text-set="1" aria-pressed="true">A<span class="sr-only"> normal text size</span></button>'
+		. '<button type="button" class="text-size__btn" data-text-set="2" aria-pressed="false">A+<span class="sr-only"> larger text size</span></button>'
+		. '<button type="button" class="text-size__btn" data-text-set="3" aria-pressed="false">A++<span class="sr-only"> largest text size</span></button>'
+		. '</div>';
 }
 
 function cwc_menu_links($active, $class) {
@@ -127,7 +126,7 @@ function cwc_page_start($page) {
 	})(document);
 	</script>
 
-	<link rel="preload" href="fonts/HelveticaNeueLTPro-BlkCn.woff2" as="font" type="font/woff2" crossorigin />
+	<link rel="preload" href="fonts/HelveticaNeueLTPro-HvCn.woff2" as="font" type="font/woff2" crossorigin />
 	<link rel="preload" href="fonts/MinionPro-Regular.woff2" as="font" type="font/woff2" crossorigin />
 	<link rel="stylesheet" href="<?php echo cwc_asset('css/cwc.css'); ?>" />
 
@@ -136,16 +135,24 @@ function cwc_page_start($page) {
 <body class="<?php echo cwc_e($bodyClass); ?>">
 <a class="skip-link" href="#main">Skip to main content</a>
 
-<div class="announce">
-	<a class="announce__link" href="presentations">
-		<span class="announce__pulse" aria-hidden="true"></span>
-		<span class="announce__text">Check out the Docs &amp; Presentations Page to see CwCs Fraud Insights Report!</span>
-		<?php echo cwc_icon('arrow'); ?>
-	</a>
+<div class="topbar">
+	<div class="container topbar__inner">
+		<a class="topbar__notice" href="presentations">
+			<span>Check out the Docs &amp; Presentations Page to see CwCs Fraud Insights Report!</span>
+			<?php echo cwc_icon('arrow'); ?>
+		</a>
+		<div class="topbar__tools">
+			<div class="mode-switch" role="group" aria-label="Display mode">
+				<button type="button" class="mode-switch__btn" data-mode-set="industry" aria-pressed="true">Interactive</button>
+				<button type="button" class="mode-switch__btn" data-mode-set="readable" aria-pressed="false">Readable</button>
+			</div>
+			<?php echo cwc_text_size_control(); ?>
+		</div>
+	</div>
 </div>
 
 <header class="site-header" id="top">
-	<div class="site-header__bar">
+	<div class="container site-header__inner">
 		<a class="brand" href="{{base_url}}">
 			<img class="brand__logo" src="gallery/logo-wide.svg" alt="Click With Confidence" width="432" height="72" />
 		</a>
@@ -157,27 +164,16 @@ function cwc_page_start($page) {
 		</nav>
 
 		<div class="header-tools">
-			<div class="mode-switch" role="group" aria-label="Display mode">
-				<span class="mode-switch__thumb" aria-hidden="true"></span>
-				<button type="button" class="mode-switch__btn" data-mode-set="industry" aria-pressed="true"><?php echo cwc_icon('spark'); ?><span>Interactive</span></button>
-				<button type="button" class="mode-switch__btn" data-mode-set="readable" aria-pressed="false"><?php echo cwc_icon('text'); ?><span>Readable</span></button>
-			</div>
 			<button type="button" class="mode-toggle" role="switch" aria-checked="false" data-mode-toggle>
 				<span class="mode-toggle__track" aria-hidden="true"><span class="mode-toggle__dot"></span></span>
 				<span class="mode-toggle__label">Readable</span>
 			</button>
-			<div class="text-size" role="group" aria-label="Text size">
-				<span class="text-size__label" aria-hidden="true">Text size</span>
-				<button type="button" class="text-size__btn" data-text-set="1" aria-pressed="true">A<span class="sr-only"> normal text size</span></button>
-				<button type="button" class="text-size__btn" data-text-set="2" aria-pressed="false">A+<span class="sr-only"> larger text size</span></button>
-				<button type="button" class="text-size__btn" data-text-set="3" aria-pressed="false">A++<span class="sr-only"> largest text size</span></button>
-			</div>
+			<?php echo cwc_text_size_control(); ?>
 			<button type="button" class="nav-toggle" aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
 				<span class="nav-toggle__bars" aria-hidden="true"><span></span><span></span><span></span></span>
 			</button>
 		</div>
 	</div>
-	<div class="scroll-progress" aria-hidden="true"><span></span></div>
 </header>
 
 <main id="main" class="site-main" tabindex="-1">
@@ -191,13 +187,10 @@ function cwc_page_end($page = array()) {
 </main>
 
 <footer class="site-footer">
-	<canvas class="particles particles--footer" aria-hidden="true"></canvas>
-	<div class="site-footer__inner">
+	<div class="container site-footer__grid">
 		<div class="site-footer__brand">
-			<img class="site-footer__shield" src="gallery/logo-shield.svg" alt="" width="120" height="120" loading="lazy" />
-			<div class="footer-donate">
-				<a class="btn btn--primary btn--lg btn--glow" href="https://givebutter.com/click-with-confidence"><span>Donate Now!</span></a>
-			</div>
+			<img class="site-footer__shield" src="gallery/logo-shield.svg" alt="" width="72" height="72" loading="lazy" />
+			<a class="btn btn--light" href="https://givebutter.com/click-with-confidence"><span>Donate Now!</span></a>
 		</div>
 
 		<nav class="site-footer__nav" aria-label="Footer menu">
@@ -212,7 +205,9 @@ function cwc_page_end($page = array()) {
 		</div>
 	</div>
 	<div class="site-footer__base">
-		<p class="site-footer__hosting"><a href="https://www.kualo.com/free-charity-hosting">Kualo Free Charity Hosting</a></p>
+		<div class="container">
+			<p class="site-footer__hosting"><a href="https://www.kualo.com/free-charity-hosting">Kualo Free Charity Hosting</a></p>
+		</div>
 	</div>
 </footer>
 

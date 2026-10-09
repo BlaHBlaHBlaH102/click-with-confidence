@@ -10,11 +10,9 @@ cwc_page_start(array(
 ));
 ?>
 
-<section class="page-hero page-hero--full">
-	<canvas class="particles" aria-hidden="true"></canvas>
-	<div class="hero__orb hero__orb--a" aria-hidden="true"></div>
+<section class="section">
 	<div class="container">
-		<img class="hero__logo reveal" src="gallery/logo-wide.svg" alt="Click With Confidence" width="1158" height="193" />
+		<img class="maintenance-logo" src="gallery/logo-wide.svg" alt="Click With Confidence" width="432" height="72" />
 	</div>
 </section>
 

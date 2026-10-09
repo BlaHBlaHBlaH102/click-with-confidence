@@ -20,20 +20,19 @@ $cwcTeam = array(
 );
 ?>
 
-<section class="page-hero">
+<section class="page-band band">
 	<canvas class="particles" aria-hidden="true"></canvas>
-	<div class="hero__orb hero__orb--a" aria-hidden="true"></div>
 	<div class="container">
-		<h1 class="display page-hero__title reveal">Leadership</h1>
+		<h1 class="page-band__title reveal">Leadership</h1>
 	</div>
 </section>
 
 <section class="section">
-	<div class="container">
+	<div class="container container--mid">
 		<ul class="team" role="list">
 			<?php foreach ($cwcTeam as $i => $member): ?>
 			<li class="team-card reveal" data-delay="<?php echo $i % 3; ?>">
-				<figure class="team-card__figure">
+				<figure>
 					<div class="team-card__photo">
 						<img src="<?php echo $member['src']; ?>" alt="<?php echo cwc_e($member['name']); ?>" width="<?php echo $member['w']; ?>" height="<?php echo $member['h']; ?>" loading="<?php echo $i < 3 ? 'eager' : 'lazy'; ?>" />
 					</div>

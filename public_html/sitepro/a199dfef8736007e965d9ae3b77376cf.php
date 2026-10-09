@@ -26,17 +26,17 @@ $cwcScreens = array(
 );
 ?>
 
-<section class="page-hero page-hero--app">
+<section class="page-band band">
 	<canvas class="particles" aria-hidden="true"></canvas>
-	<div class="hero__orb hero__orb--a" aria-hidden="true"></div>
 	<div class="container">
-		<h1 class="display page-hero__title reveal">OUR APP</h1>
-		<p class="page-hero__lede lede reveal" data-delay="1">The Click With Confidence Mobile Application allows senior citizens to use AI in order to identify whether a call, text, or email is suspicious or not. Seniors can also reach out to real volunteers, who can identify requests and help seniors on their own time. <span class="badge-soon">LAUNCHING SOON!</span></p>
+		<h1 class="page-band__title reveal">OUR APP</h1>
 	</div>
 </section>
 
-<section class="section section--tight">
+<section class="section">
 	<div class="container">
+		<p class="lede app-intro reveal">The Click With Confidence Mobile Application allows senior citizens to use AI in order to identify whether a call, text, or email is suspicious or not. Seniors can also reach out to real volunteers, who can identify requests and help seniors on their own time. <span class="badge-soon">LAUNCHING SOON!</span></p>
+
 		<ul class="masonry" role="list" data-lightbox>
 			<?php foreach ($cwcScreens as $i => $s): ?>
 			<li class="masonry__item reveal" data-delay="<?php echo $i % 3; ?>">

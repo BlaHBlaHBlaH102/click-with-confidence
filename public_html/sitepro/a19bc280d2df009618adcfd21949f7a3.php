@@ -10,15 +10,14 @@ cwc_page_start(array(
 ));
 ?>
 
-<section class="page-hero">
+<section class="page-band band">
 	<canvas class="particles" aria-hidden="true"></canvas>
-	<div class="hero__orb hero__orb--a" aria-hidden="true"></div>
 	<div class="container">
-		<h1 class="display page-hero__title reveal">Flyer &amp; Brochure</h1>
+		<h1 class="page-band__title reveal">Flyer &amp; Brochure</h1>
 	</div>
 </section>
 
-<section class="section section--tight">
+<section class="section">
 	<div class="container flyers">
 		<?php /* Original Canva embed code, unchanged. */ ?>
 		<div class="canva-embed canva-embed--portrait reveal">

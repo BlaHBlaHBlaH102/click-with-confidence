@@ -10,25 +10,19 @@ cwc_page_start(array(
 ));
 ?>
 
-<section class="page-hero">
+<section class="page-band band">
 	<canvas class="particles" aria-hidden="true"></canvas>
-	<div class="hero__orb hero__orb--a" aria-hidden="true"></div>
 	<div class="container">
-		<h1 class="display page-hero__title reveal">Video Content</h1>
+		<h1 class="page-band__title reveal">Video Content</h1>
 	</div>
 </section>
 
-<section class="section section--tight">
-	<div class="container">
-		<div class="media-stage reveal">
-			<div class="media-stage__screen" aria-hidden="true">
-				<span class="media-stage__play"><?php echo cwc_icon('play'); ?></span>
-				<span class="media-stage__scan"></span>
-			</div>
-			<div class="media-stage__action">
-				<?php /* As on the original site, this button has no link yet. */ ?>
-				<a class="btn btn--primary btn--xl"><span>Video Content &amp; Library</span></a>
-			</div>
+<section class="section">
+	<div class="container container--text">
+		<div class="media-panel reveal">
+			<span class="media-panel__icon" aria-hidden="true"><?php echo cwc_icon('play'); ?></span>
+			<?php /* As on the original site, this button has no link yet. */ ?>
+			<a class="btn btn--light btn--lg"><span>Video Content &amp; Library</span></a>
 		</div>
 	</div>
 </section>

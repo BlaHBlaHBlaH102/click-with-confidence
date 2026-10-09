@@ -11,18 +11,15 @@ cwc_page_start(array(
 ?>
 
 <article class="story">
-	<header class="page-hero page-hero--story">
+	<header class="page-band band">
 		<canvas class="particles" aria-hidden="true"></canvas>
-		<div class="hero__orb hero__orb--a" aria-hidden="true"></div>
-		<div class="hero__orb hero__orb--b" aria-hidden="true"></div>
 		<div class="container">
-			<img class="story__shield" src="gallery/logo-shield.svg" alt="" width="120" height="120" data-parallax="-0.18" />
-			<h1 class="story__title reveal"><strong>Founder's Story <em>by Viraj Shah</em></strong></h1>
+			<h1 class="page-band__title story__title reveal"><strong>Founder's Story <em>by Viraj Shah</em></strong></h1>
 		</div>
 	</header>
 
-	<div class="section story__section">
-		<div class="container container--narrow story__body">
+	<div class="section">
+		<div class="container container--text story__body">
 			<div class="story__spine" aria-hidden="true"><span></span></div>
 
 			<div class="story__beat reveal">

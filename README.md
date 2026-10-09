@@ -13,12 +13,13 @@ Every page is written once. A switch in the header changes how that same content
 | | **Interactive** (default) | **Readable** |
 |---|---|---|
 | For | Partners, donors, judges, media, general visitors | Seniors, and anyone who wants calm, large text |
-| Look | Glass header, particle-network backgrounds, gradient display type, depth and cards | White page, large high-contrast text, plain blocks, like the original site |
-| Motion | Scroll reveals, parallax, animated counters, word-by-word reading highlight, card tilt, timeline on Founder's Story | None |
-| Menu | Inline on wide screens, full-screen menu on smaller ones | Large buttons that are always visible, also on phones |
+| Look | Conventional nonprofit layout: utility bar, white header with standard menu, deep-blue page banners, bordered cards | White page, larger high-contrast text, plain stacked blocks, like the original site |
+| Motion | Faint particle network in the blue banners, gentle fade-in on scroll, a slight parallax on the home photo, impact numbers that count up, a reading-progress line on Founder's Story | None |
+| Menu | Inline on wide screens; a drop-down menu below 1100px | Large buttons that are always visible, also on phones |
 | Extras | — | Text size buttons (A / A+ / A++), thick focus outlines, underlined links |
 
 - The visitor's choice is remembered on that device (`localStorage`).
+- The display switch is in the blue bar at the top of every page (on phones, next to the logo).
 - A link can open a page in a given mode: add `?mode=readable` or `?mode=interactive`. This is useful on printed flyers for seniors, for example `clickwithconfidence.org/?mode=readable`.
 - If a visitor's device is set to reduce motion, Interactive mode shows no animation.
 - Both modes are responsive from 320 px phones up to wide desktops.
