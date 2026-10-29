@@ -390,31 +390,34 @@
 	document.addEventListener('visibilitychange', function () { fields.forEach(function (f) { f.update(); }); });
 
 	/* ------------------------------------------------------------------ */
-	/* Home intro: logo eases in, tilted dot orbits gyrate then dissipate,  */
-	/* and the logo grows (Interactive mode only, plays once per page load) */
+	/* Home intro: dots fill the space and gyrate around the logo on a      */
+	/* tilted orbit, expand outwards and fade, then the logo grows          */
+	/* (Interactive mode only, plays once per page load)                    */
 	/* ------------------------------------------------------------------ */
 
 	var ORBIT_COLORS = [[92, 163, 255], [31, 128, 255], [0, 74, 173]]; // the logo's three blues
 	var ORBIT_SAMPLES = 720;
-	var ORBIT_TILT = 24 * Math.PI / 180; // angle of the orbit axis, like the NASA orbit
-	var INTRO = { logoIn: 0.2, logoInEnd: 1.5, bloom: 0.8, dissipate: 6.0, dissipateEnd: 7.8, grow: 6.4, growEnd: 8.6, startScale: 0.6 };
+	var ORBIT_TILT = 16 * Math.PI / 180; // angle of the orbit axis, like the NASA orbit but flatter
+	var ORBIT_SWAY = 2 * Math.PI / 180;
+	var ORBIT_EXP = 2.6; // superellipse exponent: 2 is an ellipse, higher is boxier
+	var INTRO = { logoIn: 0.3, logoInEnd: 1.7, expand: 4.2, expandEnd: 6.8, grow: 5.0, growEnd: 7.4, startScale: 0.6 };
 
-	function easeOut3(k) { return 1 - Math.pow(1 - k, 3); }
 	function easeInOut3(k) { return k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
+	function smoothstep(a, b, x) { var k = clamp((x - a) / (b - a), 0, 1); return k * k * (3 - 2 * k); }
 
-	function orbitColor(f) {
+	function orbitColor(f, alpha) {
 		var n = ORBIT_COLORS.length;
 		var x = (f - Math.floor(f)) * n;
 		var i = Math.floor(x);
 		var k = x - i;
 		k = k * k * (3 - 2 * k);
 		var a = ORBIT_COLORS[i % n], b = ORBIT_COLORS[(i + 1) % n];
-		return 'rgb(' + Math.round(a[0] + (b[0] - a[0]) * k) + ',' + Math.round(a[1] + (b[1] - a[1]) * k) + ',' + Math.round(a[2] + (b[2] - a[2]) * k) + ')';
+		return 'rgba(' + Math.round(a[0] + (b[0] - a[0]) * k) + ',' + Math.round(a[1] + (b[1] - a[1]) * k) + ',' + Math.round(a[2] + (b[2] - a[2]) * k) + ',' + alpha.toFixed(3) + ')';
 	}
 
 	// Points spaced evenly along a rounded, oblong superellipse, so dots travel around it at a steady speed.
 	function orbitPath(a, b) {
-		var fine = 1440, exp = 2 / 2.6, xs = [], ys = [], len = [0], i;
+		var fine = 1440, exp = 2 / ORBIT_EXP, xs = [], ys = [], len = [0], i;
 		for (i = 0; i <= fine; i++) {
 			var th = (i / fine) * Math.PI * 2;
 			var c = Math.cos(th), s = Math.sin(th);
@@ -434,6 +437,16 @@
 		return { pts: pts, length: total };
 	}
 
+	// True when the point lies inside the superellipse (a, b) turned by every tilt the sway can reach.
+	function orbitContains(a, b, x, y) {
+		for (var s = -1; s <= 1; s++) {
+			var th = ORBIT_TILT + s * ORBIT_SWAY, c = Math.cos(th), n = Math.sin(th);
+			var u = x * c + y * n, v = -x * n + y * c;
+			if (Math.pow(Math.abs(u / a), ORBIT_EXP) + Math.pow(Math.abs(v / b), ORBIT_EXP) > 1) { return false; }
+		}
+		return true;
+	}
+
 	function IntroOrbit(root) {
 		this.root = root;
 		this.canvas = $('canvas', root);
@@ -442,8 +455,11 @@
 		this.rings = [];
 		this.w = 0;
 		this.h = 0;
+		this.lw = 0;
+		this.lh = 0;
 		this.dotMax = 10;
 		this.t = 0;
+		this.spin = 0;
 		this.last = 0;
 		this.visible = false;
 		this.running = false;
@@ -462,74 +478,104 @@
 		this.canvas.width = Math.round(w * dpr);
 		this.canvas.height = Math.round(h * dpr);
 		this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+		this.lw = this.logo.offsetWidth;
+		this.lh = this.logo.offsetHeight;
 
-		// The orbits are sized around the logo as it first appears (small), before it grows.
-		var lw = this.logo.offsetWidth * INTRO.startScale, lh = this.logo.offsetHeight * INTRO.startScale;
-		var count = w < 560 ? 3 : (w < 900 ? 4 : 6);
+		// Rings start just outside the logo as it first appears (small) and continue until they
+		// cover the corners, so the dots fill the whole section. Neighbouring rings are at least
+		// `sep` apart and dots are sized below half of it, so no two dots ever touch.
+		var lw = this.lw * INTRO.startScale, lh = this.lh * INTRO.startScale;
+		var sep = clamp(h / 12, 22, 44);
+		var gapB = sep, gapA = sep * clamp(w / h, 1, 2.4);
 		var pad = clamp(lw * 0.1, 18, 44);
 		var a0 = lw / 2 + pad, b0 = lh / 2 + pad;
-		var gapA = Math.max(8, (w / 2 - 26 - a0) / (count - 1));
-		var gapB = Math.max(8, (h / 2 - 26 - b0) / (count - 1));
-		// Shrink everything a little if the tilted outer ring would leave the canvas.
-		var tiltMax = ORBIT_TILT + 0.04 * count + 0.1;
-		var aOut = a0 + gapA * (count - 1), bOut = b0 + gapB * (count - 1);
-		var cosM = Math.cos(tiltMax), sinM = Math.sin(tiltMax);
-		var halfW = Math.sqrt(aOut * aOut * cosM * cosM + bOut * bOut * sinM * sinM);
-		var halfH = Math.sqrt(aOut * aOut * sinM * sinM + bOut * bOut * cosM * cosM);
-		var fit = Math.min(1, (w / 2 - 26) / halfW, (h / 2 - 26) / halfH);
-		this.dotMax = clamp(Math.min(gapA, gapB) * fit * 0.4, 4, 15);
+		var count = 1;
+		while (count < 40 && !(orbitContains(a0 + gapA * (count - 1), b0 + gapB * (count - 1), w / 2, h / 2) &&
+			orbitContains(a0 + gapA * (count - 1), b0 + gapB * (count - 1), w / 2, -h / 2))) { count++; }
+		count += 1;
+		this.dotMax = sep * 0.85 / (2 * 1.06); // 1.06 = largest pulse (breath)
 		this.rings = [];
 		for (var k = 0; k < count; k++) {
-			var a = (a0 + gapA * k) * fit, b = (b0 + gapB * k) * fit;
+			var a = a0 + gapA * k, b = b0 + gapB * k;
 			var path = orbitPath(a, b);
-			var scale = 0.55 + 0.45 * (count > 1 ? k / (count - 1) : 1);
-			var n = Math.max(10, Math.round(path.length / (this.dotMax * scale * 3.4)));
+			var scale = 0.6 + 0.4 * (count > 1 ? k / (count - 1) : 1);
+			var n = Math.max(8, Math.floor(path.length / (2.6 * this.dotMax * scale * 1.06)));
 			this.rings.push({ a: a, b: b, path: path.pts, n: n, scale: scale });
 		}
 		if (!this.running) { this.draw(this.t); }
 	};
 
+	IntroOrbit.prototype.logoState = function (t) {
+		var lo = easeInOut3(clamp((t - INTRO.logoIn) / (INTRO.logoInEnd - INTRO.logoIn), 0, 1));
+		var gr = easeInOut3(clamp((t - INTRO.grow) / (INTRO.growEnd - INTRO.grow), 0, 1));
+		return { opacity: lo, lift: (1 - lo) * 28, scale: (INTRO.startScale + (1 - INTRO.startScale) * gr) * (0.92 + 0.08 * lo) };
+	};
+
 	IntroOrbit.prototype.draw = function (t) {
-		var ctx = this.ctx, cx = this.w / 2, cy = this.h / 2;
-		var breath = 1 + 0.08 * Math.sin(t * 1.3);
-		ctx.clearRect(0, 0, this.w, this.h);
-		for (var k = 0; k < this.rings.length; k++) {
+		var ctx = this.ctx, w = this.w, h = this.h, cx = w / 2, cy = h / 2;
+		var count = this.rings.length;
+		var breath = 1 + 0.06 * Math.sin(t * 1.4);
+		var x = easeInOut3(clamp((t - INTRO.expand) / (INTRO.expandEnd - INTRO.expand), 0, 1));
+		var spread = 1 + 1.6 * x;
+		var fadeOut = 1 - easeInOut3(clamp((t - INTRO.expand - 0.4) / (INTRO.expandEnd - INTRO.expand - 0.4), 0, 1));
+		var tilt = ORBIT_TILT + ORBIT_SWAY * Math.sin(t * 0.6);
+		var cosT = Math.cos(tilt), sinT = Math.sin(tilt);
+		ctx.clearRect(0, 0, w, h);
+		for (var k = 0; k < count; k++) {
 			var ring = this.rings[k];
-			var e = easeOut3(clamp((t - INTRO.bloom - k * 0.12) / 1.4, 0, 1));
-			var d = clamp((t - INTRO.dissipate - k * 0.06) / (INTRO.dissipateEnd - INTRO.dissipate), 0, 1);
-			d = d * d;
-			if (e <= 0 || d >= 1) { continue; }
-			var spread = (0.55 + 0.45 * e) * (1 + 0.9 * d);
-			var phase = (0.06 + 0.01 * k) * t + (1 - e) * 0.25 + 0.15 * d;
-			var tilt = ORBIT_TILT + 0.04 * k + 0.1 * Math.sin(t * 0.9 + k);
-			var cosT = Math.cos(tilt), sinT = Math.sin(tilt);
+			// Fill in as a quick ripple from the centre outwards.
+			var e = easeInOut3(clamp((t - 0.4 * k / count) / 1.0, 0, 1));
+			if (e <= 0 || fadeOut <= 0) { continue; }
+			var phase = this.spin * (1 + 0.25 * k / count) + 0.5 * (k % 2) / ring.n;
 			var pts = ring.path;
-			ctx.globalAlpha = 0.92 * e * (1 - d);
+			var rMax = this.dotMax * ring.scale;
 			for (var i = 0; i < ring.n; i++) {
-				var s = (i + 0.5 * (k % 2)) / ring.n + phase;
+				var s = i / ring.n + phase;
 				s -= Math.floor(s);
 				var idx = s * ORBIT_SAMPLES, i0 = Math.floor(idx), f = idx - i0, i1 = (i0 + 1) % ORBIT_SAMPLES;
 				var ux = pts[i0 * 2] + (pts[i1 * 2] - pts[i0 * 2]) * f;
 				var uy = pts[i0 * 2 + 1] + (pts[i1 * 2 + 1] - pts[i0 * 2 + 1]) * f;
-				var x = ux * spread, y = uy * spread;
+				var px = cx + (ux * cosT - uy * sinT) * spread;
+				var py = cy + (ux * sinT + uy * cosT) * spread;
+				if (px < -rMax || px > w + rMax || py < -rMax || py > h + rMax) { continue; }
+				// Fade towards white near the edges of the section.
+				var dx = (px - cx) / cx, dy = (py - cy) / cy;
+				var edge = 1 - smoothstep(0.5, 1.2, Math.sqrt(dx * dx + dy * dy));
+				var alpha = 0.92 * e * fadeOut * edge;
+				if (alpha < 0.01) { continue; }
 				var ang = Math.atan2(uy / ring.b, ux / ring.a);
-				var wave = 0.5 + 0.5 * Math.sin(ang * 3 - t * 1.7 + k * 0.8);
-				var size = this.dotMax * ring.scale * (0.3 + 0.7 * wave) * breath * e * (1 - 0.6 * d);
-				ctx.fillStyle = orbitColor(ang / (Math.PI * 2) + t * 0.02 + k * 0.015);
+				var wave = 0.5 + 0.5 * Math.sin(ang * 3 - t * 1.7 + k * 0.5);
+				var size = rMax * (0.45 + 0.55 * wave) * breath * e * (1 - 0.35 * x);
+				ctx.fillStyle = orbitColor(ang / (Math.PI * 2) + t * 0.02 + k * 0.01, alpha);
 				ctx.beginPath();
-				ctx.arc(cx + x * cosT - y * sinT, cy + x * sinT + y * cosT, size, 0, Math.PI * 2);
+				ctx.arc(px, py, size, 0, Math.PI * 2);
 				ctx.fill();
 			}
 		}
-		ctx.globalAlpha = 1;
+
+		// A soft white glow behind the logo keeps it readable over the dots.
+		var logo = this.logoState(t);
+		var rx = this.lw * logo.scale * 0.62, ry = this.lh * logo.scale * 1.5;
+		if (logo.opacity > 0 && rx > 0 && ry > 0) {
+			ctx.save();
+			ctx.translate(cx, cy - logo.lift);
+			ctx.scale(rx, ry);
+			var glow = ctx.createRadialGradient(0, 0, 0, 0, 0, 1);
+			glow.addColorStop(0, 'rgba(255,255,255,' + (0.95 * logo.opacity).toFixed(3) + ')');
+			glow.addColorStop(0.65, 'rgba(255,255,255,' + (0.8 * logo.opacity).toFixed(3) + ')');
+			glow.addColorStop(1, 'rgba(255,255,255,0)');
+			ctx.fillStyle = glow;
+			ctx.beginPath();
+			ctx.arc(0, 0, 1, 0, Math.PI * 2);
+			ctx.fill();
+			ctx.restore();
+		}
 	};
 
 	IntroOrbit.prototype.drawLogo = function (t) {
-		var lo = easeOut3(clamp((t - INTRO.logoIn) / (INTRO.logoInEnd - INTRO.logoIn), 0, 1));
-		var gr = easeInOut3(clamp((t - INTRO.grow) / (INTRO.growEnd - INTRO.grow), 0, 1));
-		var scale = (INTRO.startScale + (1 - INTRO.startScale) * gr) * (0.92 + 0.08 * lo);
-		this.logo.style.opacity = lo.toFixed(3);
-		this.logo.style.transform = 'translateY(' + ((1 - lo) * 28).toFixed(1) + 'px) scale(' + scale.toFixed(4) + ')';
+		var logo = this.logoState(t);
+		this.logo.style.opacity = logo.opacity.toFixed(3);
+		this.logo.style.transform = 'translateY(' + logo.lift.toFixed(1) + 'px) scale(' + logo.scale.toFixed(4) + ')';
 	};
 
 	IntroOrbit.prototype.finish = function () {
@@ -544,9 +590,14 @@
 
 	IntroOrbit.prototype.frame = function (now) {
 		if (!this.running) { return; }
-		if (this.last) { this.t += Math.min((now - this.last) / 1000, 0.05); }
+		var dt = this.last ? Math.min((now - this.last) / 1000, 0.05) : 0;
 		this.last = now;
+		this.t += dt;
 		if (this.t >= INTRO.growEnd) { this.finish(); return; }
+		// Spin speed (turns per second) eases up at the start and eases down while the dots expand.
+		var up = easeInOut3(clamp(this.t / 1.6, 0, 1));
+		var down = 1 - 0.7 * easeInOut3(clamp((this.t - INTRO.expand) / (INTRO.expandEnd - INTRO.expand), 0, 1));
+		this.spin += 0.07 * up * down * dt;
 		this.draw(this.t);
 		this.drawLogo(this.t);
 		this.raf = requestAnimationFrame(this.loop);
