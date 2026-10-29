@@ -400,6 +400,19 @@
 	var ORBIT_TILT = 16 * Math.PI / 180; // angle of the orbit axis, like the NASA orbit but flatter
 	var ORBIT_SWAY = 2 * Math.PI / 180;
 	var ORBIT_EXP = 2.6; // superellipse exponent: 2 is an ellipse, higher is boxier
+	var ORBIT_SHAPE = 'shield'; // 'shield' or 'circle'
+
+	// Adds a shield outline (like the one in the logo) to the current path, about `r` wide on each side.
+	function orbitShield(ctx, x, y, r) {
+		ctx.moveTo(x, y - r);
+		ctx.bezierCurveTo(x + 0.35 * r, y - 0.8 * r, x + 0.7 * r, y - 0.72 * r, x + 0.92 * r, y - 0.72 * r);
+		ctx.lineTo(x + 0.92 * r, y + 0.1 * r);
+		ctx.bezierCurveTo(x + 0.92 * r, y + 0.62 * r, x + 0.46 * r, y + 0.92 * r, x, y + 1.12 * r);
+		ctx.bezierCurveTo(x - 0.46 * r, y + 0.92 * r, x - 0.92 * r, y + 0.62 * r, x - 0.92 * r, y + 0.1 * r);
+		ctx.lineTo(x - 0.92 * r, y - 0.72 * r);
+		ctx.bezierCurveTo(x - 0.7 * r, y - 0.72 * r, x - 0.35 * r, y - 0.8 * r, x, y - r);
+		ctx.closePath();
+	}
 	var INTRO = { logoIn: 0.1, logoInEnd: 0.7, expand: 1.5, expandEnd: 2.6, grow: 1.9, growEnd: 3.0, startScale: 0.6 };
 
 	function easeInOut3(k) { return k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
@@ -549,7 +562,7 @@
 				var size = rMax * (0.45 + 0.55 * wave) * breath * e * (1 - 0.35 * x);
 				ctx.fillStyle = orbitColor(ang / (Math.PI * 2) + t * 0.02 + k * 0.01, alpha);
 				ctx.beginPath();
-				ctx.arc(px, py, size, 0, Math.PI * 2);
+				if (ORBIT_SHAPE === 'shield') { orbitShield(ctx, px, py, size * 0.92); } else { ctx.arc(px, py, size, 0, Math.PI * 2); }
 				ctx.fill();
 			}
 		}
@@ -598,7 +611,7 @@
 		// Spin speed (turns per second) eases up at the start and eases down while the dots expand.
 		var up = easeInOut3(clamp(this.t / 0.8, 0, 1));
 		var down = 1 - 0.7 * easeInOut3(clamp((this.t - INTRO.expand) / (INTRO.expandEnd - INTRO.expand), 0, 1));
-		this.spin += 0.16 * up * down * dt;
+		this.spin += 0.07 * up * down * dt;
 		this.draw(this.t);
 		this.drawLogo(this.t);
 		this.raf = requestAnimationFrame(this.loop);
@@ -622,7 +635,10 @@
 	if (introRoot) {
 		var introCanvas = $('canvas', introRoot);
 		var introSeen = false;
-		try { introSeen = sessionStorage.getItem('cwcIntroSeen') === '1'; } catch (e) {}
+		var navEntry = window.performance && performance.getEntriesByType ? performance.getEntriesByType('navigation')[0] : null;
+		var isReload = !!navEntry && navEntry.type === 'reload';
+		// Plays on the first page of a session and on every reload, but not when moving between pages.
+		try { introSeen = !isReload && sessionStorage.getItem('cwcIntroSeen') === '1'; } catch (e) {}
 		if (reduceMotion || introSeen || !introCanvas || !introCanvas.getContext) {
 			introRoot.classList.add('is-done'); // no animation: show the finished state
 		} else {
