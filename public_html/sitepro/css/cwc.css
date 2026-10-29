@@ -454,7 +454,7 @@ html.js[data-mode="industry"] .intro:not(.is-done) .intro__logo { opacity: 0; }
 .marquee__item { display: flex; flex-direction: column; align-items: center; }
 .marquee__item img[src$="rlc.webp"] { height: 92px; }
 .marquee__caption { margin-top: 6px; font-family: var(--font-sub); font-size: 1.125rem; line-height: 1.2; color: var(--ink-2); }
-@keyframes cwc-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes cwc-marquee { from { transform: translateX(0); } to { transform: translateX(calc(-100% / 6)); } }
 @media (prefers-reduced-motion: reduce) {
 	.marquee__track { animation: none; }
 }
@@ -518,7 +518,7 @@ html.js[data-mode="industry"] .intro:not(.is-done) .intro__logo { opacity: 0; }
 .impact-headline__ch { display: inline-block; color: var(--c, var(--blue-700)); }
 .impact-headline__ch--tight { margin-right: -0.07em; }
 /* A page-coloured outline eats into the letterforms to thin them (Minion Display has no lighter weight). */
-html[data-mode="industry"] .impact-headline__ch { -webkit-text-stroke: 0.006em var(--white); }
+html[data-mode="industry"] .impact-headline__ch { -webkit-text-stroke: 0.006em var(--white); stroke-linejoin: round; text-rendering: geometricPrecision; -webkit-font-smoothing: antialiased; backface-visibility: hidden; }
 html.js[data-mode="industry"] .impact-headline:not(.is-in) .impact-headline__ch { opacity: 0; }
 html.js[data-mode="industry"] .impact-headline.is-in .impact-headline__ch { animation: cwc-bloom 1s cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--i) * 0.08s) both; }
 @keyframes cwc-bloom {
@@ -637,6 +637,9 @@ html.js[data-mode="industry"] .reveal:not(.is-in) .mark { background-size: 0% 10
 .social-icon:hover { background: var(--blue-700); }
 .social-icon img { width: 22px; height: 22px; }
 .site-footer__base { border-top: 1px solid rgba(255, 255, 255, 0.12); padding: 18px 0 22px; font-size: 0.875rem; }
+.site-footer__email { margin: 0 0 6px; }
+.site-footer__email a { color: var(--white); text-decoration: none; }
+.site-footer__email a:hover { text-decoration: underline; }
 .site-footer__hosting { margin: 0; }
 .site-footer__hosting a { color: rgba(255, 255, 255, 0.6); text-decoration: none; }
 .site-footer__hosting a:hover { color: var(--white); text-decoration: underline; }

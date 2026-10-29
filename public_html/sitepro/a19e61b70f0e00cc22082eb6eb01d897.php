@@ -78,10 +78,10 @@ cwc_page_start(array(
 				array('wake-county.svg', 'Wake County', 785, 928),
 				array('rlc.webp', 'RLC Resort Lifestyle Communities', 2000, 1000, 'Brier Pointe'),
 			);
-			// The list is written twice so the loop is seamless; the copy is hidden from screen readers.
-			for ($pass = 0; $pass < 2; $pass++) {
+			// The list is repeated so one copy spans very wide screens; copies are hidden from screen readers.
+			for ($pass = 0; $pass < 6; $pass++) {
 				foreach ($partners as $p) {
-					echo '<li class="marquee__item"' . ($pass ? ' aria-hidden="true"' : '') . '><img src="gallery/partners/' . $p[0] . '" alt="' . ($pass ? '' : $p[1]) . '" width="' . $p[2] . '" height="' . $p[3] . '" loading="lazy" />' . (isset($p[4]) ? '<span class="marquee__caption">' . $p[4] . '</span>' : '') . '</li>' . "\n";
+					echo '<li class="marquee__item"' . ($pass ? ' aria-hidden="true"' : '') . '><img src="gallery/partners/' . $p[0] . '" alt="' . ($pass ? '' : $p[1]) . '" width="' . $p[2] . '" height="' . $p[3] . '" />' . (isset($p[4]) ? '<span class="marquee__caption">' . $p[4] . '</span>' : '') . '</li>' . "\n";
 				}
 			}
 			?>
