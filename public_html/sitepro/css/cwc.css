@@ -517,8 +517,6 @@ html.js[data-mode="industry"] .intro:not(.is-done) .intro__logo { opacity: 0; }
 .impact-headline__line:last-child { font-size: calc(var(--w) * 0.4336); }
 .impact-headline__ch { display: inline-block; color: var(--c, var(--blue-700)); }
 .impact-headline__ch--tight { margin-right: -0.07em; }
-/* A page-coloured outline eats into the letterforms to thin them (Minion Display has no lighter weight). */
-html[data-mode="industry"] .impact-headline__ch { -webkit-text-stroke: 0.006em var(--white); stroke-linejoin: round; text-rendering: geometricPrecision; -webkit-font-smoothing: antialiased; }
 html.js[data-mode="industry"] .impact-headline:not(.is-in) .impact-headline__ch { opacity: 0; }
 html.js[data-mode="industry"] .impact-headline.is-in .impact-headline__ch { animation: cwc-bloom 1s cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--i) * 0.08s) backwards; }
 @keyframes cwc-bloom {
