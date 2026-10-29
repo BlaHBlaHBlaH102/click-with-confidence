@@ -19,7 +19,7 @@ cwc_page_start(array(
 
 <section class="section">
 	<div class="container container--text">
-		<p class="lede reveal">Click with Confidence was founded in 2025 by Viraj Shah. He has been running Click with Confidence in some form since 2022. He was inspired to start the initiative by his grandfather, who unfortunately got scammed, leading his once-successful accounting business to bankruptcy in the span of a few days. Shocked by this event and illuminated by the fact that <strong class="mark">seniors lose 61.5 Billion Dollars </strong>to scams every single year, he decided to create Click with Confidence.</p>
+		<p class="lede reveal">Click with Confidence was founded in 2025 by Viraj Shah. He has been running Click with Confidence in some form since 2022. He was inspired to start the initiative by his grandfather, who unfortunately got scammed, leading his once-successful accounting business to bankruptcy in the span of a few days. Shocked by this event and illuminated by the fact that <strong class="mark">seniors lose 119.5 Billion Dollars</strong> to scams every single year, he decided to create Click with Confidence.</p>
 	</div>
 </section>
 
@@ -33,7 +33,7 @@ cwc_page_start(array(
 				</figure>
 				<div class="card__body">
 					<h3 class="h3">Educate</h3>
-					<p>We want to educate thousand's of people on how to identify scam calls, practical digital safety, and protecting data from hackers.</p>
+					<p>We want to educate thousands of people on how to identify scam calls, practical digital safety, and protecting data from hackers.</p>
 				</div>
 			</article>
 			<article class="card goal-card reveal" data-delay="1">
