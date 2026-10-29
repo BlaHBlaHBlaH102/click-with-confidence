@@ -235,7 +235,7 @@
 					countObserver.unobserve(entry.target);
 				}
 			});
-		}, { threshold: 0.6 });
+		}, { threshold: 0.3 });
 		counters.forEach(function (el) { countObserver.observe(el); });
 	}
 
