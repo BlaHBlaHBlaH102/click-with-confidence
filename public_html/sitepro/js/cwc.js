@@ -16,7 +16,7 @@
 	function $$(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); }
 	function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
 	function isInteractive() { return html.getAttribute('data-mode') !== 'readable'; }
-	function store(key, value) { try { localStorage.setItem(key, value); } catch (e) {} }
+	function store(key, value, session) { try { (session ? sessionStorage : localStorage).setItem(key, value); } catch (e) {} }
 
 	window.__cwcReady = true;
 
@@ -400,7 +400,7 @@
 	var ORBIT_TILT = 16 * Math.PI / 180; // angle of the orbit axis, like the NASA orbit but flatter
 	var ORBIT_SWAY = 2 * Math.PI / 180;
 	var ORBIT_EXP = 2.6; // superellipse exponent: 2 is an ellipse, higher is boxier
-	var INTRO = { logoIn: 0.3, logoInEnd: 1.7, expand: 4.2, expandEnd: 6.8, grow: 5.0, growEnd: 7.4, startScale: 0.6 };
+	var INTRO = { logoIn: 0.1, logoInEnd: 0.7, expand: 1.5, expandEnd: 2.6, grow: 1.9, growEnd: 3.0, startScale: 0.6 };
 
 	function easeInOut3(k) { return k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
 	function smoothstep(a, b, x) { var k = clamp((x - a) / (b - a), 0, 1); return k * k * (3 - 2 * k); }
@@ -518,14 +518,14 @@
 		var breath = 1 + 0.06 * Math.sin(t * 1.4);
 		var x = easeInOut3(clamp((t - INTRO.expand) / (INTRO.expandEnd - INTRO.expand), 0, 1));
 		var spread = 1 + 1.6 * x;
-		var fadeOut = 1 - easeInOut3(clamp((t - INTRO.expand - 0.4) / (INTRO.expandEnd - INTRO.expand - 0.4), 0, 1));
+		var fadeOut = 1 - easeInOut3(clamp((t - INTRO.expand - 0.15) / (INTRO.expandEnd - INTRO.expand - 0.15), 0, 1));
 		var tilt = ORBIT_TILT + ORBIT_SWAY * Math.sin(t * 0.6);
 		var cosT = Math.cos(tilt), sinT = Math.sin(tilt);
 		ctx.clearRect(0, 0, w, h);
 		for (var k = 0; k < count; k++) {
 			var ring = this.rings[k];
 			// Fill in as a quick ripple from the centre outwards.
-			var e = easeInOut3(clamp((t - 0.4 * k / count) / 1.0, 0, 1));
+			var e = easeInOut3(clamp((t - 0.3 * k / count) / 0.6, 0, 1));
 			if (e <= 0 || fadeOut <= 0) { continue; }
 			var phase = this.spin * (1 + 0.25 * k / count) + 0.5 * (k % 2) / ring.n;
 			var pts = ring.path;
@@ -596,9 +596,9 @@
 		this.t += dt;
 		if (this.t >= INTRO.growEnd) { this.finish(); return; }
 		// Spin speed (turns per second) eases up at the start and eases down while the dots expand.
-		var up = easeInOut3(clamp(this.t / 1.6, 0, 1));
+		var up = easeInOut3(clamp(this.t / 0.8, 0, 1));
 		var down = 1 - 0.7 * easeInOut3(clamp((this.t - INTRO.expand) / (INTRO.expandEnd - INTRO.expand), 0, 1));
-		this.spin += 0.07 * up * down * dt;
+		this.spin += 0.16 * up * down * dt;
 		this.draw(this.t);
 		this.drawLogo(this.t);
 		this.raf = requestAnimationFrame(this.loop);
@@ -610,6 +610,7 @@
 		if (shouldRun && !this.running) {
 			this.running = true;
 			this.last = 0;
+			store('cwcIntroSeen', '1', true); // plays once per browser session, whichever page is opened first
 			this.raf = requestAnimationFrame(this.loop);
 		} else if (!shouldRun && this.running) {
 			this.running = false;
@@ -620,7 +621,9 @@
 	var introRoot = $('.intro');
 	if (introRoot) {
 		var introCanvas = $('canvas', introRoot);
-		if (reduceMotion || !introCanvas || !introCanvas.getContext) {
+		var introSeen = false;
+		try { introSeen = sessionStorage.getItem('cwcIntroSeen') === '1'; } catch (e) {}
+		if (reduceMotion || introSeen || !introCanvas || !introCanvas.getContext) {
 			introRoot.classList.add('is-done'); // no animation: show the finished state
 		} else {
 			var orbit = new IntroOrbit(introRoot);
