@@ -10,6 +10,11 @@ cwc_page_start(array(
 ));
 ?>
 
+<section class="intro" aria-label="Click With Confidence">
+	<canvas class="intro__canvas" aria-hidden="true"></canvas>
+	<img class="intro__logo" src="gallery/logo-wide.svg" alt="Click With Confidence" width="432" height="72" />
+</section>
+
 <section class="hero band">
 	<canvas class="particles" aria-hidden="true"></canvas>
 	<div class="container hero__layout">

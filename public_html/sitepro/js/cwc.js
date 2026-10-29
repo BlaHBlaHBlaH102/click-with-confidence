@@ -390,6 +390,209 @@
 	document.addEventListener('visibilitychange', function () { fields.forEach(function (f) { f.update(); }); });
 
 	/* ------------------------------------------------------------------ */
+	/* Home intro: logo eases in, tilted dot orbits gyrate then dissipate,  */
+	/* and the logo grows (Interactive mode only, plays once per page load) */
+	/* ------------------------------------------------------------------ */
+
+	var ORBIT_COLORS = [[92, 163, 255], [31, 128, 255], [0, 74, 173]]; // the logo's three blues
+	var ORBIT_SAMPLES = 720;
+	var ORBIT_TILT = 24 * Math.PI / 180; // angle of the orbit axis, like the NASA orbit
+	var INTRO = { logoIn: 0.2, logoInEnd: 1.5, bloom: 0.8, dissipate: 6.0, dissipateEnd: 7.8, grow: 6.4, growEnd: 8.6, startScale: 0.6 };
+
+	function easeOut3(k) { return 1 - Math.pow(1 - k, 3); }
+	function easeInOut3(k) { return k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
+
+	function orbitColor(f) {
+		var n = ORBIT_COLORS.length;
+		var x = (f - Math.floor(f)) * n;
+		var i = Math.floor(x);
+		var k = x - i;
+		k = k * k * (3 - 2 * k);
+		var a = ORBIT_COLORS[i % n], b = ORBIT_COLORS[(i + 1) % n];
+		return 'rgb(' + Math.round(a[0] + (b[0] - a[0]) * k) + ',' + Math.round(a[1] + (b[1] - a[1]) * k) + ',' + Math.round(a[2] + (b[2] - a[2]) * k) + ')';
+	}
+
+	// Points spaced evenly along a rounded, oblong superellipse, so dots travel around it at a steady speed.
+	function orbitPath(a, b) {
+		var fine = 1440, exp = 2 / 2.6, xs = [], ys = [], len = [0], i;
+		for (i = 0; i <= fine; i++) {
+			var th = (i / fine) * Math.PI * 2;
+			var c = Math.cos(th), s = Math.sin(th);
+			xs.push(a * (c < 0 ? -1 : 1) * Math.pow(Math.abs(c), exp));
+			ys.push(b * (s < 0 ? -1 : 1) * Math.pow(Math.abs(s), exp));
+			if (i) { len.push(len[i - 1] + Math.sqrt(Math.pow(xs[i] - xs[i - 1], 2) + Math.pow(ys[i] - ys[i - 1], 2))); }
+		}
+		var total = len[fine], pts = new Float32Array(ORBIT_SAMPLES * 2), j = 0;
+		for (i = 0; i < ORBIT_SAMPLES; i++) {
+			var target = (i / ORBIT_SAMPLES) * total;
+			while (j < fine - 1 && len[j + 1] < target) { j++; }
+			var seg = len[j + 1] - len[j] || 1;
+			var u = (target - len[j]) / seg;
+			pts[i * 2] = xs[j] + (xs[j + 1] - xs[j]) * u;
+			pts[i * 2 + 1] = ys[j] + (ys[j + 1] - ys[j]) * u;
+		}
+		return { pts: pts, length: total };
+	}
+
+	function IntroOrbit(root) {
+		this.root = root;
+		this.canvas = $('canvas', root);
+		this.logo = $('.intro__logo', root);
+		this.ctx = this.canvas.getContext('2d');
+		this.rings = [];
+		this.w = 0;
+		this.h = 0;
+		this.dotMax = 10;
+		this.t = 0;
+		this.last = 0;
+		this.visible = false;
+		this.running = false;
+		this.done = false;
+		this.raf = 0;
+		var self = this;
+		this.loop = function (now) { self.frame(now); };
+	}
+
+	IntroOrbit.prototype.resize = function () {
+		if (this.done) { return; }
+		var r = this.canvas.getBoundingClientRect();
+		if (!r.width || !r.height) { return; }
+		var dpr = Math.min(window.devicePixelRatio || 1, 2);
+		var w = this.w = r.width, h = this.h = r.height;
+		this.canvas.width = Math.round(w * dpr);
+		this.canvas.height = Math.round(h * dpr);
+		this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+		// The orbits are sized around the logo as it first appears (small), before it grows.
+		var lw = this.logo.offsetWidth * INTRO.startScale, lh = this.logo.offsetHeight * INTRO.startScale;
+		var count = w < 560 ? 3 : (w < 900 ? 4 : 6);
+		var pad = clamp(lw * 0.1, 18, 44);
+		var a0 = lw / 2 + pad, b0 = lh / 2 + pad;
+		var gapA = Math.max(8, (w / 2 - 26 - a0) / (count - 1));
+		var gapB = Math.max(8, (h / 2 - 26 - b0) / (count - 1));
+		// Shrink everything a little if the tilted outer ring would leave the canvas.
+		var tiltMax = ORBIT_TILT + 0.04 * count + 0.1;
+		var aOut = a0 + gapA * (count - 1), bOut = b0 + gapB * (count - 1);
+		var cosM = Math.cos(tiltMax), sinM = Math.sin(tiltMax);
+		var halfW = Math.sqrt(aOut * aOut * cosM * cosM + bOut * bOut * sinM * sinM);
+		var halfH = Math.sqrt(aOut * aOut * sinM * sinM + bOut * bOut * cosM * cosM);
+		var fit = Math.min(1, (w / 2 - 26) / halfW, (h / 2 - 26) / halfH);
+		this.dotMax = clamp(Math.min(gapA, gapB) * fit * 0.4, 4, 15);
+		this.rings = [];
+		for (var k = 0; k < count; k++) {
+			var a = (a0 + gapA * k) * fit, b = (b0 + gapB * k) * fit;
+			var path = orbitPath(a, b);
+			var scale = 0.55 + 0.45 * (count > 1 ? k / (count - 1) : 1);
+			var n = Math.max(10, Math.round(path.length / (this.dotMax * scale * 3.4)));
+			this.rings.push({ a: a, b: b, path: path.pts, n: n, scale: scale });
+		}
+		if (!this.running) { this.draw(this.t); }
+	};
+
+	IntroOrbit.prototype.draw = function (t) {
+		var ctx = this.ctx, cx = this.w / 2, cy = this.h / 2;
+		var breath = 1 + 0.08 * Math.sin(t * 1.3);
+		ctx.clearRect(0, 0, this.w, this.h);
+		for (var k = 0; k < this.rings.length; k++) {
+			var ring = this.rings[k];
+			var e = easeOut3(clamp((t - INTRO.bloom - k * 0.12) / 1.4, 0, 1));
+			var d = clamp((t - INTRO.dissipate - k * 0.06) / (INTRO.dissipateEnd - INTRO.dissipate), 0, 1);
+			d = d * d;
+			if (e <= 0 || d >= 1) { continue; }
+			var spread = (0.55 + 0.45 * e) * (1 + 0.9 * d);
+			var phase = (0.06 + 0.01 * k) * t + (1 - e) * 0.25 + 0.15 * d;
+			var tilt = ORBIT_TILT + 0.04 * k + 0.1 * Math.sin(t * 0.9 + k);
+			var cosT = Math.cos(tilt), sinT = Math.sin(tilt);
+			var pts = ring.path;
+			ctx.globalAlpha = 0.92 * e * (1 - d);
+			for (var i = 0; i < ring.n; i++) {
+				var s = (i + 0.5 * (k % 2)) / ring.n + phase;
+				s -= Math.floor(s);
+				var idx = s * ORBIT_SAMPLES, i0 = Math.floor(idx), f = idx - i0, i1 = (i0 + 1) % ORBIT_SAMPLES;
+				var ux = pts[i0 * 2] + (pts[i1 * 2] - pts[i0 * 2]) * f;
+				var uy = pts[i0 * 2 + 1] + (pts[i1 * 2 + 1] - pts[i0 * 2 + 1]) * f;
+				var x = ux * spread, y = uy * spread;
+				var ang = Math.atan2(uy / ring.b, ux / ring.a);
+				var wave = 0.5 + 0.5 * Math.sin(ang * 3 - t * 1.7 + k * 0.8);
+				var size = this.dotMax * ring.scale * (0.3 + 0.7 * wave) * breath * e * (1 - 0.6 * d);
+				ctx.fillStyle = orbitColor(ang / (Math.PI * 2) + t * 0.02 + k * 0.015);
+				ctx.beginPath();
+				ctx.arc(cx + x * cosT - y * sinT, cy + x * sinT + y * cosT, size, 0, Math.PI * 2);
+				ctx.fill();
+			}
+		}
+		ctx.globalAlpha = 1;
+	};
+
+	IntroOrbit.prototype.drawLogo = function (t) {
+		var lo = easeOut3(clamp((t - INTRO.logoIn) / (INTRO.logoInEnd - INTRO.logoIn), 0, 1));
+		var gr = easeInOut3(clamp((t - INTRO.grow) / (INTRO.growEnd - INTRO.grow), 0, 1));
+		var scale = (INTRO.startScale + (1 - INTRO.startScale) * gr) * (0.92 + 0.08 * lo);
+		this.logo.style.opacity = lo.toFixed(3);
+		this.logo.style.transform = 'translateY(' + ((1 - lo) * 28).toFixed(1) + 'px) scale(' + scale.toFixed(4) + ')';
+	};
+
+	IntroOrbit.prototype.finish = function () {
+		this.done = true;
+		this.running = false;
+		cancelAnimationFrame(this.raf);
+		this.ctx.clearRect(0, 0, this.w, this.h);
+		this.logo.style.opacity = '';
+		this.logo.style.transform = '';
+		this.root.classList.add('is-done');
+	};
+
+	IntroOrbit.prototype.frame = function (now) {
+		if (!this.running) { return; }
+		if (this.last) { this.t += Math.min((now - this.last) / 1000, 0.05); }
+		this.last = now;
+		if (this.t >= INTRO.growEnd) { this.finish(); return; }
+		this.draw(this.t);
+		this.drawLogo(this.t);
+		this.raf = requestAnimationFrame(this.loop);
+	};
+
+	IntroOrbit.prototype.update = function () {
+		if (this.done) { return; }
+		var shouldRun = this.visible && isInteractive() && !reduceMotion && !document.hidden;
+		if (shouldRun && !this.running) {
+			this.running = true;
+			this.last = 0;
+			this.raf = requestAnimationFrame(this.loop);
+		} else if (!shouldRun && this.running) {
+			this.running = false;
+			cancelAnimationFrame(this.raf);
+		}
+	};
+
+	var introRoot = $('.intro');
+	if (introRoot) {
+		var introCanvas = $('canvas', introRoot);
+		if (reduceMotion || !introCanvas || !introCanvas.getContext) {
+			introRoot.classList.add('is-done'); // no animation: show the finished state
+		} else {
+			var orbit = new IntroOrbit(introRoot);
+			orbit.resize();
+			if ('IntersectionObserver' in window) {
+				new IntersectionObserver(function (entries) {
+					orbit.visible = entries[0].isIntersecting;
+					orbit.update();
+				}).observe(introRoot);
+			} else {
+				orbit.visible = true;
+				orbit.update();
+			}
+			if ('ResizeObserver' in window) {
+				new ResizeObserver(function () { orbit.resize(); orbit.update(); }).observe(introRoot);
+			}
+			document.addEventListener('visibilitychange', function () { orbit.update(); });
+			if ('MutationObserver' in window) {
+				new MutationObserver(function () { orbit.resize(); orbit.update(); }).observe(html, { attributes: true, attributeFilter: ['data-mode'] });
+			}
+		}
+	}
+
+	/* ------------------------------------------------------------------ */
 	/* Lightbox (App screenshots)                                          */
 	/* ------------------------------------------------------------------ */
 
