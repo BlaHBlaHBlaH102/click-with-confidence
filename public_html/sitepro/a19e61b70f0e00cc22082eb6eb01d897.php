@@ -17,6 +17,9 @@ cwc_page_start(array(
 		<svg class="intro__pause-icon intro__pause-icon--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
 		<svg class="intro__pause-icon intro__pause-icon--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>
 	</button>
+	<button type="button" class="intro__replay" aria-label="Replay animation" data-intro-replay>
+		<svg class="intro__pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg>
+	</button>
 </section>
 
 <section class="hero band">

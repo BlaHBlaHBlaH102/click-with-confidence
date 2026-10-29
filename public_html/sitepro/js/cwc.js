@@ -600,6 +600,20 @@
 		this.logo.style.opacity = '';
 		this.logo.style.transform = '';
 		this.root.classList.add('is-done');
+		// The pause button is replaced by the replay button, so keep keyboard focus on the control.
+		var replayBtn = $('[data-intro-replay]', this.root);
+		if (replayBtn && document.activeElement && document.activeElement.hasAttribute('data-intro-pause')) { replayBtn.focus(); }
+	};
+
+	IntroOrbit.prototype.replay = function () {
+		this.done = false;
+		this.paused = false;
+		this.t = 0;
+		this.spin = 0;
+		this.last = 0;
+		this.root.classList.remove('is-done');
+		this.resize();
+		this.update();
 	};
 
 	IntroOrbit.prototype.frame = function (now) {
@@ -639,11 +653,17 @@
 		var isReload = !!navEntry && navEntry.type === 'reload';
 		// Plays on the first page of a session and on every reload, but not when moving between pages.
 		try { introSeen = !isReload && sessionStorage.getItem('cwcIntroSeen') === '1'; } catch (e) {}
-		if (reduceMotion || introSeen || !introCanvas || !introCanvas.getContext) {
+		if (reduceMotion || !introCanvas || !introCanvas.getContext) {
 			introRoot.classList.add('is-done'); // no animation: show the finished state
 		} else {
 			var orbit = new IntroOrbit(introRoot);
-			orbit.resize();
+			if (introSeen) {
+				orbit.done = true; // already played this session: start from the finished state
+				introRoot.classList.add('is-done');
+			} else {
+				orbit.resize();
+			}
+			introRoot.classList.add('can-replay');
 			if ('IntersectionObserver' in window) {
 				new IntersectionObserver(function (entries) {
 					orbit.visible = entries[0].isIntersecting;
@@ -666,10 +686,65 @@
 					orbit.update();
 				});
 			}
+			var replayBtn = $('[data-intro-replay]', introRoot);
+			if (replayBtn) {
+				replayBtn.addEventListener('click', function () {
+					if (pauseBtn) {
+						pauseBtn.setAttribute('aria-pressed', 'false');
+						pauseBtn.setAttribute('aria-label', 'Pause animation');
+					}
+					orbit.replay();
+					if (pauseBtn) { pauseBtn.focus(); }
+				});
+			}
 			if ('MutationObserver' in window) {
 				new MutationObserver(function () { orbit.resize(); orbit.update(); }).observe(html, { attributes: true, attributeFilter: ['data-mode'] });
 			}
 		}
+	}
+
+	/* ------------------------------------------------------------------ */
+	/* Founder's Story signature: written stroke by stroke while scrolling */
+	/* ------------------------------------------------------------------ */
+
+	var signature = $('[data-signature]');
+	if (signature) {
+		var sigImage = $('image', signature);
+		var sigMask = 'url(#' + $('mask', signature).id + ')';
+		var sigStrokes = $$('[data-s]', signature).map(function (el) {
+			return { el: el, s: parseFloat(el.getAttribute('data-s')), e: parseFloat(el.getAttribute('data-e')) };
+		});
+		var sigLast = -1;
+
+		var drawSignature = function () {
+			var p = 1;
+			if (isInteractive() && !reduceMotion) {
+				// Writing starts as the signature rises past 90% of the window and finishes by 45%,
+				// or by the bottom of the page if it can't scroll that far.
+				var vh = window.innerHeight;
+				var top = signature.getBoundingClientRect().top;
+				var maxScroll = document.documentElement.scrollHeight - vh;
+				var lowestTop = top - (maxScroll - window.scrollY);
+				var startTop = vh * 0.9, endTop = Math.max(vh * 0.45, lowestTop);
+				p = endTop >= startTop ? 1 : clamp((startTop - top) / (startTop - endTop), 0, 1);
+			}
+			if (p === sigLast) { return; }
+			sigLast = p;
+			if (p >= 1) { sigImage.removeAttribute('mask'); return; }
+			sigImage.setAttribute('mask', sigMask);
+			sigStrokes.forEach(function (st) {
+				var k = clamp((p - st.s) / ((st.e - st.s) || 1), 0, 1);
+				st.el.style.strokeDashoffset = String(1 - k);
+				st.el.style.visibility = k > 0 ? 'visible' : 'hidden'; // a zero-length round cap would still show a dot
+			});
+		};
+
+		window.addEventListener('scroll', drawSignature, { passive: true });
+		window.addEventListener('resize', drawSignature);
+		if ('MutationObserver' in window) {
+			new MutationObserver(function () { sigLast = -1; drawSignature(); }).observe(html, { attributes: true, attributeFilter: ['data-mode'] });
+		}
+		drawSignature();
 	}
 
 	/* ------------------------------------------------------------------ */
