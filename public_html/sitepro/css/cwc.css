@@ -365,6 +365,31 @@ a.btn:not([href]) { cursor: default; }
 }
 .intro__canvas { position: absolute; top: 0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
 .intro__logo { position: relative; z-index: 1; width: min(80vw, 760px); height: auto; transform-origin: 50% 50%; filter: drop-shadow(0 0 1.5px #fff) drop-shadow(0 0 3px #fff) drop-shadow(0 0 6px rgba(255, 255, 255, 0.9)); }
+.intro__pause {
+	position: absolute;
+	left: 16px;
+	bottom: 16px;
+	z-index: 2;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	padding: 0;
+	border: 1px solid var(--line);
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.9);
+	color: var(--blue-700);
+	cursor: pointer;
+	transition: background-color 0.2s, border-color 0.2s;
+}
+.intro__pause:hover { background: var(--white); border-color: var(--blue-500); }
+.intro__pause:focus-visible { outline: 3px solid var(--blue-500); outline-offset: 2px; }
+.intro__pause-icon { width: 16px; height: 16px; fill: currentColor; }
+.intro__pause-icon--play { display: none; }
+.intro__pause[aria-pressed="true"] .intro__pause-icon--pause { display: none; }
+.intro__pause[aria-pressed="true"] .intro__pause-icon--play { display: block; }
+.intro.is-done .intro__pause { display: none; }
 /* While the intro plays, cwc.js drives the logo's opacity and scale; until then keep it hidden. */
 html.js[data-mode="industry"] .intro:not(.is-done) .intro__logo { opacity: 0; }
 [data-mode="readable"] .intro { display: none; }

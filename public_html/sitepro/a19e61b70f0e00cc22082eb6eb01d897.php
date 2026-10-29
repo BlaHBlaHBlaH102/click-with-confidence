@@ -13,6 +13,10 @@ cwc_page_start(array(
 <section class="intro" aria-label="Click With Confidence">
 	<canvas class="intro__canvas" aria-hidden="true"></canvas>
 	<img class="intro__logo" src="gallery/logo-wide.svg" alt="Click With Confidence" width="432" height="72" />
+	<button type="button" class="intro__pause" aria-label="Pause animation" aria-pressed="false" data-intro-pause>
+		<svg class="intro__pause-icon intro__pause-icon--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+		<svg class="intro__pause-icon intro__pause-icon--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>
+	</button>
 </section>
 
 <section class="hero band">

@@ -464,6 +464,7 @@
 		this.visible = false;
 		this.running = false;
 		this.done = false;
+		this.paused = false;
 		this.raf = 0;
 		var self = this;
 		this.loop = function (now) { self.frame(now); };
@@ -605,7 +606,7 @@
 
 	IntroOrbit.prototype.update = function () {
 		if (this.done) { return; }
-		var shouldRun = this.visible && isInteractive() && !reduceMotion && !document.hidden;
+		var shouldRun = this.visible && isInteractive() && !reduceMotion && !document.hidden && !this.paused;
 		if (shouldRun && !this.running) {
 			this.running = true;
 			this.last = 0;
@@ -637,6 +638,15 @@
 				new ResizeObserver(function () { orbit.resize(); orbit.update(); }).observe(introRoot);
 			}
 			document.addEventListener('visibilitychange', function () { orbit.update(); });
+			var pauseBtn = $('[data-intro-pause]', introRoot);
+			if (pauseBtn) {
+				pauseBtn.addEventListener('click', function () {
+					orbit.paused = !orbit.paused;
+					pauseBtn.setAttribute('aria-pressed', String(orbit.paused));
+					pauseBtn.setAttribute('aria-label', orbit.paused ? 'Play animation' : 'Pause animation');
+					orbit.update();
+				});
+			}
 			if ('MutationObserver' in window) {
 				new MutationObserver(function () { orbit.resize(); orbit.update(); }).observe(html, { attributes: true, attributeFilter: ['data-mode'] });
 			}
