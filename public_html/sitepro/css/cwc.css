@@ -1148,6 +1148,52 @@ html[data-mode="readable"][data-text="3"] { font-size: 140%; }
 	.reader.is-full .reader__stage { height: auto; flex: 1 1 auto; }
 }
 
+/* ---------- Scam Stopper (question of the day) ---------- */
+
+.quiz { background: var(--tint); }
+.quiz-card { max-width: 860px; margin: 0 auto; padding: clamp(24px, 4vw, 40px); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--white); box-shadow: var(--shadow); }
+.quiz__label { margin: 0 0 6px; }
+.quiz__title { margin: 0; font-family: var(--font-cond); font-weight: 900; font-size: clamp(2rem, 4.4vw, 3rem); line-height: 1.05; color: var(--blue-700); }
+.quiz__date { margin: 6px 0 22px; font-family: var(--font-head); font-size: 0.9375rem; color: var(--ink-3); }
+.quiz__scenario { margin: 0 0 22px; font-size: clamp(1.1875rem, 1.8vw, 1.375rem); line-height: 1.55; color: var(--ink); }
+.quiz__choices { display: grid; gap: 12px; }
+.quiz__choice { position: relative; display: flex; align-items: flex-start; gap: 14px; width: 100%; padding: 14px 16px; border: 2px solid var(--line); border-radius: 10px; background: var(--white); color: var(--ink); font: inherit; font-size: 1.125rem; line-height: 1.4; text-align: left; cursor: pointer; transition: border-color 0.2s, background 0.2s, transform 0.2s var(--ease), opacity 0.2s; }
+.quiz__choice:hover:not(:disabled) { border-color: var(--blue-500); background: #F2F7FF; }
+.quiz__choice:disabled { cursor: default; }
+.quiz__letter { flex: none; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #E4EEFC; color: var(--blue-700); font-family: var(--font-head); font-weight: 800; font-size: 0.9375rem; }
+.quiz__text { flex: 1; padding-top: 3px; }
+.quiz__mark { flex: none; align-self: center; font-family: var(--font-head); font-weight: 800; font-size: 0.8125rem; letter-spacing: 0.02em; }
+.quiz__choice.is-correct { border-color: #1E8A4C; background: #EAF7EF; }
+.quiz__choice.is-correct .quiz__letter { background: #1E8A4C; color: var(--white); }
+.quiz__choice.is-correct .quiz__mark { color: #176C3B; }
+.quiz__choice.is-wrong { border-color: #C0392B; background: #FDF0EE; }
+.quiz__choice.is-wrong .quiz__letter { background: #C0392B; color: var(--white); }
+.quiz__choice.is-wrong .quiz__mark { color: #A52E22; }
+.quiz__choice.is-dim { opacity: 0.55; }
+.quiz__result { margin-top: 20px; }
+.quiz__result.is-shown { padding: 18px 20px; border-radius: 10px; border-left: 6px solid var(--blue-700); background: var(--tint); }
+.quiz__result.is-right { border-left-color: #1E8A4C; }
+.quiz__result.is-miss { border-left-color: #C0392B; }
+.quiz__verdict { margin: 0 0 6px; font-family: var(--font-head); font-weight: 800; font-size: 1.1875rem; color: var(--ink); }
+.quiz__why { margin: 0 0 10px; font-size: 1.125rem; line-height: 1.55; color: var(--ink); }
+.quiz__next { margin: 0; font-family: var(--font-head); font-size: 0.9375rem; line-height: 1.5; color: var(--ink-3); }
+.quiz:not(:has(.is-ready)) .quiz__body:empty::before { content: "Loading today\2019s question\2026"; color: var(--ink-3); }
+[data-mode="industry"] .quiz__choice:hover:not(:disabled) { transform: translateX(3px); }
+[data-mode="industry"] .quiz__result.is-shown { animation: cwc-quiz-in 0.45s var(--ease); }
+@keyframes cwc-quiz-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+[data-mode="readable"] .quiz { background: none; }
+[data-mode="readable"] .quiz-card { box-shadow: none; border: 2px solid #C9D5E6; }
+[data-mode="readable"] .quiz__scenario, [data-mode="readable"] .quiz__why { color: #111; font-size: 1.1875rem; line-height: 1.7; }
+[data-mode="readable"] .quiz__choice { border-width: 2px; border-color: var(--blue-700); font-size: 1.1875rem; min-height: 56px; }
+[data-mode="readable"] .quiz__next, [data-mode="readable"] .quiz__date { color: #111; font-size: 1rem; }
+@media (max-width: 560px) {
+	.quiz__choice { flex-wrap: wrap; padding: 12px 14px; font-size: 1.0625rem; }
+	.quiz__mark { margin-left: 46px; }
+}
+@media (prefers-reduced-motion: reduce) {
+	[data-mode="industry"] .quiz__result.is-shown { animation: none; }
+}
+
 @media print {
 	.topbar, .site-header, .site-footer, .cookie-notice, .particles { display: none !important; }
 	.reveal { opacity: 1 !important; transform: none !important; }

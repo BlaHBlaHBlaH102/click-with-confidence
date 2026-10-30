@@ -51,18 +51,20 @@
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
 		return page.render({ canvasContext: ctx, viewport: vp }).promise.then(function () {
 			return new Promise(function (resolve) {
-				canvas.toBlob(function (blob) { resolve({ blob: blob, canvas: canvas }); }, 'image/jpeg', 0.9);
+				canvas.toBlob(function (blob) { resolve({ blob: blob, canvas: canvas }); }, 'image/jpeg', 0.95);
 			});
 		});
 	}
 
 	function drawThumb(i, source) {
 		var img = thumbImgs[i];
-		var w = 140;
+		var w = 280;
 		var c = document.createElement('canvas');
 		c.width = w;
 		c.height = Math.round(w * source.height / source.width);
-		c.getContext('2d').drawImage(source, 0, 0, c.width, c.height);
+		var tctx = c.getContext('2d');
+		tctx.imageSmoothingQuality = 'high';
+		tctx.drawImage(source, 0, 0, c.width, c.height);
 		img.src = c.toDataURL('image/jpeg', 0.8);
 		img.parentNode.classList.add('is-ready');
 	}
@@ -211,8 +213,9 @@
 		sync();
 
 		/* Render sharply enough for the largest page on screen, capped for memory. */
-		var dpr = Math.min(window.devicePixelRatio || 1, 2);
-		var width = Math.min(1400, Math.max(700, Math.round(Math.min(stage.clientWidth / 2, 900) * dpr)));
+		/* Render at twice the largest size a page is shown (full screen included), so the browser only ever scales down a little. */
+		var cssW = Math.min(900, Math.max(stage.clientWidth / 2, (screen.height * 0.85) / ratio));
+		var width = Math.min(2000, Math.max(1200, Math.round(cssW * Math.max(window.devicePixelRatio || 1, 2))));
 		var order = [];
 		for (var k = 0; k < total; k++) { order.push(k); }
 		renderAll(order, width).catch(fail);
