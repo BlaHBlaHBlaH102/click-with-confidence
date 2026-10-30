@@ -24,6 +24,8 @@ function cwc_menu() {
 		array('key' => 'founders',      'href' => 'Founders-Story', 'label' => 'Founder\'s Story'),
 		array('key' => 'presentations', 'href' => 'presentations',  'label' => 'Docs & Presentations'),
 		array('key' => 'video-content', 'href' => 'video-content',  'label' => 'Video Content'),
+		array('key' => 'extension',     'href' => 'Extension',      'label' => 'Chrome Extension'),
+		array('key' => 'flyers',        'href' => 'Flyer-Brochure', 'label' => 'Flyers & Media Kit'),
 	);
 }
 
@@ -130,7 +132,8 @@ function cwc_page_start($page) {
 	<link rel="preload" href="fonts/MinionPro-Regular.woff2" as="font" type="font/woff2" crossorigin />
 	<link rel="stylesheet" href="<?php echo cwc_asset('css/cwc.css'); ?>" />
 
-	<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="gallery/favicons/favicon-120x120.png"><link rel="icon" type="image/png" sizes="120x120" href="gallery/favicons/favicon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="152x152" href="gallery/favicons/favicon-152x152.png"><link rel="icon" type="image/png" sizes="152x152" href="gallery/favicons/favicon-152x152.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="gallery/favicons/favicon-180x180.png"><link rel="icon" type="image/png" sizes="180x180" href="gallery/favicons/favicon-180x180.png"><link rel="apple-touch-icon" type="image/png" sizes="192x192" href="gallery/favicons/favicon-192x192.png"><link rel="icon" type="image/png" sizes="192x192" href="gallery/favicons/favicon-192x192.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="gallery/favicons/favicon-60x60.png"><link rel="icon" type="image/png" sizes="60x60" href="gallery/favicons/favicon-60x60.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="gallery/favicons/favicon-76x76.png"><link rel="icon" type="image/png" sizes="76x76" href="gallery/favicons/favicon-76x76.png"><link rel="icon" type="image/png" href="gallery/favicons/favicon.png">
+	<link rel="icon" type="image/svg+xml" href="gallery/favicon.svg" />
+	<link rel="apple-touch-icon" sizes="180x180" href="gallery/favicons/favicon-180x180.png" />
 </head>
 <body class="<?php echo cwc_e($bodyClass); ?>">
 <a class="skip-link" href="#main">Skip to main content</a>

@@ -76,7 +76,8 @@ The original `sitepro/index.php` was Site.pro's obfuscated runtime. It contacts 
 | `/presentations` | `a199bbdbb9df043f0f5ce4eb1ecf24f2.php` (Docs & Presentations) |
 | `/video-content` | `a199bbdbb9df050f379b945a793a7ba4.php` |
 | `/App` | `a199dfef8736007e965d9ae3b77376cf.php` (not in the menu) |
-| `/Flyer-Brochure` | `a19bc280d2df009618adcfd21949f7a3.php` (not in the menu) |
+| `/Flyer-Brochure` | `a19bc280d2df009618adcfd21949f7a3.php` (Flyers & Media Kit) |
+| `/Extension` | `a19f0c1e5b7a00e4c2d9b8a7f6e5d4c3.php` (Chrome Extension) |
 | `/privacy-policy` | `a199bbdbb9df00c39633cbfcbc916828.php` (not in the menu) |
 | anything else | `a199bbdbba5a00f7e3efcee9f99665a9.php` (Custom 404 page, with a 404 status) |
 
@@ -112,7 +113,7 @@ All 10 pages currently pass.
 
 These are the only places where the new site differs from a literal copy of the old pages. Each is easy to reverse.
 
-1. **Menu.** It shows exactly Home, Impact, What We Do, Leadership, Founder's Story, Docs & Presentations and Video Content. *App* and *Flyer & Brochure* were removed from the menu as the brief asks. Both pages still work at `/App` and `/Flyer-Brochure`, like `/privacy-policy`. The footer repeats the same seven menu items.
+1. **Menu.** It shows Home, Impact, What We Do, Leadership, Founder's Story, Docs & Presentations, Video Content, Chrome Extension and Flyers & Media Kit. *App* is not in the menu, but still works at `/App`, like `/privacy-policy`. The footer repeats the menu. With nine items the inline menu needs about 1360 px, so the drop-down menu now starts below that width.
 2. **Duplicate home-page blocks left over from the builder.** The old home page had three extra "Who We Are" headings with no text, plus a second copy of the "Our Vision" heading and paragraph. On desktop these sat off-screen. On phones they appeared as repeated headings. Each piece of home-page text now appears once.
 3. **A broken slideshow on Docs & Presentations.** One embed's code was cut off on the old page, so visitors saw a stray `src="https://docs.google.com/…"` line instead of a slideshow. When repaired, it shows an "IRS scams" deck that looks the same as the deck right after it. It is kept in the page file, commented out, and is not shown. To show it, move the line out of the comment.
 4. **"Video Content & Library" button.** On the old site this button has **no link**, and that is still true. Send the URL it should open.
@@ -122,3 +123,12 @@ These are the only places where the new site differs from a literal copy of the 
 8. **Impact spreadsheet.** The embedded "CWC Organization Tracker" Google Sheet has contact name, phone and email columns. It was already public on the old site. Check that it doesn't expose personal details CwC didn't intend to publish.
 9. **Cookie notice.** The text and the Reject and Got it buttons are kept as they were. The site currently loads no analytics (the Site.pro `ga_code` file is empty).
 10. **Not included:** the server-managed empty folders `.well-known/` and `cgi-bin/`. Uploading does not delete them. The rest of the cPanel backup (mail, SSL keys, logs) is not part of the website and is not in this repo.
+
+---
+
+## Chrome Extension, Flyers & Media Kit, report reader
+
+- **/Extension** (menu: Chrome Extension) describes the Chrome extension, links to its Chrome Web Store listing and shows its screenshots (`gallery/extension/`) in the same lightbox as the App page.
+- **/Flyer-Brochure** (menu: Flyers & Media Kit) shows the Canva media kit, flyer and brochure embeds.
+- **Docs & Presentations** has a flip-book reader for the Fraud & Scam Patterns Insights Report (`gallery/CWC Fraud  Scam Patterns Insights Report 2026.pdf`): page-turn animation, thumbnails, a page slider, a page box and a download link. It uses PDF.js (Apache-2.0) and StPageFlip (MIT), self-hosted in `js/vendor/`; the reader code is `js/pdf-viewer.js`. To publish a new report, replace the PDF (same filename, or change `$cwcReportFile` in the page file).
+- **Favicon:** `gallery/favicon.svg` (the shield, transparent background).
