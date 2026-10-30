@@ -129,7 +129,7 @@ function cwc_page_start($page) {
 			}
 			size = localStorage.getItem('cwc-text') || size;
 			var t = localStorage.getItem('cwc-theme');
-			theme = (t === 'dark' || t === 'light') ? t : (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+			theme = t === 'dark' ? 'dark' : 'light'; // light unless the visitor chose dark before
 		} catch (e) {}
 		html.setAttribute('data-theme', theme);
 		html.setAttribute('data-mode', mode === 'readable' ? 'readable' : 'industry');

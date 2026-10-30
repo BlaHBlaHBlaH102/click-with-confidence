@@ -110,16 +110,6 @@
 		if (e.target.closest('[data-theme-toggle]')) { setTheme(isDark() ? 'light' : 'dark', true); }
 	});
 
-	// Until the visitor picks a theme themselves, follow the device's setting.
-	if (window.matchMedia) {
-		var darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
-		var followDevice = function (ev) {
-			var chosen = null;
-			try { chosen = localStorage.getItem('cwc-theme'); } catch (err) {}
-			if (!chosen) { setTheme(ev.matches ? 'dark' : 'light', false); }
-		};
-		if (darkQuery.addEventListener) { darkQuery.addEventListener('change', followDevice); } else if (darkQuery.addListener) { darkQuery.addListener(followDevice); }
-	}
 	syncTheme();
 
 	/* ------------------------------------------------------------------ */
