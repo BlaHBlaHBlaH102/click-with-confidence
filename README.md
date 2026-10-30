@@ -132,3 +132,7 @@ These are the only places where the new site differs from a literal copy of the 
 - **/Flyer-Brochure** (menu: Flyers & Media Kit) shows the Canva media kit, flyer and brochure embeds.
 - **Docs & Presentations** has a flip-book reader for the Fraud & Scam Patterns Insights Report (`gallery/CWC Fraud  Scam Patterns Insights Report 2026.pdf`): page-turn animation, thumbnails, a page slider, a page box and a download link. It uses PDF.js (Apache-2.0) and StPageFlip (MIT), self-hosted in `js/vendor/`; the reader code is `js/pdf-viewer.js`. To publish a new report, replace the PDF (same filename, or change `$cwcReportFile` in the page file).
 - **Favicon:** `gallery/favicon.svg` (the shield, transparent background).
+
+## Dark mode
+
+A sun/moon button (in the blue bar at the top, and next to the menu button on phones) switches the whole site between light and dark. The first visit follows the device's setting; after that the visitor's choice is remembered (`localStorage`, key `cwc-theme`). It works in both Interactive and Readable mode. Colours are theme tokens at the top of `css/cwc.css`; the dark values are in the "Light / dark theme" block. The logo has a dark-page version (`gallery/logo-wide-dark.svg`, `gallery/logo-shield-dark.svg`), and the home intro's particles are the logo's exact shield outline, traced from `gallery/logo-shield.svg` (the `SHIELD` array in `js/cwc.js`).

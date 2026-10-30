@@ -75,6 +75,54 @@
 	});
 
 	/* ------------------------------------------------------------------ */
+	/* Colour theme (light / dark)                                         */
+	/* ------------------------------------------------------------------ */
+
+	function isDark() { return html.getAttribute('data-theme') === 'dark'; }
+
+	function syncTheme() {
+		$$('[data-theme-toggle]').forEach(function (b) { b.setAttribute('aria-pressed', String(isDark())); });
+		var meta = $('meta[name="theme-color"]');
+		if (meta) { meta.setAttribute('content', isDark() ? '#0B1A33' : '#004AAD'); }
+	}
+
+	function setTheme(theme, remember) {
+		theme = theme === 'dark' ? 'dark' : 'light';
+		if (html.getAttribute('data-theme') === theme) { return; }
+		var apply = function () {
+			html.setAttribute('data-theme', theme);
+			if (remember) { store('cwc-theme', theme); }
+			syncTheme();
+			if (typeof orbit !== 'undefined' && orbit && !orbit.done && !orbit.running) { orbit.draw(orbit.t); } // repaint a paused intro in the new colours
+		};
+		if (document.startViewTransition && !reduceMotion && !document.hidden) {
+			var transition = document.startViewTransition(apply);
+			var ignore = function () {};
+			transition.ready.catch(ignore);
+			transition.finished.catch(ignore);
+			transition.updateCallbackDone.catch(ignore);
+		} else {
+			apply();
+		}
+	}
+
+	document.addEventListener('click', function (e) {
+		if (e.target.closest('[data-theme-toggle]')) { setTheme(isDark() ? 'light' : 'dark', true); }
+	});
+
+	// Until the visitor picks a theme themselves, follow the device's setting.
+	if (window.matchMedia) {
+		var darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+		var followDevice = function (ev) {
+			var chosen = null;
+			try { chosen = localStorage.getItem('cwc-theme'); } catch (err) {}
+			if (!chosen) { setTheme(ev.matches ? 'dark' : 'light', false); }
+		};
+		if (darkQuery.addEventListener) { darkQuery.addEventListener('change', followDevice); } else if (darkQuery.addListener) { darkQuery.addListener(followDevice); }
+	}
+	syncTheme();
+
+	/* ------------------------------------------------------------------ */
 	/* Header: menu, scrolled state, progress                              */
 	/* ------------------------------------------------------------------ */
 
@@ -396,21 +444,31 @@
 	/* ------------------------------------------------------------------ */
 
 	var ORBIT_COLORS = [[92, 163, 255], [31, 128, 255], [0, 74, 173]]; // the logo's three blues
+	var ORBIT_COLORS_DARK = [[170, 210, 255], [92, 163, 255], [31, 128, 255]]; // the same blues, lifted to read on a dark page
 	var ORBIT_SAMPLES = 720;
 	var ORBIT_TILT = 16 * Math.PI / 180; // angle of the orbit axis, like the NASA orbit but flatter
 	var ORBIT_SWAY = 2 * Math.PI / 180;
 	var ORBIT_EXP = 2.6; // superellipse exponent: 2 is an ellipse, higher is boxier
-	var ORBIT_SHAPE = 'shield'; // 'shield' or 'circle'
+	// The outline of the logo's outer shield, traced from gallery/logo-shield.svg: x, y pairs with the
+	// shape centred on 0,0 and half its width = 1 (so it is about 2.45 tall). Flattened curves, within 0.1% of the artwork.
+	var SHIELD = [
+		0.0007, -1.2233, 0.0094, -1.2233, 0.1008, -1.1763, 0.2486, -1.1065, 0.3492, -1.0641, 0.4822, -1.017,
+		0.578, -0.9895, 0.6677, -0.9683, 0.7814, -0.947, 0.9041, -0.9272, 1, -0.9079, 0.9941, -0.6847,
+		0.9803, -0.4071, 0.9704, -0.2716, 0.9569, -0.1694, 0.9418, -0.0926, 0.9183, 0.0103, 0.8845, 0.1359,
+		0.8352, 0.2757, 0.8082, 0.342, 0.7754, 0.4146, 0.7286, 0.4999, 0.6801, 0.5829, 0.649, 0.6315,
+		0.5965, 0.7072, 0.5335, 0.7915, 0.4375, 0.8969, 0.3888, 0.9452, 0.2724, 1.0478, 0.1948, 1.1119,
+		0.0786, 1.1863, 0.03, 1.2102, -0.0014, 1.2233, -0.0234, 1.2162, -0.0789, 1.1875, -0.193, 1.1141,
+		-0.2753, 1.0459, -0.3799, 0.9543, -0.4513, 0.8844, -0.5171, 0.8124, -0.5424, 0.7818, -0.6277, 0.6648,
+		-0.6785, 0.5868, -0.722, 0.5133, -0.7843, 0.3983, -0.8127, 0.3332, -0.8466, 0.2467, -0.8891, 0.1185,
+		-0.932, -0.045, -0.9639, -0.2035, -0.9721, -0.2889, -0.9828, -0.44, -0.9974, -0.7538, -1, -0.9065,
+		-0.992, -0.9103, -0.9764, -0.9138, -0.6809, -0.9647, -0.5791, -0.9882, -0.4986, -1.011, -0.4096, -1.0405,
+		-0.3087, -1.0799, -0.2354, -1.1114, -0.143, -1.1548, -0.0081, -1.2233
+	];
 
-	// Adds a shield outline (like the one in the logo) to the current path, about `r` wide on each side.
+	// Adds the logo's shield to the current path, with a half-width of `r`.
 	function orbitShield(ctx, x, y, r) {
-		ctx.moveTo(x, y - r);
-		ctx.bezierCurveTo(x + 0.35 * r, y - 0.8 * r, x + 0.7 * r, y - 0.72 * r, x + 0.92 * r, y - 0.72 * r);
-		ctx.lineTo(x + 0.92 * r, y + 0.1 * r);
-		ctx.bezierCurveTo(x + 0.92 * r, y + 0.62 * r, x + 0.46 * r, y + 0.92 * r, x, y + 1.12 * r);
-		ctx.bezierCurveTo(x - 0.46 * r, y + 0.92 * r, x - 0.92 * r, y + 0.62 * r, x - 0.92 * r, y + 0.1 * r);
-		ctx.lineTo(x - 0.92 * r, y - 0.72 * r);
-		ctx.bezierCurveTo(x - 0.7 * r, y - 0.72 * r, x - 0.35 * r, y - 0.8 * r, x, y - r);
+		ctx.moveTo(x + SHIELD[0] * r, y + SHIELD[1] * r);
+		for (var i = 2; i < SHIELD.length; i += 2) { ctx.lineTo(x + SHIELD[i] * r, y + SHIELD[i + 1] * r); }
 		ctx.closePath();
 	}
 	var INTRO = { logoIn: 0.1, logoInEnd: 0.7, expand: 1.5, expandEnd: 2.6, grow: 1.9, growEnd: 3.0, startScale: 0.6 };
@@ -419,12 +477,13 @@
 	function smoothstep(a, b, x) { var k = clamp((x - a) / (b - a), 0, 1); return k * k * (3 - 2 * k); }
 
 	function orbitColor(f, alpha) {
-		var n = ORBIT_COLORS.length;
+		var cols = isDark() ? ORBIT_COLORS_DARK : ORBIT_COLORS;
+		var n = cols.length;
 		var x = (f - Math.floor(f)) * n;
 		var i = Math.floor(x);
 		var k = x - i;
 		k = k * k * (3 - 2 * k);
-		var a = ORBIT_COLORS[i % n], b = ORBIT_COLORS[(i + 1) % n];
+		var a = cols[i % n], b = cols[(i + 1) % n];
 		return 'rgba(' + Math.round(a[0] + (b[0] - a[0]) * k) + ',' + Math.round(a[1] + (b[1] - a[1]) * k) + ',' + Math.round(a[2] + (b[2] - a[2]) * k) + ',' + alpha.toFixed(3) + ')';
 	}
 
@@ -463,7 +522,8 @@
 	function IntroOrbit(root) {
 		this.root = root;
 		this.canvas = $('canvas', root);
-		this.logo = $('.intro__logo', root);
+		this.logos = $$('.intro__logo', root); // light and dark artwork; the CSS shows one
+		this.logo = this.logos[0];
 		this.ctx = this.canvas.getContext('2d');
 		this.rings = [];
 		this.w = 0;
@@ -492,8 +552,9 @@
 		this.canvas.width = Math.round(w * dpr);
 		this.canvas.height = Math.round(h * dpr);
 		this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-		this.lw = this.logo.offsetWidth;
-		this.lh = this.logo.offsetHeight;
+		var shown = this.logos.filter(function (l) { return l.offsetWidth; })[0] || this.logo;
+		this.lw = shown.offsetWidth;
+		this.lh = shown.offsetHeight;
 
 		// Rings start just outside the logo as it first appears (small) and continue until they
 		// cover the corners, so the dots fill the whole section. Neighbouring rings are at least
@@ -552,7 +613,7 @@
 				var px = cx + (ux * cosT - uy * sinT) * spread;
 				var py = cy + (ux * sinT + uy * cosT) * spread;
 				if (px < -rMax || px > w + rMax || py < -rMax || py > h + rMax) { continue; }
-				// Fade towards white near the edges of the section.
+				// Fade out near the edges of the section.
 				var dx = (px - cx) / cx, dy = (py - cy) / cy;
 				var edge = 1 - smoothstep(0.5, 1.2, Math.sqrt(dx * dx + dy * dy));
 				var alpha = 0.92 * e * fadeOut * edge;
@@ -562,12 +623,13 @@
 				var size = rMax * (0.45 + 0.55 * wave) * breath * e * (1 - 0.35 * x);
 				ctx.fillStyle = orbitColor(ang / (Math.PI * 2) + t * 0.02 + k * 0.01, alpha);
 				ctx.beginPath();
-				if (ORBIT_SHAPE === 'shield') { orbitShield(ctx, px, py, size * 0.92); } else { ctx.arc(px, py, size, 0, Math.PI * 2); }
+				orbitShield(ctx, px, py, size * 0.9);
 				ctx.fill();
 			}
 		}
 
-		// A soft white glow behind the logo keeps it readable over the dots.
+		// A soft glow in the page colour behind the logo keeps it readable over the dots.
+		var bg = isDark() ? '14,23,39' : '255,255,255';
 		var logo = this.logoState(t);
 		var rx = this.lw * logo.scale * 0.62, ry = this.lh * logo.scale * 1.5;
 		if (logo.opacity > 0 && rx > 0 && ry > 0) {
@@ -575,9 +637,9 @@
 			ctx.translate(cx, cy - logo.lift);
 			ctx.scale(rx, ry);
 			var glow = ctx.createRadialGradient(0, 0, 0, 0, 0, 1);
-			glow.addColorStop(0, 'rgba(255,255,255,' + (0.95 * logo.opacity).toFixed(3) + ')');
-			glow.addColorStop(0.65, 'rgba(255,255,255,' + (0.8 * logo.opacity).toFixed(3) + ')');
-			glow.addColorStop(1, 'rgba(255,255,255,0)');
+			glow.addColorStop(0, 'rgba(' + bg + ',' + (0.95 * logo.opacity).toFixed(3) + ')');
+			glow.addColorStop(0.65, 'rgba(' + bg + ',' + (0.8 * logo.opacity).toFixed(3) + ')');
+			glow.addColorStop(1, 'rgba(' + bg + ',0)');
 			ctx.fillStyle = glow;
 			ctx.beginPath();
 			ctx.arc(0, 0, 1, 0, Math.PI * 2);
@@ -588,8 +650,8 @@
 
 	IntroOrbit.prototype.drawLogo = function (t) {
 		var logo = this.logoState(t);
-		this.logo.style.opacity = logo.opacity.toFixed(3);
-		this.logo.style.transform = 'translateY(' + logo.lift.toFixed(1) + 'px) scale(' + logo.scale.toFixed(4) + ')';
+		var tf = 'translateY(' + logo.lift.toFixed(1) + 'px) scale(' + logo.scale.toFixed(4) + ')';
+		this.logos.forEach(function (l) { l.style.opacity = logo.opacity.toFixed(3); l.style.transform = tf; });
 	};
 
 	IntroOrbit.prototype.finish = function () {
@@ -597,8 +659,7 @@
 		this.running = false;
 		cancelAnimationFrame(this.raf);
 		this.ctx.clearRect(0, 0, this.w, this.h);
-		this.logo.style.opacity = '';
-		this.logo.style.transform = '';
+		this.logos.forEach(function (l) { l.style.opacity = ''; l.style.transform = ''; });
 		this.root.classList.add('is-done');
 		// The pause button is replaced by the replay button, so keep keyboard focus on the control.
 		var replayBtn = $('[data-intro-replay]', this.root);

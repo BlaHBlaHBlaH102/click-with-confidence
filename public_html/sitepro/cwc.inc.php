@@ -53,6 +53,14 @@ function cwc_icon($name) {
 	return '<svg class="icon icon--' . $name . '" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' . $icons[$name] . '</svg>';
 }
 
+/** Light / dark switch (a sun and a moon; css/cwc.css shows the right one). */
+function cwc_theme_toggle($class = '') {
+	return '<button type="button" class="theme-toggle ' . $class . '" data-theme-toggle aria-pressed="false" aria-label="Dark mode" title="Dark mode">'
+		. '<svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></svg>'
+		. '<svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7z"/></svg>'
+		. '</button>';
+}
+
 /** Text-size buttons (shown in Readable mode). */
 function cwc_text_size_control() {
 	return '<div class="text-size" role="group" aria-label="Text size">'
@@ -88,7 +96,7 @@ function cwc_page_start($page) {
 	$active = isset($page['active']) ? $page['active'] : '';
 	$bodyClass = isset($page['bodyClass']) ? $page['bodyClass'] : '';
 ?><!DOCTYPE html>
-<html lang="en" data-mode="industry" data-text="1">
+<html lang="en" data-mode="industry" data-text="1" data-theme="light">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -98,6 +106,7 @@ function cwc_page_start($page) {
 	<meta name="description" content="<?php echo cwc_e($description); ?>" />
 	<meta name="keywords" content="<?php echo cwc_e($keywords); ?>" />
 	<meta name="theme-color" content="#004AAD" />
+	<meta name="color-scheme" content="light dark" />
 
 	<!-- Facebook Open Graph -->
 	<meta property="og:title" content="<?php echo cwc_e($title); ?>" />
@@ -109,7 +118,7 @@ function cwc_page_start($page) {
 	<script>
 	/* Apply the visitor's display mode and text size before the page paints. */
 	(function (d) {
-		var mode = 'industry', size = '1', html = d.documentElement;
+		var mode = 'industry', size = '1', theme = 'light', html = d.documentElement;
 		try {
 			var q = (location.search.match(/[?&]mode=([a-z]+)/) || [])[1];
 			if (q === 'readable' || q === 'interactive' || q === 'industry') {
@@ -119,7 +128,10 @@ function cwc_page_start($page) {
 				mode = localStorage.getItem('cwc-mode');
 			}
 			size = localStorage.getItem('cwc-text') || size;
+			var t = localStorage.getItem('cwc-theme');
+			theme = (t === 'dark' || t === 'light') ? t : (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 		} catch (e) {}
+		html.setAttribute('data-theme', theme);
 		html.setAttribute('data-mode', mode === 'readable' ? 'readable' : 'industry');
 		html.setAttribute('data-text', /^[123]$/.test(size) ? size : '1');
 		html.className += ' js';
@@ -150,6 +162,7 @@ function cwc_page_start($page) {
 				<button type="button" class="mode-switch__btn" data-mode-set="readable" aria-pressed="false">Readable</button>
 			</div>
 			<?php echo cwc_text_size_control(); ?>
+			<?php echo cwc_theme_toggle(); ?>
 		</div>
 	</div>
 </div>
@@ -157,7 +170,8 @@ function cwc_page_start($page) {
 <header class="site-header" id="top">
 	<div class="container site-header__inner">
 		<a class="brand" href="{{base_url}}">
-			<img class="brand__logo" src="gallery/logo-wide.svg" alt="Click With Confidence" width="432" height="72" />
+			<img class="brand__logo logo-light" src="gallery/logo-wide.svg" alt="Click With Confidence" width="432" height="72" />
+			<img class="brand__logo logo-dark" src="gallery/logo-wide-dark.svg" alt="Click With Confidence" width="432" height="72" />
 		</a>
 
 		<nav class="site-nav" id="site-nav" aria-label="Main menu">
@@ -172,6 +186,7 @@ function cwc_page_start($page) {
 				<span class="mode-toggle__label">Readable</span>
 			</button>
 			<?php echo cwc_text_size_control(); ?>
+			<?php echo cwc_theme_toggle('theme-toggle--header'); ?>
 			<button type="button" class="nav-toggle" aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
 				<span class="nav-toggle__bars" aria-hidden="true"><span></span><span></span><span></span></span>
 			</button>
@@ -192,7 +207,8 @@ function cwc_page_end($page = array()) {
 <footer class="site-footer">
 	<div class="container site-footer__grid">
 		<div class="site-footer__brand">
-			<img class="site-footer__shield" src="gallery/logo-shield.svg" alt="" width="72" height="72" loading="lazy" />
+			<img class="site-footer__shield logo-light" src="gallery/logo-shield.svg" alt="" width="72" height="72" loading="lazy" />
+			<img class="site-footer__shield logo-dark" src="gallery/logo-shield-dark.svg" alt="" width="72" height="72" loading="lazy" />
 			<a class="btn btn--light" href="https://givebutter.com/click-with-confidence"><span>Donate Now!</span></a>
 		</div>
 
