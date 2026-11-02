@@ -27,6 +27,8 @@ $cwcTeam = array(
 	array('src' => 'gallery_gen/60e1d885d9c2eedb958340a78f11e8d3_fit.jpg?ts=1789585351',       'w' => 1280, 'h' => 1280, 'name' => 'Luke Walsh',                       'role' => 'Social Media'),
 	array('src' => 'gallery_gen/3b9b2db1691fc5bcb49624f739706b0a_fit.jpg?ts=1789585351',       'w' => 690,  'h' => 876,  'name' => 'Jacob Michael',                    'role' => 'Outreach'),
 	array('src' => 'gallery_gen/0d55592fa52b3b34a7ccf483a5980288_fit.jpg?ts=1789585351',       'w' => 1198, 'h' => 1597, 'name' => 'Aarna Vaidya',                     'role' => 'Outreach'),
+	array('src' => '',                                                                          'w' => 0,    'h' => 0,    'name' => 'Niket Dharia',                     'role' => 'Merchandise Officer'),
+	array('src' => '',                                                                          'w' => 0,    'h' => 0,    'name' => 'Adarsh Senthukumaran',            'role' => 'Web Officer'),
 );
 ?>
 
