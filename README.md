@@ -136,3 +136,7 @@ These are the only places where the new site differs from a literal copy of the 
 ## Dark mode
 
 A sun/moon button (in the blue bar at the top, and next to the menu button on phones) switches the whole site between light and dark. The site is light by default (the device's dark setting is ignored); once a visitor picks dark, that choice is remembered (`localStorage`, key `cwc-theme`). It works in both Interactive and Readable mode. Colours are theme tokens at the top of `css/cwc.css`; the dark values are in the "Light / dark theme" block. The logo has a dark-page version (`gallery/logo-wide-dark.svg`, `gallery/logo-shield-dark.svg`), and the home intro's particles are the logo's exact shield outline, traced from `gallery/logo-shield.svg` (the `SHIELD` array in `js/cwc.js`).
+
+## Contact form ("bring us to your organization")
+
+The home page has a form (`#contact`) that posts to `/Contact` (`sitepro/a19f1c0e7d3b00a5e4f2c8b6d9a17e30.php`). It emails every request to `viraj.shah.president@clickwithconfidence.org` and `info@clickwithconfidence.org` with PHP `mail()`, From `info@clickwithconfidence.org` and Reply-To the visitor. It has a hidden spam field, a minimum fill time and a limit of 5 requests an hour per connection. To change the recipients, edit `$cwcMailTo` at the top of that file. Check that mail from the site is delivered (and not filtered as spam) after deploying.

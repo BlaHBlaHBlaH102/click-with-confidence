@@ -225,7 +225,7 @@ function cwc_page_end($page = array()) {
 	</div>
 	<div class="site-footer__base">
 		<div class="container">
-			<p class="site-footer__email"><a href="mailto:info@clickwithconfidence.org">info@clickwithconfidence.org</a></p>
+			<p class="site-footer__email"><a href="{{base_url}}#contact">Bring us to your community</a> &middot; <a href="mailto:info@clickwithconfidence.org">info@clickwithconfidence.org</a></p>
 			<p class="site-footer__hosting"><a href="https://www.kualo.com/free-charity-hosting">Kualo Free Charity Hosting</a></p>
 		</div>
 	</div>

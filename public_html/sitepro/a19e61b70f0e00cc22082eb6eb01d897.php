@@ -90,6 +90,9 @@ cwc_page_start(array(
 				array('raleigh.svg', 'City of Raleigh', 219, 90),
 				array('wake-county.svg', 'Wake County', 785, 928),
 				array('rlc.webp', 'RLC Resort Lifestyle Communities', 2000, 1000, 'Brier Pointe'),
+				array('dhs.svg', 'U.S. Department of Homeland Security', 247, 247),
+				array('doj.svg', 'U.S. Department of Justice', 720, 720),
+				array('elder-fraud-hotline.png', 'National Elder Fraud Hotline, 1-833-FRAUD-11', 2310, 1537),
 			);
 			// The list is repeated so one copy spans very wide screens; copies are hidden from screen readers.
 			for ($pass = 0; $pass < 6; $pass++) {
@@ -99,6 +102,82 @@ cwc_page_start(array(
 			}
 			?>
 		</ul>
+	</div>
+</section>
+
+<section class="section contact" id="contact" aria-labelledby="contact-title">
+	<div class="container contact__layout">
+		<div class="contact__intro reveal">
+			<p class="label">Bring us to you</p>
+			<h2 class="contact__title" id="contact-title">Contact us to bring us to your senior center or organization</h2>
+			<p class="contact__lede">Tell us a little about your community and we will get back to you to plan a visit.</p>
+			<p class="contact__direct">Prefer email? Write to <a href="mailto:info@clickwithconfidence.org">info@clickwithconfidence.org</a>.</p>
+		</div>
+
+		<div class="contact__card reveal" data-delay="1">
+			<form class="contact-form" action="Contact" method="post" data-contact-form novalidate>
+				<div class="contact-form__grid">
+					<div class="field">
+						<label for="cf-name">Your name <span class="field__req">(required)</span></label>
+						<input id="cf-name" name="name" type="text" autocomplete="name" maxlength="100" required />
+					</div>
+					<div class="field">
+						<label for="cf-email">Email <span class="field__req">(required)</span></label>
+						<input id="cf-email" name="email" type="email" autocomplete="email" maxlength="150" required />
+					</div>
+					<div class="field field--wide">
+						<label for="cf-org">Senior center or organization <span class="field__req">(required)</span></label>
+						<input id="cf-org" name="org" type="text" autocomplete="organization" maxlength="150" required />
+					</div>
+					<div class="field">
+						<label for="cf-type">Type of organization</label>
+						<select id="cf-type" name="type">
+							<option value="">Choose one</option>
+							<option>Senior center</option>
+							<option>Library</option>
+							<option>Assisted or independent living</option>
+							<option>Faith community</option>
+							<option>Community organization</option>
+							<option>School or student group</option>
+							<option>Other</option>
+						</select>
+					</div>
+					<div class="field">
+						<label for="cf-city">City or town</label>
+						<input id="cf-city" name="city" type="text" autocomplete="address-level2" maxlength="100" />
+					</div>
+					<div class="field">
+						<label for="cf-phone">Phone</label>
+						<input id="cf-phone" name="phone" type="tel" autocomplete="tel" maxlength="40" />
+					</div>
+					<div class="field">
+						<label for="cf-people">About how many people?</label>
+						<input id="cf-people" name="people" type="text" inputmode="numeric" maxlength="40" />
+					</div>
+					<div class="field field--wide">
+						<label for="cf-when">When would you like us to visit?</label>
+						<input id="cf-when" name="when" type="text" maxlength="100" placeholder="For example: a weekday morning in March" />
+					</div>
+					<div class="field field--wide">
+						<label for="cf-message">Anything else we should know?</label>
+						<textarea id="cf-message" name="message" rows="4" maxlength="3000"></textarea>
+					</div>
+				</div>
+
+				<div class="contact-form__trap" aria-hidden="true">
+					<label for="cf-website">Leave this field empty</label>
+					<input id="cf-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+				</div>
+				<input type="hidden" name="ts" value="<?php echo time(); ?>" />
+
+				<p class="contact-form__status" role="status" aria-live="polite" data-contact-status></p>
+				<button class="btn btn--primary btn--lg" type="submit"><span>Send request</span></button>
+			</form>
+			<div class="contact-done" data-contact-done hidden tabindex="-1">
+				<h3 class="contact-done__title">Thank you!</h3>
+				<p>Your request was sent to our team. We will reply by email soon.</p>
+			</div>
+		</div>
 	</div>
 </section>
 
@@ -118,5 +197,6 @@ cwc_page_start(array(
 
 <script defer src="<?php echo cwc_asset('js/scam-stopper-data.js'); ?>"></script>
 <script defer src="<?php echo cwc_asset('js/scam-stopper.js'); ?>"></script>
+<script defer src="<?php echo cwc_asset('js/contact-form.js'); ?>"></script>
 
 <?php cwc_page_end(array('active' => 'home'));

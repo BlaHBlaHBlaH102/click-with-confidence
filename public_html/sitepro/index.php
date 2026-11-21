@@ -16,6 +16,7 @@
  *   /Founders-Story  -> a19a0e4884d200534b5bac2b002abb46.php
  *   /Flyer-Brochure  -> a19bc280d2df009618adcfd21949f7a3.php  (Flyers & Media Kit)
  *   /Extension       -> a19f0c1e5b7a00e4c2d9b8a7f6e5d4c3.php  (Chrome Extension)
+ *   /Contact         -> a19f1c0e7d3b00a5e4f2c8b6d9a17e30.php  (receives the home page's visit-request form)
  *   /privacy-policy  -> a199bbdbb9df00c39633cbfcbc916828.php  (not in the menu)
  *
  * Requests reach this file through public_html/index.php, exactly as before
@@ -36,6 +37,7 @@ $cwcPages = array(
 	'Founders-Story' => 'a19a0e4884d200534b5bac2b002abb46.php',
 	'Flyer-Brochure' => 'a19bc280d2df009618adcfd21949f7a3.php',
 	'Extension'      => 'a19f0c1e5b7a00e4c2d9b8a7f6e5d4c3.php',
+	'Contact'        => 'a19f1c0e7d3b00a5e4f2c8b6d9a17e30.php',
 	'privacy-policy' => 'a199bbdbb9df00c39633cbfcbc916828.php',
 );
 $cwcNotFoundPage = 'a199bbdbba5a00f7e3efcee9f99665a9.php';
