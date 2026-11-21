@@ -47,6 +47,7 @@
 		var c = current();
 		prev.disabled = track.scrollLeft <= 2;
 		next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+		videos.forEach(function (v, i) { if (i !== c && !v.paused) { v.pause(); } });
 		dots.forEach(function (d, i) {
 			if (i === c) { d.setAttribute('aria-current', 'true'); } else { d.removeAttribute('aria-current'); }
 		});

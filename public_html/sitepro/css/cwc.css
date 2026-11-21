@@ -619,13 +619,11 @@ html.js[data-mode="industry"] .reveal:not(.is-in) .mark { background-size: 0% 10
 .media-panel__icon .icon { width: 30px; height: 30px; margin-left: 4px; fill: currentColor; }
 
 /* Video carousel */
-.vcar { position: relative; padding: 0 56px; }
-.vcar__track { display: flex; gap: 24px; margin: 0; padding: 8px 4px 16px; list-style: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.vcar { position: relative; max-width: 560px; margin: 0 auto; padding: 0 64px; }
+.vcar__track { position: relative; display: flex; gap: 24px; margin: 0; padding: 8px 0 16px; list-style: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .vcar__track::-webkit-scrollbar { display: none; }
-.vcar__slide { flex: 0 0 auto; width: min(296px, 72vw); scroll-snap-align: center; }
-.vcar__slide:first-child { margin-left: auto; }
-.vcar__slide:last-child { margin-right: auto; }
-.vcar__video { display: block; width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: var(--radius-lg); background: var(--navy); box-shadow: var(--shadow); }
+.vcar__slide { flex: 0 0 100%; min-width: 0; scroll-snap-align: center; scroll-snap-stop: always; }
+.vcar__video { display: block; width: min(100%, 360px, calc(76vh * 9 / 16)); margin: 0 auto; aspect-ratio: 9 / 16; object-fit: cover; border-radius: var(--radius-lg); background: var(--navy); box-shadow: var(--shadow); }
 .vcar__caption { margin: 12px 4px 0; font-family: var(--font-head); font-weight: 700; font-size: 1rem; line-height: 1.35; color: var(--ink); text-align: center; }
 .vcar__nav { position: absolute; top: calc(50% - 40px); z-index: 2; display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: 2px solid var(--line-strong); border-radius: 50%; background: var(--surface); color: var(--accent); cursor: pointer; box-shadow: var(--shadow); transition: background 0.2s, border-color 0.2s, opacity 0.2s; }
 .vcar__nav[hidden] { display: none; }
