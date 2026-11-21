@@ -140,3 +140,13 @@ A sun/moon button (in the blue bar at the top, and next to the menu button on ph
 ## Contact form ("bring us to your organization")
 
 The home page has a form (`#contact`) that posts to `/Contact` (`sitepro/a19f1c0e7d3b00a5e4f2c8b6d9a17e30.php`). It emails every request to `viraj.shah.president@clickwithconfidence.org` and `info@clickwithconfidence.org` with PHP `mail()`, From `info@clickwithconfidence.org` and Reply-To the visitor. It has a hidden spam field, a minimum fill time and a limit of 5 requests an hour per connection. To change the recipients, edit `$cwcMailTo` at the top of that file. Check that mail from the site is delivered (and not filtered as spam) after deploying.
+
+## Video Content carousel
+
+The Video Content page (`/video-content`) shows a swipeable carousel of videos hosted on the site itself (no external links).
+
+- Files live in `public_html/sitepro/gallery/videos/` as `clipN.mp4` (H.264, 9:16) plus a `clipN.jpg` poster.
+- To add, remove or rename a video, edit the `$videos` array at the top of the page file `a199bbdbb9df050f379b945a793a7ba4.php`.
+- Convert new phone videos (iPhone `.mov` is usually HEVC, which many browsers can't play) with:
+  `ffmpeg -i in.mov -vf "scale='min(960,iw)':-2" -c:v libx264 -crf 26 -pix_fmt yuv420p -c:a aac -b:a 96k -movflags +faststart clipN.mp4`
+- Videos load only when played (`preload="none"`), so the page stays light.
