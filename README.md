@@ -150,3 +150,12 @@ The Video Content page (`/video-content`) shows a swipeable carousel of videos h
 - Convert new phone videos (iPhone `.mov` is usually HEVC, which many browsers can't play) with:
   `ffmpeg -i in.mov -vf "scale='min(960,iw)':-2" -c:v libx264 -crf 26 -pix_fmt yuv420p -c:a aac -b:a 96k -movflags +faststart clipN.mp4`
 - Videos load only when played (`preload="none"`), so the page stays light.
+
+## Scam Stopper (daily game, home page)
+
+A Minesweeper-style game on the home page (`#scam-stopper`). Each day shows a scam message split into 16 pieces (two columns, eight rows). The player taps a piece and presses **Safe** or **Red flag**. A safe piece shows how many red flags touch it (corners included). Three wrong calls end the game; marking everything wins. Red flags are explained on their tiles, and a "What to do" tip follows each game.
+
+- One game per day per browser (progress and streak in `localStorage` key `cwc-game`); the day changes at local midnight. Game #1 is 2026-11-26 (`start` in `js/scam-stopper-data.js`).
+- Games are generated from the content pools in `js/scam-stopper-data.js` with a seeded random generator, so everyone gets the same game on the same day and it never runs out. Games 1-365 (20 scam types, in email, text, voicemail, pop-up and chat form) were checked to be valid and different from each other.
+- To add a scam type or a line, edit `TYPES` (or the shared pools `GS` and `GF`) in that file. Each flagged line needs a "why". After editing, check the first year in Node: `node -e "require('./public_html/sitepro/js/scam-stopper-data.js')"` then call `make(n)` for n = 0..364 and make sure every game has 16 tiles, 5-7 red flags and no leftover `{token}` text.
+- Game logic and layout: `js/scam-stopper.js`; styles: the "Scam Stopper (daily game)" block in `css/cwc.css`.

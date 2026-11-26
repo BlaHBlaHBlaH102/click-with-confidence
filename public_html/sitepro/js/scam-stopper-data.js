@@ -1,372 +1,529 @@
-/* Scam Stopper question of the day: 365 scenarios, one per day, starting 2026-10-30.
-   Each entry: [scenario, correct answer, wrong, wrong, wrong, explanation]. js/scam-stopper.js shuffles the answer order. */
-window.CWC_QUIZ = {
-	start: [2026, 10, 30],
-	questions: [
-	["A caller says he is your grandson, sounds upset, and needs $2,000 for bail. He begs you not to tell his parents. What do you do?","Hang up and call your grandson or his parents on a number you already have","Wire the money quickly so he is not stuck in jail","Ask him to confirm his name, then send the money","Buy gift cards and read him the numbers","Scammers count on panic and secrecy. A real emergency can wait for a verification call."],
-	["Someone calls from the court saying you missed jury duty and must pay a fine by gift card or be arrested. What do you do?","Hang up; courts do not demand payment by phone or gift card","Pay the fine to avoid a warrant","Ask for the officer's badge number","Give your Social Security number to look up the case","Courts send mail about jury duty. Threats of arrest over the phone are a scam."],
-	["A caller says he is from the bank's fraud department and asks you to move your savings to a safe account he provides. What do you do?","Hang up and call your bank; real banks never ask you to move money","Move the money to protect it","Move half the money and keep half","Ask him to send an email confirming it","The safe account belongs to the scammer. Banks do not tell you to transfer your own money."],
-	["Your caller ID shows a local number. The voice says your Apple ID has been locked and to confirm your password. What do you do?","Hang up; check your Apple ID directly through settings or the website","Give the password to unlock it","Give the verification code you just received","Tell them your device passcode","Companies do not call to ask for passwords. Always go to their official site yourself."],
-	["A voice from your 'insurance company' says you are due a premium refund and needs your online banking sign-in to deposit it. What do you do?","Hang up and call the number on your policy","Give the sign-in details","Give your account and routing numbers only","Ask them to send a check","Refunds are sent to your payment method; no sign-in is ever needed."],
-	["A telemarketer asks you to sign up for a free 30-day trial that needs your credit card for shipping only. What do you do?","Decline; free trials often renew with large charges","Sign up and cancel after","Use a debit card","Use your spouse's card","Trials with hidden renewals are a common trick. Read terms carefully."],
-	["A voicemail says it is Medicare and you must press 1 to renew your plan today. What do you do?","Delete it; contact Medicare directly if concerned","Press 1 to renew","Call the number back","Press 2 to cancel","Medicare does not use robocalls to renew coverage."],
-	["Your bank sends a text with a six-digit code after you try to log in. Moments later someone calls asking for it. What do you do?","Never share the code; hang up and secure your account","Read the code to the caller","Read half of the code","Text the code to the caller","Codes prove you are you. Anyone asking for one is trying to break into your account."],
-	["A text says 'Your Social Security payment is on hold, call us to release it.' What do you do?","Ignore it and contact Social Security through the official site","Call the number to release it","Send a copy of your ID","Pay a release fee","Government agencies do not hold payments hostage by text."],
-	["You receive a text from 'Costco' asking you to take a survey and win a free prize, with a link. What do you do?","Delete it; it is a scam","Tap the link and fill the survey","Reply with your name","Forward it to your family","Prize surveys are used to collect personal information."],
-	["A text from 'Spotify' says your account will be closed unless you update billing. What do you do?","Ignore the text and check your account in the app","Click the link and update billing","Reply with your card number","Call the number provided","Streaming service phishing texts mimic real brands."],
-	["You receive an email with an attachment named 'Resume.pdf.exe'. What does the .exe mean?","It is a program that could harm your computer; do not open it","It is a normal resume","It is a picture","It is a document","A file ending in .exe is a program, even if the first part looks like a document."],
-	["A text says to confirm your Social Security number to receive a COVID relief payment. What do you do?","Delete it; no program works that way","Reply with your SSN","Reply with the last four","Call the number","Relief payments never need your SSN by text."],
-	["You are buying a used car online. The seller says he is deployed overseas and wants you to pay through a special escrow site. What do you do?","Walk away; only buy where you can inspect the vehicle in person","Pay through the escrow site","Send a deposit to hold the car","Ask for a video of the car","Fake escrow sites are a typical car scam."],
-	["You find a puppy online for $400, but the seller wants payment by gift card to ship it. What do you do?","Do not pay; it is a pet scam","Pay by gift card","Send half","Ask for a video call and then pay","Pet scams use cute pictures to rush victims."],
-	["A man on a travel website says you won a free hotel stay and asks you to pay taxes with a debit card. What do you do?","Decline; real prizes do not need payment","Pay the taxes","Pay half","Give your card details","Free travel offers hide fees."],
-	["You get a message from someone claiming to be a lawyer who has a client with the same last name as you who died, leaving millions. What do you do?","Ignore it","Reply","Send your ID","Pay a fee","Inheritance scams ask for personal details and fees."],
-	["You get a message from a friend asking if you can vote for their child in a contest by sending a code from your phone. What do you do?","Do not share any code","Send the code","Send half","Ask for more details then send","Codes give access to your account."],
-	["A seller asks for a phone number to send a verification code, and then asks for the code. What do you do?","Do not give the code","Give the code","Give half","Give it later","Fraudsters use codes to take over accounts."],
-	["Someone offers to buy your home for cash and wants you to sign a document today before you talk to anyone. What do you do?","Do not sign; consult a lawyer or trusted family member","Sign to get the cash","Sign and read it later","Sign only the first page","Deed theft scams rely on rushed signatures. Never sign legal documents you do not understand."],
-	["You get a call saying a family member has been kidnapped and you need to pay a ransom. You can hear crying in the background. What do you do?","Hang up and call your family member right away","Pay the ransom","Ask for a delay","Negotiate","Virtual kidnapping calls use AI voices or recordings."],
-	["A man says he is from your bank and offers to help you set up a new debit card at your house. What do you do?","Decline; call the bank","Let him in","Give him your PIN","Hand him your old card","Banks do not send people to your home."],
-	["A person says to pay your auto insurance bill by sending a prepaid debit card number. What do you do?","Pay through the official site or office","Send the card number","Send the PIN","Pay in person at a store","Legit insurers do not use prepaid cards."],
-	["A man calls offering to sell you cheaper prescription medication from abroad without a prescription. What do you do?","Decline; use a licensed pharmacy","Buy it","Buy a small amount","Buy a large amount","Counterfeit drugs can be dangerous."],
-	["A person offers a prize if you attend a free dinner seminar where they sell products. What do you do?","Decline or attend only with a friend and no money","Attend and buy","Sign a contract","Give a deposit","Pressure sales are common."],
-	["Why should you be cautious about the 'urgent' wording in a message?","Scammers use urgency so you act before you think","Urgent messages are always real","Urgent messages are cheaper","It means the sender is nearby","Pressure and deadlines are the most common scam tactic."],
-	["How should you respond to an unknown caller who asks, 'Can you hear me?'","Hang up; do not answer yes","Say yes","Say your name","Ask who they are","Scammers try to record your voice saying yes."],
-	["You are shopping online. Which payment method gives you the most protection if something goes wrong?","A credit card","A wire transfer","A gift card","Cryptocurrency","Credit cards let you dispute charges."],
-	["You sent money to a scammer. What should you do?","Report it to your bank, the FTC and local police right away","Keep it secret from family","Send more to recover it","Hire someone who promises to recover it","Reporting quickly increases the chance of recovering funds."],
-	["What is a safe way to use public Wi-Fi?","Avoid banking and shopping; use your phone's data instead","Log into your bank","Share your passwords","Turn off your firewall","Public Wi-Fi can be watched by others."],
-	["What should you do before clicking a link in a text from an unknown number?","Do not click; delete it","Click it","Reply to ask","Share it","Unknown links are risky."],
-	["What is a 'quid pro quo' tech support scam?","Someone offers help in exchange for access to your computer","A tax rule","A computer upgrade","A shopping deal","Free help can be a trap."],
-	["Which of these is the best habit for strong online security?","Use unique passwords and two-step verification","Reuse passwords","Share passwords","Write passwords on your phone case","Layers of protection help."],
-	["You are asked to pay a 'processing fee' to receive your lottery winnings, and the sender says it will be deducted from the prize anyway. What do you do?","Refuse; a real lottery never charges you to collect","Pay since it comes out of the prize","Pay half to show good faith","Ask for the prize to be sent first","If a prize needs money first, it is a scam, however the fee is described."],
-	["A friendly caller says she is from your bank and asks you to confirm your full card number, expiry and security code to stop fraud. What do you do?","Hang up and call your bank using the number on your card","Give the number but not the code","Give all three since she is from the bank","Ask her to text you the details instead","Your bank already has your card details. Anyone asking for them on an incoming call is not your bank."],
-	["A caller offers you a free medical alert device and just needs your bank details for the shipping fee. What do you do?","Hang up and do not share your bank details","Give your account number for the shipping fee","Give only your routing number","Agree to a free trial and cancel later","Free offers that need your bank information are typically traps for unauthorized charges."],
-	["Someone calls from tech support after you purchased antivirus software and says you are due a refund of $300 and accidentally got refunded $3,000. He asks you to send back the difference. What do you do?","Hang up; this is a refund scam","Send back $2,700 by gift card","Wire the difference","Ask him to correct it so you will send it later","The refund never really happened. Check your bank directly if you are unsure."],
-	["A voice mail from a 'friend' says only 'Hey, it is me, call me back,' from an unknown number. What do you do?","Be cautious; ask a mutual friend before calling back","Call back immediately and share news","Reply by text with your full name","Click a link they send next","Vague messages are used to start a conversation and build trust."],
-	["A voicemail says to call an 800 number about a package that cannot be delivered. What do you do?","Ignore it and check with the real carrier using its official site","Call the number back","Press 1 to speak to a driver","Give your card number for redelivery","Fake delivery calls are common. Check packages directly with the sender."],
-	["A friend calls and says they were mugged abroad and need money wired. The voice sounds a bit off, but they are crying. What do you do?","Hang up and call your friend's number or a family member to verify","Wire the money right away","Ask for a bank account to deposit into","Send gift cards instead","Crying and urgency are used to stop you from thinking. Verify first."],
-	["You get a text from an unknown number saying, 'Hi, this is Linda, are we still on for dinner?' You do not know a Linda. What do you do?","Do not reply; delete and block the number","Reply that they have the wrong number and chat","Ask where dinner is","Send a photo","Wrong-number texts are often the first step of a romance or investment scam."],
-	["You get a Zelle text saying 'You have received $500, click to accept.' You did not expect it. What do you do?","Ignore it and check your bank app directly","Click the link to accept","Reply to confirm","Give your login to receive it","Money from real Zelle transfers shows up in your bank app without links."],
-	["You receive a text with a six-digit code you did not request. What does this mean?","Someone may be trying to access your account; change your password","Nothing; just ignore it","Share the code with the sender to cancel it","Reply STOP","An unexpected code can mean someone is trying to log in. Secure the account."],
-	["A message says you have a pending tax refund and to click to claim it. What do you do?","Ignore it and use the official IRS website if you are unsure","Click the link","Enter your SSN","Pay a processing fee","The IRS does not email or text about refunds."],
-	["You receive an email saying someone tried to sign in to your Facebook account, and gives a link to secure it. What do you do?","Open the app or website yourself and check security settings","Click the link","Reply with your password","Share it with friends","Always visit the site yourself rather than clicking links."],
-	["Someone leaves a note on your car with a QR code to see 'photos of the damage' to your vehicle. What do you do?","Do not scan; inspect the car and contact the police if worried","Scan the code","Send them a text","Call the number written on the note","QR codes can lead to harmful sites that steal information."],
-	["Someone you met online asks you to move the chat to WhatsApp and soon recommends a crypto investment platform. What do you do?","Decline and end the conversation","Try a small investment","Ask for their account to compare","Invest more after seeing profits on their site","Pig-butchering scams show fake gains before taking everything."],
-	["An online store has no phone number or address and has glowing reviews all on the same day. What do you do?","Avoid it; these are warning signs","Buy from it","Buy one item to test","Pay with your debit card","Fake stores often copy brands and write fake reviews."],
-	["A person claims to be Elon Musk in a livestream saying send Bitcoin to double it. What do you do?","Ignore it; it is a deepfake scam","Send a little","Send a lot","Join the stream","Deepfake videos mimic well-known people."],
-	["You are asked to pay a 'refundable deposit' for a rental via a wire transfer. What do you do?","Do not wire money","Wire the deposit","Send half","Send by gift card","Wire transfers are hard to reverse."],
-	["An online store asks to confirm your Social Security number to complete a $30 order. What do you do?","Cancel the order","Provide the SSN","Provide the last four","Provide a birth date","Stores do not need SSNs."],
-	["A message says someone is stuck at an airport and needs help paying for a ticket and they will refund you. What do you do?","Decline; contact family or authorities","Send money","Send half","Buy a ticket","Travel emergency scams exploit sympathy."],
-	["A man says he just finished paving a neighbor's driveway and has leftover asphalt, so he can do yours cheap today. What do you do?","Say no; unsolicited same-day deals are a common scam","Agree if the price is fair","Pay half upfront","Ask him to start and decide later","Door-to-door leftover-materials offers usually produce poor work and no refund."],
-	["Someone sends you a pamphlet claiming you are due a refund from a class action lawsuit for $400, if you send $20 for processing. What do you do?","Verify through official sources; do not pay","Send $20","Send your SSN","Send a check","Legitimate settlements do not require a payment."],
-	["A friend offers you a chance to buy into a business that guarantees monthly returns, with no paperwork. What do you do?","Ask for documents and seek independent advice","Invest quickly","Invest a little","Invest more","No paperwork is a red flag."],
-	["A man says he works for the IRS and appears at your door demanding payment. What do you do?","Do not pay; ask for ID and call the IRS","Pay him","Give him your SSN","Let him in","The IRS does not collect payments at your door."],
-	["You receive a bill from a hospital that you never visited. What do you do?","Contact the hospital using official numbers","Pay it","Ignore it","Call the number on the bill","Medical identity theft can lead to false bills."],
-	["A flyer on your car says you owe a parking fine and has a QR code to pay. What do you do?","Ignore it and contact the city","Scan and pay","Call the number","Send a check","Fake fines are a scam."],
-	["You get a call that sounds exactly like your son asking for money, but he is traveling. Which is the best first step?","Hang up and call his regular number or another family member","Send what he asks since it is his voice","Ask him to text a photo","Send half to be safe","Voice cloning is real. Verify through a separate channel."],
-	["A shopping website has no contact info, strange spelling and a price that seems too good. What should you do?","Walk away and shop at a store you know","Order one item to test","Use a debit card for protection","Call the number on the site","Scam shops disappear after taking your money."],
-	["Which statement about caller ID is true?","It can be faked so it is not proof of who is calling","It is always accurate","It cannot be faked","It shows the exact location","Spoofing is common."],
-	["A caller tells you to stay on the line while you go to the bank. Why is this a red flag?","They want to coach you and prevent you from asking anyone","They are being helpful","It is a standard bank procedure","It makes the call faster","Scammers keep victims on the phone to stop them thinking."],
-	["You get a call from your doctor's office offering a flu shot reminder. How can you be sure?","Hang up and call the office using its listed number","Share your birthday","Share your SSN","Share your insurance","Verify before sharing."],
-	["A friend tells you about an investment that made them rich quickly and urges you to join. What do you do?","Research it independently and be cautious","Join them","Send money first","Invite others","Friends can be victims too."],
-	["Why should you keep software and apps updated?","Updates fix security holes that criminals use","They make your phone slower","They cost money","They remove contacts","Updates are a free layer of protection."],
-	["Why is a short video call not always proof someone is who they claim to be?","Fake video and filters can imitate faces","Video is always real","Video never lags","Video always shows ID","Deepfakes exist."],
-	["A pop-up on your computer says 'Your Windows license has expired. Call this number to renew or lose all your files.' What do you do?","Close the window or restart; Windows does not ask you to phone anyone","Call the number to renew","Click the pop-up to keep your files","Pay with a gift card as instructed","Licenses are never renewed by calling a number from a pop-up. The pop-up itself is the scam."],
-	["A call from Medicare says you are due a new card, but they need your Medicare number and bank account to send it. What do you do?","Hang up; Medicare does not call asking for your information","Give the Medicare number only","Give both so the card arrives sooner","Confirm your date of birth and address first","Medicare already has your information and will not phone you out of the blue for it."],
-	["Someone calls pretending to be from your internet provider, says your router is hacked, and asks for your password to fix it. What do you do?","Hang up and call your provider using the number on your bill","Give the password for the router","Give the password of your email instead","Let them connect remotely","Companies do not need your passwords. Verify through the number printed on your bill."],
-	["You get repeated calls from an unknown number. The caller says to press 9 to stop the calls. What should you do?","Do not press anything and hang up; block the number","Press 9 to be removed from the list","Say stop calling in a loud voice","Stay on the line and wait","Pressing a key confirms your number is active and often leads to more calls."],
-	["You answer and hear a recording about suspicious activity on your Amazon Prime account, and it asks you to press 1. What do you do?","Hang up and check your account directly","Press 1 to talk to an agent","Press 2 to cancel Prime","Say your account email aloud","Fake order robocalls lead to remote access or payment scams."],
-	["A person offers to fix your leaking roof for a lower price and asks you to pay in cash before starting. What do you do?","Decline and ask for a written estimate and a license number","Pay half upfront","Pay in cash to get a discount","Hand over the full amount so he buys supplies","Unlicensed workers often disappear with deposits."],
-	["You get a call from a 'bank' to confirm a purchase of $2,500. It asks you to say no to deny it. What do you do?","Hang up and check your account on your own","Say no to deny it","Give your card number to cancel it","Press 1 to report fraud","Any response can be used to steal details. Check transactions directly."],
-	["An email from 'PayPal' says your account is limited. The button says Log In. The sender address ends in .ru. What do you do?","Delete it; log in only by typing the website address yourself","Click Log In to fix it","Reply asking if it is real","Call the number in the email","The sender address is a giveaway. Do not click links in unexpected account warnings."],
-	["An email from your child's school asks you to log in at a link to see a new notice, but the link goes to a strange website. What do you do?","Open the school website yourself or call the school","Log in at the link","Forward it to other parents","Reply with your password","Always confirm through a trusted site or phone number."],
-	["You receive an email from 'Geek Squad' saying your subscription renews today for $399 and to call if you did not authorize it. What do you do?","Ignore it and check your bank account directly","Call the number to cancel","Reply to cancel","Click the dispute link","The number connects to scammers who ask for remote access."],
-	["You receive a text with a link that says 'Is this you in this photo?' What do you do?","Do not click; delete it","Click to see the photo","Reply asking who sent it","Share it with friends","Curiosity bait delivers harmful software."],
-	["A text from an unknown number says 'Please confirm your appointment at this link.' You have no appointments. What do you do?","Delete it","Click the link","Reply asking who it is","Call the sender","Appointment texts from strangers are a phishing ploy."],
-	["You see an online ad offering a new iPad for $29. The page asks for your card for shipping. What do you do?","Close the page; the offer is too good to be true","Buy it quickly before it sells out","Use a gift card","Use your debit card","Unrealistic prices signal scams or stolen card numbers."],
-	["You receive a text from 'Wells Fargo' with a code and a message to call if you did not request it. You did not request it. What do you do?","Do not call the number in the text; call Wells Fargo using the number on your card","Call the number in the text","Reply with your PIN","Give the code","Fake alerts include scam numbers."],
-	["A stranger on Facebook sends a message saying you won a lottery grant and asks you to pay a fee. What do you do?","Block them; it is a scam","Pay the fee","Send your bank details","Ask them to prove it","Winners never pay a fee."],
-	["You are asked to receive a package at your home and re-ship it to another country as part of a work-from-home job. What do you do?","Decline; it may be part of a reshipping scam","Accept the job","Ship only part","Ask for a bigger commission","You could become involved in crime."],
-	["You see a fundraising post for a sick child, but the page was created yesterday and the account has no history. What do you do?","Verify the fundraiser before donating","Donate quickly","Share without checking","Send gift cards","Fake charity campaigns exploit sympathy."],
-	["A man calls himself Mr. Smith from your tech company and says you won a free laptop but must pay shipping with a gift card. What do you do?","Hang up","Pay with a gift card","Send cash","Give your card","Gift cards are for scams."],
-	["A person offers to sell you a pre-owned phone at a low price and wants to meet at night in an empty parking lot. What do you do?","Meet in a public place or skip it","Go alone","Pay first","Bring cash","Safety first."],
-	["A text says you won an Amazon gift card for answering a survey, but it needs your bank login. What do you do?","Delete it","Enter your login","Enter your SSN","Enter your card","Gift card surveys are phishing."],
-	["A salesperson at a senior fair offers a free lunch if you attend a seminar. At the seminar, they pressure you to buy an annuity. What do you do?","Take your time; never sign the same day","Sign to get a bonus","Sign only if you like the lunch","Write a check","Pressure sales target seniors."],
-	["You receive a bank statement that shows a transaction you did not make. What do you do?","Call your bank at the number on your card","Ignore it","Pay it","Wait until next month","Report fraud quickly to limit losses."],
-	["A mailed check for $4,800 arrives with a letter saying you won a sweepstakes, and you should send $2,000 for taxes. What do you do?","Do not deposit it or send money","Deposit and send the taxes","Send half","Cash it and keep the rest","The check is fake and will bounce."],
-	["Someone calls asking for your Medicare number to offer a free genetic test. What do you do?","Decline","Give the number","Share the SSN","Share your card","Genetic test scams steal Medicare numbers."],
-	["A friend asks you to send money via a payment app, saying their account is locked. What do you do?","Call them to verify","Send money","Send half","Send by gift card","Hacked accounts can impersonate friends."],
-	["You get a pop-up on a website saying your software is out of date and to download an update from that page. What do you do?","Close it and update through your device's own settings","Click Download to be safe","Allow it to run once","Enter your password to update","Fake update pop-ups install harmful software. Update from official settings only."],
-	["What is 'phishing'?","Messages that trick you into sharing private information or clicking harmful links","A type of fishing sport","A computer repair method","A privacy setting","Phishing messages pretend to be someone you trust."],
-	["A website asks you to scan your face or ID to claim a prize. What do you do?","Close the page","Scan your face","Upload your ID","Share with friends","Identity data can be used to open accounts in your name."],
-	["A website asks you to disable your antivirus to install a file. What do you do?","Do not install it","Disable the antivirus","Install anyway","Share the file","Legitimate software never asks you to turn off security."],
-	["Which of these is a legitimate way for the IRS to first contact you about a problem?","A letter in the mail","A text message","A phone call with threats","A social media message","The IRS starts with mail."],
-	["How can you tell an AI-generated voice call might be fake?","You cannot always; verify through another channel","It always sounds robotic","It never has background noise","It always comes from overseas","Modern clones sound very natural."],
-	["You receive an email with a link to reset your password you did not request. What do you do?","Ignore it, and change your password through the real site if worried","Click the link","Reply","Forward it","Do not use links you did not ask for."],
-	["What is a safe way to handle a call asking for your Medicare number?","Do not give it; call 1-800-MEDICARE yourself","Give the number","Give the last four","Say you will think about it","Protect your number."],
-	["A caller says the money you send will be returned within 24 hours. What do you do?","Do not send it","Send it","Send half","Send by gift card","Promises of repayment are a lure."],
-	["Your computer screen suddenly locks with a loud alarm and a number to call for Windows support. What do you do?","Close the browser or restart the computer and do not call","Call the number right away","Click the button to scan for viruses","Pay the support fee shown","Fake alarm pop-ups are ads, not real warnings. Real security software never shows a phone number to call."],
-	["A man says he is a police officer and a family member has been in an accident. He wants money for hospital fees. What do you do?","Hang up and call your family member and the local police directly","Send money to help the family","Give your card number to the hospital he names","Ask him for a callback number and call it","Never act on a call that creates urgency. Call people you know on numbers you trust."],
-	["A caller says you won a free cruise. He just needs a credit card to hold the reservation. What do you do?","Hang up; a free prize should not need your card","Give the card to hold your spot","Use a debit card instead","Pay the port fee by money order","Free trip offers often hide big fees or are outright theft."],
-	["A caller is very polite, offers to help you with a computer problem you do not have, and says it is free. What do you do?","Hang up; you did not ask for help","Accept the free help","Accept but keep your passwords private","Ask for a name and call back later at the same number","Friendly unsolicited help is how many tech support scams begin."],
-	["Your phone shows a number with your area code and a voice says there has been a data breach and asks for the last four of your Social Security number. What do you do?","Hang up; do not share any part of your SSN","Give the last four only","Confirm your birth year","Give your mother's maiden name","Pieces of information can be combined to steal your identity."],
-	["A call from a 'telecom company' says you are due a free phone upgrade, but you must confirm your account PIN. What do you do?","Hang up and contact your carrier at its official number","Give your PIN to get the upgrade","Give the last four digits","Give your date of birth only","Your account PIN lets someone take over your phone number."],
-	["You get a text: 'USPS: your package could not be delivered. Pay a $1.99 redelivery fee at this link.' You are not expecting anything. What do you do?","Delete it and track packages only through the carrier's official site","Tap the link and pay the small fee","Reply STOP to unsubscribe","Forward it to friends to warn them with the link","Fake delivery texts collect card numbers. A tiny fee is the bait."],
-	["A text says your bank detected fraud and asks you to reply YES or NO to a $1,200 charge. What do you do?","Do not reply; call the number on your card","Reply NO to deny the charge","Reply YES in case it is right","Tap the link to review the charge","Replying confirms your number is active and starts a conversation with the scammer."],
-	["A text from 'Walmart' says you won a $1,000 gift card and to click to claim it. What do you do?","Delete the message; it is a scam","Click the link","Share it with family","Enter your card details to pay shipping","Retailers do not give out random prizes by text."],
-	["An email says your computer has been recorded watching videos and demands $1,000 in Bitcoin. It shows an old password of yours. What do you do?","Ignore it and change your passwords","Pay in Bitcoin","Reply to negotiate","Send a smaller amount","These sextortion bluffs use old leaked passwords. They have no video."],
-	["An unexpected text says your Google account was accessed from a new location and asks for the code sent to your phone. What do you do?","Do not share the code; check your account security directly","Share the code to block them","Send a screenshot","Reply with your password","Sharing codes lets attackers into your account."],
-	["Your phone gets a text with a link claiming to be a shared Google Doc from an unknown number. What do you do?","Do not click; delete it","Click the link to see it","Reply asking who it is","Forward it to your contacts","Shared document links from strangers can lead to fake login pages."],
-	["A text says your 'electric bill is overdue and your power will be cut,' with a link to pay. What do you do?","Log in to your utility account on your own","Pay through the link","Reply with your account number","Call the number","Utilities rarely demand payment through texted links."],
-	["You see a social media post from a celebrity offering to double any money you send. What do you do?","Ignore it; it is a giveaway scam","Send $50 to test it","Send $500 for a larger payback","Share the post","Celebrity giveaways asking for money are fake."],
-	["A website offers a free credit report but asks for your credit card for a verification fee. What do you do?","Use the official free report site instead","Enter your card","Use a prepaid card","Pay with PayPal","The official site is AnnualCreditReport.com and is free."],
-	["A person calls offering a free trip but wants a $200 deposit to hold it. What do you do?","Decline; free trips do not need deposits","Pay the deposit","Pay half","Give a credit card number","Deposits for free offers are suspicious."],
-	["A 'friend' on Facebook shares an investment link and says everyone is making money. What do you do?","Verify independently and be wary","Invest","Ask for the link","Share it","Friends can be hacked and share scams."],
-	["You are invited to join an investment club where early members get paid with money from new members. What is this?","A Ponzi or pyramid scheme","A safe investment","A savings plan","A retirement fund","Paying early investors with new money is illegal."],
-	["A man says you can make money from a simple trick of buying and reselling gift cards. What do you do?","Decline","Try it","Invest a lot","Ask friends","Gift card resale is a common scam."],
-	["A caller from the 'local police' says they are collecting donations for retired officers and asks you to pay by gift card. What do you do?","Decline; police do not ask for gift cards","Pay","Pay half","Pay by check","Police donation scams are common."],
-	["A teller asks why you are withdrawing a large amount of cash and says it looks like a scam. What do you do?","Listen; tell the teller the truth","Say it is for a vacation","Take the cash anyway","Go to a different branch","Tellers are trained to spot scams."],
-	["A man calls to say he found your lost wallet and wants you to pay a reward before he returns it. What do you do?","Check with local police","Pay the reward","Pay half","Send a gift card","Reward scams are false."],
-	["A store clerk asks to swipe your card at a hidden spot and take it out of sight. What do you do?","Decline and insist on paying in front of you","Let them","Let them take your card","Give your PIN","Skimming is a risk."],
-	["You get a call from a 'debt collector' about a debt you do not recognize. What do you do?","Ask for written validation","Pay","Give your SSN","Give your bank","You have the right to validation."],
-	["You use the same password for your email, bank and shopping sites. What is the main risk?","If one site is breached, criminals can try it everywhere","Your passwords will expire sooner","Your computer will slow down","Websites will lock you out","Criminals try stolen passwords on other sites. Use a different one for each important account."],
-	["A website says you won a prize and need to pay a fee with a prepaid card. What do you do?","Close the page and do not pay","Pay the small fee","Ask a friend to pay","Pay only half","A real prize never requires you to pay."],
-	["Which action best protects you from most phone scams?","Let unknown calls go to voicemail and call back on known numbers","Answer every call","Press 1 to opt out","Give your name to find out who is calling","Real callers leave messages. Scammers rarely do."],
-	["You get a text from 'your grandchild' who has a new number and asks for help. What do you do?","Call their old number or a parent to check","Send money","Reply with your bank details","Ask for a photo","Changing numbers is a common trick."],
-	["In the Click With Confidence extension, what does a risk score of 90+ usually suggest?","The email is very likely a scam","The email is safe","The email is from a friend","The email is a newsletter","Higher scores mean higher danger. Do not click links in it."],
-	["What is a 'deepfake'?","A fake video or audio created with AI to imitate a real person","A type of photograph","A computer virus","A dating site","Deepfakes are used to trick people into trust."],
-	["What is a good habit before sending money to someone online?","Pause for 24 hours and talk to a trusted person","Send it right away","Send half","Send by gift card","A pause defeats urgency."],
-	["A man calls claiming to be your relative's lawyer, saying he needs money for bail, and tells you to hurry. What do you do?","Hang up and verify with family","Send money","Ask for details and send","Give your card","Time pressure and legal terms are used to scare."],
-	["What is the safest way to answer a text asking you to confirm your identity?","Do not reply; contact the company through its official channel","Reply with your name","Reply with your address","Reply YES","Replying confirms you are active."],
-	["A recorded message says your Social Security number has been suspended because of criminal activity. Press 1 to speak to an agent. What do you do?","Hang up; Social Security numbers are never suspended","Press 1 to find out more","Call back the number that called you","Say your number out loud to verify your identity","There is no such thing as a suspended Social Security number. This is a classic robocall scam."],
-	["A text from your boss, whose number looks new, asks you to buy gift cards for a client and send the codes. What do you do?","Call or message your boss on a known number before doing anything","Buy the cards and send the codes","Buy only one card to be safe","Reply and ask which store to buy from","Impersonating a boss or relative is a common trick. Gift card codes cannot be traced or recovered."],
-	["A survey caller promises a $50 gift card for 5 minutes of your time but wants your Social Security number to verify you. What do you do?","Hang up; a survey never needs your Social Security number","Give the last four digits only","Give the full number to receive the reward","Give your bank details instead","Reputable surveys never need sensitive identity numbers."],
-	["A person calls offering to lower your credit card interest rate to 0% if you give your card number and security code. What do you do?","Hang up; call your card issuer directly if you want to ask about rates","Give the number but not the code","Give both since it saves you money","Ask them to mail a form first","Fake rate offers are used to steal card details."],
-	["Someone calls offering you a reverse mortgage to pay for home repairs, and wants you to sign today. What do you do?","Decline and talk to a trusted family member or housing counselor","Sign to get the cash now","Sign and read it afterward","Give your home deed as a deposit","High pressure to sign immediately is a red flag in any financial deal."],
-	["You hear that a neighbor lost money after helping a 'prince' move funds. A 'prince' now emails you. What do you do?","Delete the email; this is an advance-fee scam","Reply to learn more","Send a small amount as a test","Share your bank details to receive a share","Advance-fee scams promise riches in return for upfront money."],
-	["Someone calls offering a free home inspection and asks you to verify your Social Security number. What do you do?","Decline; you do not need to give your SSN","Give the SSN to book it","Give the last four","Give your birth date","Home service companies should not need your SSN for a free inspection."],
-	["An email arrives with an attachment called 'Invoice_2891.zip' from someone you do not know. What do you do?","Delete it without opening it","Open it to see what it is","Open it on your phone instead","Download it and scan later","Unexpected attachments can install harmful software."],
-	["A text says your Venmo account has been charged $349.99 for an order, and tells you to call to dispute it. What do you do?","Check your Venmo app and ignore the number","Call the number to dispute","Reply with your login","Click the link in the text","Scammers invent charges to get you on the phone."],
-	["An email offers a job working from home for $5,000 a week with no experience. You must buy equipment first with a check they send. What do you do?","Delete it; it is a fake check scam","Deposit the check and buy the equipment","Ask for a contract first and then deposit","Keep the extra money as a bonus","Fake checks bounce days later, leaving you owing the bank."],
-	["An email says you have an unclaimed inheritance from a distant relative, and a lawyer needs your bank details to release it. What do you do?","Delete it; it is an inheritance scam","Reply to the lawyer","Send a copy of your ID","Pay a small legal fee","Inheritance emails ask for fees and personal details."],
-	["A text from 'Capital One' says your card has been used abroad, press the link to verify. What do you do?","Call the number on the back of your card","Click the link and verify","Reply with your card number","Reply with your PIN","Use official numbers only."],
-	["A voice message left on your phone says your 'Chase account was locked.' It gives a number to call. What do you do?","Ignore it and call the number on your card","Call the number given","Text the number","Reply with your account details","Voicemail phishing is often called vishing."],
-	["A rental listing is a beautiful apartment priced very low. The owner is out of the country and wants a deposit before showing it. What do you do?","Do not send money; see the unit in person first","Send the deposit to secure it","Send half","Ask for the lease by email then pay","Rental scams use stolen photos and fake owners."],
-	["A seller on a marketplace app asks you to pay in advance via Zelle with no buyer protection. What do you do?","Meet in person or use a payment method with protection","Pay via Zelle","Send half","Send a deposit","Payment apps are like cash. Use protected methods for purchases from strangers."],
-	["On a gaming forum, someone offers to boost your account if you share your password. What do you do?","Never share your password","Share it temporarily","Share part of it","Share it with a friend","Passwords should never be shared."],
-	["A person offers to sell concert tickets at half price, and wants payment before sending a PDF. What do you do?","Buy only from official sellers","Pay","Pay half","Pay with a gift card","Tickets may be fake or duplicated."],
-	["You get a message from a stranger who says you inherited a house but need to pay a legal fee. What do you do?","Ignore it","Pay the fee","Send ID","Send bank details","Legitimate inheritances do not require advance payments."],
-	["A person offers to help you file your taxes for a fee, wants a percent of your refund, and will not sign the return. What do you do?","Choose a reputable preparer who signs returns","Use them","Pay upfront","Give your SSN","Ghost preparers steal refunds."],
-	["A 'census worker' knocks and asks for your Social Security number and bank information. What do you do?","Do not give any financial information","Give the SSN","Give your bank information","Let him inside","The census does not ask for SSNs or bank details."],
-	["A person says he will fix your computer for free and asks to use your Wi-Fi password. What do you do?","Do not share your Wi-Fi password","Share it","Share a guest password","Share it later","Wi-Fi passwords can give access to your devices."],
-	["You are asked to cosign a loan for someone you just met. What do you do?","Decline","Cosign","Cosign for a small amount","Cosign if they cry","Never cosign for people you barely know."],
-	["Your phone suddenly loses service and you get messages about login attempts. What might be happening?","A SIM swap attack; call your carrier","Normal outage","Spam","A software update","Fraudsters can take over your number."],
-	["A funeral home says you must pay immediately for a loved one's service by gift card. What do you do?","Verify the funeral home yourself","Pay","Send cash","Pay by wire","Funeral scams prey on grief."],
-	["You want a password that is hard to guess but easy to remember. Which is the best choice?","A long phrase of several random words, like 'purple-tractor-lemon-sailboat'","Your pet's name followed by 123","Your birth year","The word 'password' with a capital P","Length beats complexity. A long, unrelated phrase is strong and easier to remember than random symbols."],
-	["Which information should you never give out on an incoming call?","One-time codes, passwords, PINs and Social Security numbers","Your first name","Your favorite color","The day of the week","Anyone asking for these is likely a scammer."],
-	["Your credit report shows an account you never opened. What should you do?","Place a fraud alert or freeze and report identity theft","Ignore it","Pay the account","Delete the report","A credit freeze stops new accounts being opened in your name."],
-	["You find a text on your phone telling you to call back about an overdue bill. You are unsure. What do you do?","Look up the company's official number and call","Call the number in the text","Reply to the text","Click the link","Use known contact details."],
-	["A caller says you can only talk to them, not to your family or bank, because of 'security.' What do you do?","Hang up and talk to people you trust","Follow instructions","Whisper it to a friend","Do as he says","Isolation is a scam tactic."],
-	["What does a credit freeze do?","Stops new credit accounts from being opened in your name","Freezes your bank account","Blocks all purchases","Erases your debt","It is free and can be lifted when needed."],
-	["What should you do if someone you do not know asks you to scan a QR code?","Be cautious and do not scan unless you trust the source","Scan it","Scan and pay","Scan and enter your details","QR codes can lead to harmful sites."],
-	["Which action helps if you think you were scammed by phone?","Hang up, block the number, and report it","Call back","Give more details","Wait","Reporting helps others."],
-	["You get a call saying you can claim your prize today but only if you do not tell anyone. What is the lesson?","Real prizes do not require secrecy","Keep it secret","Share it later","Tell only one friend","Secrecy is a red flag."],
-	["Your phone shows the caller ID of your bank. A voice says your account was hacked and asks you to read the code just texted to you. What do you do?","Hang up and call the number on the back of your card","Read the code so they can secure your account","Give only the last three digits of the code","Stay on the line while they transfer you to security","That code unlocks your account for them. Banks never ask you to read back a one-time code."],
-	["You get a call from a number that looks like your own, so you pick up. A voice offers a refund on something you do not remember buying. What do you do?","Hang up; scammers can fake any caller ID","Stay and listen for details of the refund","Give your bank details to receive the refund","Install the software they ask for","Spoofed numbers are common. Never rely on caller ID to trust a stranger."],
-	["A call says you are owed a refund from a recent cable bill overpayment and they need your online banking login. What do you do?","Hang up; nobody legitimate needs your banking login","Give your username only","Log in while they stay on the line","Read your account balance to confirm it","Never share banking credentials. Real refunds go to the original payment method without your login."],
-	["A caller says your computer has been found sending illegal content and the FBI will arrest you unless you pay a fine. What do you do?","Hang up; this is a scare tactic","Pay the fine to avoid arrest","Delete your files immediately","Give your name and address","Law enforcement does not phone to demand fines. Never let fear force a decision."],
-	["Someone calls from the 'Social Security Fraud Department' and asks you to withdraw cash and hand it to a courier. What do you do?","Hang up and call your family and your bank","Withdraw the cash as asked","Withdraw half and keep the rest","Meet the courier in a public place","No agency uses couriers to collect cash. This is a scam that targets older adults."],
-	["A caller from the 'Bank of America fraud department' says to hang up and call the number on the back of your card, but he stays on the line. What happens?","He may keep the line open and impersonate the bank; wait or use another phone","You are talking to the real bank","The call ends normally","Nothing happens","Scammers can keep the line open so it sounds like you reached a real number."],
-	["A caller says you were selected for a government stimulus payment and needs your bank account number. What do you do?","Hang up; the government does not call for bank details","Give your account number","Give your routing number only","Give your password","Real payments are issued automatically using information the agency already has."],
-	["An email from your 'IT department' asks you to confirm your password to avoid losing email access today. What do you do?","Do not reply; contact IT through a known phone number","Reply with your password","Click the link and sign in","Forward it to coworkers","Real IT teams do not ask for your password by email."],
-	["You see a pop-up that says 'Congratulations! You are our 1,000,000th visitor.' What do you do?","Close the page; it is not real","Click to claim the prize","Enter your email and address","Share your phone number","Pop-up prizes are scams to collect personal details."],
-	["Which of these is most likely a safe way to check on a surprise email from your bank?","Open your bank app or type the bank's web address yourself","Click the link in the email","Reply to the email","Call the number shown in the email","Always use your own trusted path instead of anything in the message."],
-	["You get an email with the subject 'Your account has been compromised' from a company you do not use. What do you do?","Delete it; it is a scam","Click to secure your account","Reply with your details","Call the number in the email","If you do not have an account, there is nothing to secure."],
-	["A text says you won a free cruise and asks you to reply YES. What happens if you reply?","Scammers will know your number is active and send more","You will receive the cruise","Nothing happens","They will stop texting","Replying confirms the number is active and leads to more scams."],
-	["You receive an email with the sender name of your friend but the reply address is a different email. What do you do?","Be cautious and check with your friend","Reply to the other address","Click the link","Open the attachment","The sender name can be faked. Check the actual address."],
-	["A website sells name-brand shoes at 80% off but only accepts payment by gift card or wire. What do you do?","Leave the site; it is likely fake","Pay by gift card","Buy one pair to test it","Pay by wire for a discount","Unusual payment methods are a red flag."],
-	["A website asks you to pay a $49 fee to claim an unclaimed government pension. What do you do?","Close it; use official government sites","Pay the fee","Enter your SSN","Share it with friends","Official unclaimed-property sites are free."],
-	["An online contest says you can win a car by entering your credit card for shipping. What do you do?","Leave the page","Enter your card","Use a prepaid card","Enter only your email","Contests do not need your card."],
-	["A woman on a dating app suggests chatting on Telegram and shows investment gains. What do you do?","Be cautious and do not invest","Invest","Introduce a friend","Send her your bank info","Investment romance scams push victims to deposit."],
-	["A seller on an app asks you to confirm your Cash App PIN so they can send you payment. What do you do?","Never share your PIN","Share it","Share half","Share it with the buyer's friend","PINs protect your money."],
-	["A person says to send crypto to a wallet address to unlock your frozen account. What do you do?","Never send; contact the service directly","Send it","Send half","Send more","Crypto sent cannot be recovered."],
-	["A man says he is from the gas company, and you have a leak, but he wants to check your valuables for gas damage. What do you do?","Call the gas company's emergency number on your bill","Let him look through your home","Hand him your jewelry for safety","Go outside while he checks","Distraction burglaries use a story while a partner steals."],
-	["You find an envelope in your mailbox that looks like it is from the government but asks for payment to claim a benefit. What do you do?","Check with the real agency","Pay the fee","Return it","Call the number","Fake government mail looks official."],
-	["Someone offers to help you pay your bills for a monthly fee but needs your account passwords. What do you do?","Decline; never share passwords","Share them","Share some","Share them after a month","Giving access to your accounts is risky."],
-	["You find a USB stick in the parking lot labeled 'Payroll.' What do you do?","Do not plug it in; give it to security","Plug it in to see","Plug it in at home","Share it","Unknown USB drives can contain malware."],
-	["You see an ad for hearing aids at an unbelievably low price from an unknown website. What do you do?","Talk to an audiologist","Buy online","Pay by wire","Buy two","Devices may be fake or unsafe."],
-	["A salesperson at your door says you must sign now to lock in a special price. What do you do?","Say you need time and ask for written information","Sign","Sign after a call","Pay a deposit","The three-day rule protects door-to-door sales in many places."],
-	["You want to check if a charity is legitimate before donating. What should you do?","Look it up on a trusted rating site and use its official website","Donate to whoever calls first","Trust the name since it sounds good","Give cash at the door","Use sources such as Charity Navigator or the state attorney general's office."],
-	["What is the best way to verify a request that arrives by email from your boss?","Call or message them using a number you already have","Reply to the email","Click the link","Forward it to a coworker","Never use contact details from the suspicious message."],
-	["What should you do with an email that claims to be from a company and has a link to log in?","Go to the company website yourself","Click the link","Reply with your password","Forward it to friends","Typing the address yourself avoids fake pages."],
-	["Where can you report a scam in the United States?","reportfraud.ftc.gov and the FBI's IC3 at ic3.gov","A random website","Social media","Only to your neighbor","Reports help authorities stop scammers."],
-	["Why should you cover the keypad when entering your PIN?","To prevent people or cameras from seeing it","It keeps the keys clean","It saves energy","It is polite","Shoulder surfing is common."],
-	["Which of these protects your phone from scams?","Block and report unwanted callers and texts","Answer every call","Reply to every text","Share your number online","Blocking reduces repeat attempts."],
-	["What should you do if you receive a letter from a bank you do not use?","Do not call numbers in it; check with the bank directly","Call the number","Send payment","Give your SSN","Check independently."],
-	["Which statement is true about 'free' offers that ask for card details?","They often lead to hidden charges","They are always free","They are government approved","They are risk-free","Read terms carefully."],
-	["You receive an email that looks like it is from your own email provider warning that your account will be closed in 24 hours unless you sign in through a link. What do you do?","Ignore the link and sign in by typing the provider's address yourself","Click the link and sign in quickly","Reply with your password so they can verify you","Forward it to all your contacts","Fake deadlines push you to act before thinking. Real providers do not close accounts like this."],
-	["A caller says your car warranty is about to expire and offers an extended plan today only for a big discount. What do you do?","Hang up and do not press any buttons","Press 1 to hear the offer","Give your VIN to check eligibility","Pay the down payment today","Warranty robocalls are among the most common scams. Contact your dealer directly if you are unsure."],
-	["Your phone rings. A voice you think is your granddaughter says she is in trouble in another country and needs money. It sounds just like her. What do you do?","Hang up and call her on her normal number; voices can be cloned by AI","Trust the voice and send money","Ask her to hold while you send gift cards","Ask what her favorite food is and send money if correct","AI can copy a voice from a few seconds of audio. A family code word helps verify real emergencies."],
-	["A man calls from a local roofing company saying a storm damaged your roof and he can fix it today for cash. What do you do?","Decline; get written quotes from licensed local contractors","Pay half upfront to start work","Let him begin and pay at the end","Sign a contract on the spot to lock the price","Storm chasers pressure people. Get multiple quotes and check licenses and reviews."],
-	["A man calls claiming to be from your internet provider and offers a lower price if you give him the account PIN. What do you do?","Hang up and call the official number","Give the PIN","Give the last four of the PIN","Confirm your address instead","Your account PIN lets someone change services or steal your number."],
-	["Someone says they are with the FBI, and they say your identity was used in a crime. They ask for your bank PIN to help investigate. What do you do?","Hang up; the FBI never asks for PINs by phone","Give the PIN to cooperate","Give your card number instead","Send a photo of your ID","Government agencies do not request your PIN or banking passwords."],
-	["A caller offers you a free security system and wants your credit card to verify identity. What do you do?","Hang up; you do not need a card for a free offer","Give the card for verification","Give a debit card","Give only the expiration date","Free offers that need a card are often a trick to charge you."],
-	["An email says you won an iPhone in a survey. You only need to pay $2 shipping. What do you do?","Delete it; it is a scam to collect your card details","Pay the $2 shipping","Enter your address only","Share it with friends to enter again","The small fee is used to steal your card information."],
-	["Your email says you were sent a secure document from DocuSign, but you were not expecting one. What do you do?","Do not click; contact the sender through another method","Click View Document","Sign in with your email password","Forward it to your lawyer","Fake DocuSign emails steal logins. Verify with the sender separately."],
-	["An email says you must verify your Medicare account or lose coverage, and links to a form asking for your SSN. What do you do?","Delete it and contact Medicare through the official site","Fill in the form","Give the last four of your SSN","Print the form and mail it","Medicare will not email you to verify identity or coverage."],
-	["You receive an email from your boss asking you to quickly pay an invoice to a new vendor, with an urgent tone. What do you do?","Verify by phone before paying","Pay it right away","Pay half and ask later","Forward it to a coworker to pay","Business email compromise relies on urgency. Verify requests for payments."],
-	["A text says your cable bill is past due and to pay now to avoid disconnection. You pay your bill automatically. What do you do?","Ignore it and check with your provider","Pay through the link","Call the number","Send gift cards","Phishing texts often claim past due bills."],
-	["An email arrives claiming to be from the CEO of the charity you volunteer with, asking you to buy gift cards for donors. What do you do?","Call the CEO on a known number to confirm","Buy the cards","Ask what amount is needed and buy","Reply asking for details","Leaders do not request gift cards by email."],
-	["You are selling a couch on Facebook Marketplace. A buyer sends a check for more than the price and asks you to refund the difference. What do you do?","Refuse; it is a fake check scam","Deposit the check and refund the extra","Refund half now","Ask them to send cash instead","Fake checks bounce after you have sent real money."],
-	["A call center worker says you were selected to receive a discount on your Medicare supplement. They ask for your SSN. What do you do?","Hang up; do not share your SSN","Give your SSN","Give the last four","Mail it","Never provide your SSN to someone who contacts you."],
-	["A woman you met online asks you to buy a prepaid card, send the code, and she will pay you back. What do you do?","Refuse; do not send gift card codes","Send the code","Send a small amount","Buy a different card","Gift card codes cannot be reversed."],
-	["A person messages saying they accidentally sent you money and asks you to return it. You see no deposit in your account. What do you do?","Check your bank; do not send anything back","Send it back","Send half","Send it by gift card","Overpayment scams involve fake deposits."],
-	["Someone sends a Facebook message saying your photo was used in a fake profile and you must click a link to report it. What do you do?","Report through the platform itself","Click the link","Reply with your password","Share the link","Phishing messages create fear."],
-	["You see a website that shows your face in a photo and says to pay $19 to remove it. What do you do?","Ignore it and report it","Pay","Pay half","Ask them to delete it for free","Blackmail scams try to scare you."],
-	["A contractor says your roof needs urgent repairs and asks for the full payment in cash before starting. What do you do?","Get several written quotes and never pay everything upfront","Pay in cash to get a discount","Pay half and trust him","Let him start and pay later","A reasonable deposit is normal, but the full amount upfront in cash is a red flag."],
-	["A man who says he is a pastor's friend asks you for a donation for a church repair, collecting cash at your door. What do you do?","Ask the church directly","Give cash","Give your card","Give a check made out to him","Verify through your church office."],
-	["A financial advisor calls to say your retirement account is at risk and you should move it to an 'insured' account via a link. What do you do?","Call your advisor on a known number","Move the funds","Give your account number","Send your password","Account takeover scams use fear."],
-	["You get a letter with a check from a company you do not know, with a note that says cashing it signs you up for a service. What do you do?","Do not cash it","Cash it","Deposit it","Call to ask","Cashing may sign you up for charges."],
-	["A salesperson offers a miracle cure for diabetes with no side effects. What do you do?","Consult your doctor","Buy it","Buy two","Stop your medication","Do not abandon real treatment."],
-	["A man says you owe for a 'service call' you did not request and demands payment on the spot. What do you do?","Refuse and ask for a written invoice","Pay","Pay half","Give your card","Fake invoices are common."],
-	["A website address begins with 'https' and shows a padlock. Does that mean the site is safe to trust?","No; it only means the connection is encrypted, scam sites can have it too","Yes, it always means the site is legitimate","Yes, as long as the padlock is green","Yes, for shopping only","Scammers use padlocks too. Check the web address spelling and the company itself."],
-	["You are told your computer is infected by a pop-up that cannot be closed. What do you do?","Force-quit the browser or restart; do not call the number","Call the number","Click OK","Download the cleaner","These are scare tactics to get you on the phone."],
-	["Someone tells you that you must act now or lose your benefits forever. What does that tell you?","It is likely a scam using pressure","It is a government rule","It is a helpful warning","It is a courtesy call","Real agencies give written notice and time to respond."],
-	["What should you do if you realize you gave a scammer your bank details?","Call your bank immediately and report it","Wait and see","Change your phone number","Delete your email","Quick action can stop the transfers."],
-	["What is a good response to an unsolicited investment offer?","Ask for written details and talk to a trusted financial professional","Invest immediately","Invest a little","Pay a deposit","Do your homework before investing."],
-	["Why do scammers target older adults?","They often have savings and are polite and trusting","They are not smart","They do not have phones","They never use email","Scammers exploit trust, not intelligence."],
-	["Which is the best way to handle an unknown caller asking for donations?","Say you will donate through official channels","Give your card","Give cash","Give gift cards","You control where and when you give."],
-	["What should you do if an online friend asks for money?","Do not send it; talk to someone you trust","Send it","Send half","Ask them to pay you back","Online friends who ask for money are red flags."],
-	["A man calls and says he is a deputy collecting a fine for missed jury duty. He is polite and gives a badge number. What do you do?","Hang up and call the court's official number to check","Trust him because he gave a badge number","Pay the fine with a card","Pay with a gift card to be safe","Anyone can invent a badge number. Courts do not collect fines by phone."],
-	["A caller from the utility company says your power will be shut off in 30 minutes unless you pay with a prepaid card. What do you do?","Hang up and call the number on your utility bill","Pay immediately to keep the lights on","Ask for a few days of extra time","Pay half now and half later","Real utilities send notices in writing and do not demand prepaid cards or crypto."],
-	["You get a call from a scammer who knows your name, address and your daughter's name. Does that mean the call is real?","No; scammers can find this information online","Yes, they must be legitimate","Yes, but only if they know your birthday","Yes, if the caller ID matches","Personal details are easy to buy or look up. Knowing facts about you does not prove who is calling."],
-	["A caller asks you to say the word yes to confirm you are the right person. What should you do?","Do not say yes; hang up","Say yes, it is harmless","Say yes only if they use your name","Confirm your address instead","Some scammers record you saying yes to use as fake authorization."],
-	["A caller says he is from the sheriff's office and you failed to appear in court. He says you can pay a bond over the phone. What do you do?","Hang up; sheriffs do not collect payments by phone or gift card","Pay with your debit card","Ask him to mail a receipt","Pay with cryptocurrency","Courts and sheriffs do not use gift cards or crypto for payment."],
-	["A caller offers you an investment with a guaranteed 30% return with no risk. What do you do?","Say no; guaranteed high returns are a warning sign","Invest a small amount first","Invest everything to benefit sooner","Ask for a friend's opinion after sending money","All real investments carry risk. Guarantees of big returns are a hallmark of fraud."],
-	["A person calling claims to be from Publishers Clearing House and says you won, but must send fees through a wire first. What do you do?","Hang up; the real PCH never asks for money to claim a prize","Wire the fee","Send a prepaid card number","Give your bank details","Winners are not asked to pay fees to receive prizes."],
-	["An email says your Netflix payment was declined and links you to update your card. You see the spelling 'Netfllx.com' in the link. What do you do?","Do not click; open the Netflix app directly","Click the link and update your card","Reply with your card number","Call the phone number in the email","Look-alike web addresses with one letter changed are a classic phishing trick."],
-	["A text from 'Chase' says your account is locked and to click a link. You do not have a Chase account. What do you do?","Delete it; it is a mass phishing text","Click to see what it is about","Reply that you are not a customer","Call the number in the text","Scammers send these to thousands of numbers hoping some are customers."],
-	["A friend's social media account sends you a message saying 'Look at this video of you!' with a link. What do you do?","Ask your friend by phone if they sent it; do not click","Click the link","Reply with a laughing emoji","Share it with others","Hacked accounts spread harmful links to friends."],
-	["A suspicious email offers a coupon for a free gift card if you click and enter your email and password. What do you do?","Delete it; no coupon needs your password","Enter only your email","Enter both to claim it","Forward it to your friends","Never enter your password to get a coupon."],
-	["An email claims to be from your doctor and asks you to open an attached medical report. You were not expecting one. What do you do?","Call the doctor's office using a known number","Open the attachment","Reply with your date of birth","Forward it to your family","Unexpected medical attachments can carry harmful software."],
-	["A text from your 'bank' contains a phone number and says to call to cancel a large transfer. What do you do?","Call the number on your card, not the one in the text","Call the number in the text","Reply STOP","Reply with the last four digits","Scammers provide their own numbers in the message."],
-	["You meet someone on a dating site who quickly says they love you, but they are overseas and cannot video chat. They need money for a plane ticket. What do you do?","Stop contact; do not send money to someone you have never met","Send the money to help them visit","Send half and wait","Ask them to repay later and send it","Romance scammers build trust, then invent emergencies. Never send money to someone you have not met."],
-	["Someone you met in an online chess group asks to borrow $3,000 for hospital bills. What do you do?","Decline; do not lend money to people you only know online","Send the money","Send some now","Send gift cards instead","Online friends who ask for money may be scammers."],
-	["An online 'friend' sends you a link to a trading site and suggests depositing $100 to start. Later it shows big profits, but withdrawal needs a fee. What do you do?","Stop and report it; do not pay more","Pay the withdrawal fee","Invest more to unlock","Ask for a bigger refund","Fake platforms show fake profits and block withdrawals."],
-	["A friend sends a link to a 'Great investment opportunity' that promises 10% daily returns. What do you do?","Ask them to verify; decline","Invest a small amount","Invest a lot","Share it","Impossible returns are a sign of a Ponzi scheme."],
-	["A stranger sends you a message about how they helped others earn money from home with a program. They need a $99 enrollment fee. What do you do?","Decline; verify any business before paying","Pay the fee","Pay half","Recruit friends","Many work-from-home programs are scams."],
-	["A person claiming to be from eBay asks you to pay outside the platform to avoid fees. What do you do?","Decline; use the platform","Pay outside","Pay half","Ask for a discount","Off-platform payments are not protected."],
-	["A stranger knocks and says he works for the water company and needs to check your pipes inside. He has no uniform or ID badge. What do you do?","Do not let him in; call the water company on a number you already have","Let him in since he knows about your water","Let him in but watch him","Give him a glass of water and let him look around","Con artists pose as utility workers to get inside and steal. Real workers carry ID and you can verify by phone."],
-	["You receive a bill in the mail for services you did not use, with a late fee. What do you do?","Check the bill and call the company on its official number","Pay it right away","Ignore it","Send cash","Fake invoices are used to trick people into paying."],
-	["A man calls to say you won a lottery in another country. What do you do?","Hang up; you cannot win a lottery you did not enter","Claim it","Send fees","Ask for details","Foreign lottery calls are scams."],
-	["You see unusual charges on your credit card. What should you do first?","Call the card issuer and report it","Ignore it","Pay the bill","Close your email","Report quickly to limit liability."],
-	["A pharmacist you do not know calls to tell you that your prescription is ready but wants your SSN to verify. What do you do?","Hang up and call your pharmacy","Give the SSN","Give the last four","Give your birth date","Pharmacies do not need SSNs."],
-	["Your credit card company sends a new chip card that you did not request. What do you do?","Call the issuer using the number on your card","Activate it","Throw it away","Use it","Unrequested cards could be fraud."],
-	["Which of these is the safest place to keep a list of your passwords?","A reputable password manager, or a notebook kept in a safe place at home","A sticky note on your monitor","A file called passwords on your desktop","An email to yourself","Avoid places others or hackers can easily find. A password manager encrypts them for you."],
-	["Which email address is most likely a scam pretending to be PayPal?","service@paypa1-security.com","service@paypal.com","help@paypal.com","noreply@paypal.com","Look closely: the numeral 1 replaces the letter l. Even so, never rely on addresses alone."],
-	["You are asked to install a 'security app' on your phone after a call. What do you do?","Do not install it; hang up","Install it","Install and give permissions","Install and share the code","Fake apps give scammers control."],
-	["Which of these messages is most likely to be real?","A text from your pharmacy confirming a prescription you ordered through its app","A text promising a $500 gift card","A text about an unpaid toll you never used","A text from an unknown number about a package","A message that matches something you actually did is more likely real, but still check through the app."],
-	["What is a legitimate reason a bank would call you?","To confirm unusual activity, but they will not ask for full numbers or codes","To get your PIN","To get your online password","To ask you to move your money","If unsure, hang up and call the bank back."],
-	["Which question could help verify a caller claiming to be a relative?","Ask something only the real person would know that is not online","Ask their full name","Ask what they had for lunch","Ask where they live","Use family code words or private facts."],
-	["What should you do if your email is hacked?","Change your password, enable 2FA, and tell your contacts","Ignore it","Delete your account","Send an apology","Fast action limits damage."],
-	["How can you protect yourself from online shopping scams?","Use well-known stores, check reviews, and pay by credit card","Buy from any site","Pay with gift cards","Use wire transfers","Trusted vendors reduce risk."],
-	["The 'Click With Confidence' motto encourages you to...","Check before you click","Click fast","Ignore warnings","Trust strangers","Taking a moment protects you."],
-	["A caller says you have won a $1 million sweepstakes, but you must first pay $500 in taxes and fees. What do you do?","Hang up; real prizes never require you to pay first","Pay the $500 since a million is worth it","Ask them to deduct the fees from the prize","Send the fee by wire transfer","If you must pay to collect a prize, it is a scam. Also, you cannot win a contest you did not enter."],
-	["A call says you qualify for a government grant if you pay a processing fee in advance. What do you do?","Hang up; real government grants do not charge an upfront fee","Pay the small fee to get the grant","Give your bank account for the grant deposit","Ask for a friend to confirm it","Government agencies do not call to give free grants, and they never ask you to pay to receive money."],
-	["A call claims to be from your doctor's office and asks for your insurance number to book a new appointment. You did not call them. What do you do?","Hang up and call the office on a number you already trust","Give the insurance number to book it","Give your date of birth as well","Say you will pay a deposit over the phone","Medical identity theft is common. Confirm through the number on your own paperwork."],
-	["Your phone says it is a call from 'Medicare Services' offering a free back brace. What do you do?","Hang up and ignore it; Medicare does not make these calls","Give your Medicare number to receive it","Give your doctor's name","Say yes to a delivery","Free medical equipment calls are used to steal your Medicare number."],
-	["A pre-recorded message says your Netflix payment failed and your account will be suspended. Press 1. What do you do?","Hang up and check your account in the official app","Press 1 to update payment","Say your card number to the recording","Press 9 to cancel","Subscription robocalls steal payment details. Check the real service yourself."],
-	["An automated voice says your computer has a virus and to call a number to speak to a technician. What do you do?","Ignore it and hang up","Call and ask for help","Allow remote access","Pay for the removal","Real security tools do not call you to report a virus."],
-	["A text says you owe an unpaid toll and must pay today or face a late fee. You do not use that toll road. What do you do?","Ignore it and check your toll account on the official website","Tap the link and pay","Call the number in the text","Reply with your license plate","Toll text scams are widespread. Use the official toll site if you think you owe money."],
-	["You get an email from 'Amazon' about an order you did not place, with a number to call to cancel. What do you do?","Check your orders in the official app instead","Call the number in the email","Reply to cancel the order","Click the cancel button","The phone number connects you to a scammer who wants remote access or payment."],
-	["You get an email with a link to track a package from FedEx, but the link domain is 'fedex-tracking-secure.xyz'. What do you do?","Do not click; track using the real FedEx site","Click the tracking link","Reply asking for details","Forward it to a friend","Odd domain names are a red flag."],
-	["A text from your 'phone carrier' says you won a free phone and to click to claim. What do you do?","Ignore it and check with your carrier directly","Click the link","Reply with your account PIN","Give your address to receive it","Carrier prize messages are phishing."],
-	["A QR code on a parking meter asks you to scan to pay. The code looks like a sticker placed on top. What do you do?","Do not scan; pay at the machine or through the official app","Scan and pay","Scan and enter your card","Take a photo and share it","Scammers place fake QR stickers to steal payments."],
-	["An email says you can get a refund for a recent purchase and asks you to click a link that asks for your bank login. What do you do?","Delete it; no refund needs your bank login","Enter your login","Enter your account number only","Call the number","Refunds do not require you to share login information."],
-	["An email says you have been selected as a mystery shopper and will receive a check to buy gift cards and report back. What do you do?","Delete it; it is a fake check scam","Cash the check and buy cards","Deposit it and keep a commission","Reply for details","The check will bounce and the money you spent is lost."],
-	["You receive a friend request from someone with the same name as your friend, with the same photo. What do you do?","Check with your friend before accepting","Accept it","Message and send money","Share your phone number","Cloned accounts are used to scam friends."],
-	["Someone on a social app tells you about a sure-win crypto trading bot and shows screenshots of profits. What do you do?","Ignore it; screenshots can be faked","Invest a little","Invest a lot","Ask a friend to invest too","Fake profit screenshots are common in crypto scams."],
-	["A stranger on Instagram says they can help you recover your hacked account for a fee. What do you do?","Use the platform's official recovery tools","Pay the fee","Share your password","Give a gift card","Recovery services are usually scams."],
-	["A person selling a ring online asks you to pay a deposit and says it will be shipped when payment clears. You have seen no proof it exists. What do you do?","Ask for proof or buy elsewhere","Pay","Pay half","Pay with Zelle","Always verify sellers and items."],
-	["Someone on a travel site says you can get a cheap flight if you pay by gift card. What do you do?","Decline; book via official airlines","Pay with a gift card","Pay half","Pay by wire","Fake travel deals are common."],
-	["A video shows a well-known doctor endorsing a supplement, but the lips do not match the voice. What might this be?","A deepfake used for advertising","A real endorsement","A translation","A parody","Deepfake ads often misuse famous faces."],
-	["A person claims to be from Medicare at your door and says you must update your card. What do you do?","Close the door and call Medicare","Show your card","Give your number","Let him in","Medicare does not send people door to door."],
-	["Someone tells you to keep a transaction secret from your family and the bank. What does this mean?","It is a red flag for a scam","It is normal","It is safe","It is a privacy tip","Secrecy is a tool of scammers."],
-	["Someone texts that they are your bank's fraud team and sends you a link to download a security app. What do you do?","Do not download; call the bank","Download it","Use it once","Share it","Fake apps steal data."],
-	["The gas pump card reader looks loose or has a sticker. What do you do?","Use another pump or pay inside","Insert your card","Use your debit card","Swipe quickly","Skimmers can be attached to pumps."],
-	["A man calls to say you can wipe out your debts for a fee. What do you do?","Decline; use nonprofit credit counseling","Pay the fee","Pay half","Give your account","Debt relief scams charge fees."],
-	["What does turning on two-step verification (2FA) do for your email account?","Asks for a second proof, like a code, so a stolen password alone is not enough","Makes your email load faster","Deletes spam automatically","Hides your email address","A password thief still cannot get in without the second step."],
-	["You receive a message from your bank telling you to call a number to dispute a charge. How do you check if the number is real?","Compare it to the number printed on your card or statement","Trust the number in the message","Search the number on the same page","Ask the caller to confirm","Use the number you already trust, not one in the message."],
-	["You see a news story saying a famous investor recommends a product, but the website looks odd. What do you do?","Check the real news site and be skeptical","Invest immediately","Share the story","Enter your email","Fake news pages are used to trick people into scams."],
-	["Which is the safest way to pay a contractor?","A small deposit by check and the rest after the work is done","Full payment upfront in cash","Gift cards","Wire transfer","Pay in stages and keep a record."],
-	["Why is it helpful to ask a trusted person before acting on a surprising message?","A second opinion often spots red flags you may miss","It is a waste of time","It costs money","It makes the scam stronger","Pausing and asking breaks the scammer's pressure."],
-	["You see a video of a politician saying something shocking, but you cannot find it in the news. What do you do?","Be skeptical and look for trusted sources","Share it right away","Believe it","Comment on it","Deepfakes spread quickly. Check before sharing."],
-	["Which is a sign that a website is a scam?","Poor spelling, odd web address, and no contact details","A clear return policy","A real phone number","A physical address","Check details carefully."],
-	["Which clue suggests a letter from the 'government' is a scam?","It asks for payment by gift card or wire","It has an official logo","It has a stamp","It is addressed to you","Governments do not take gift cards."],
-	["Your neighbor says she got a call from a 'judge' and wired money. What should you tell her?","It is a scam; contact her bank and police","Wait and see","Pay the rest","Keep it secret","Help her report quickly."],
-	["A man says he is from Microsoft and your computer is sending error messages. He asks you to let him connect remotely to fix it. What do you do?","Hang up; Microsoft does not cold-call people about errors","Let him connect since he knows your computer has a problem","Allow remote access but watch what he does","Pay a small fee to start the repair","Remote access gives a stranger full control of your files and bank accounts."],
-	["A caller says your Amazon account was used to buy a $900 laptop and offers to cancel it if you install a security app. What do you do?","Hang up and check your orders directly in the Amazon app or website","Install the app to stop the charge","Give your login so they can cancel it","Press 1 to speak to the fraud team","Scammers invent fake purchases to get you to give access. Check the real account yourself."],
-	["A person calls claiming to be a Social Security employee saying your benefits will stop unless you verify your identity today. What do you do?","Hang up and call the official Social Security number yourself","Confirm your SSN to keep your benefits","Confirm your bank details only","Press 2 to speak to a supervisor","Social Security will not call to threaten you. Contact them through the official website or number."],
-	["A phone call says your Social Security number was found in a car at the border in a crime. What do you do?","Hang up; this is a well-known government impersonation scam","Press 1 to discuss the case","Give your SSN to prove your innocence","Ask which border crossing it was","The story is invented to frighten you into giving information or money."],
-	["A caller offers help recovering money you lost to a scam, for an upfront fee. What do you do?","Hang up; recovery scams target scam victims","Pay the fee to recover your money","Give your bank details to receive the funds","Pay half upfront","Fraud recovery offers are often a second scam. Report to authorities instead."],
-	["A caller says you are being sued and must settle today by paying with a money order. What do you do?","Hang up and contact a lawyer or local legal aid if worried","Send the money order","Ask them to email the documents first","Give your address","Real legal notices arrive in writing from a court, not by phone threats."],
-	["A caller says you can cancel your timeshare and get a refund if you pay a fee first. What do you do?","Hang up; timeshare exit scams ask for upfront fees","Pay the fee","Pay half and wait","Wire the funds to an escrow","Legitimate attorneys rarely ask for payment by wire or gift card for such work."],
-	["A message from 'Social Security' says your statement is ready and to log in with a link. What do you do?","Go to ssa.gov yourself instead of using the link","Click the link and sign in","Reply with your SSN","Print the message and bring it to the bank","Always type the official address yourself rather than trusting links."],
-	["An email warns that your mailbox is full and you must click to upgrade or lose messages. What do you do?","Ignore the message and check your mailbox settings yourself","Click Upgrade now","Reply with your password","Pay the storage fee in the link","Mailbox full emails are phishing attempts to steal login details."],
-	["A message from 'IT support' says to download an app to fix a problem with your tablet. What do you do?","Do not download; contact the manufacturer directly","Download the app","Give them permission to remote access","Reply with your password","Fake support apps give scammers control of your device."],
-	["Your inbox has an email that appears to be from the DMV about unpaid fines with a payment link. What do you do?","Ignore it and check with your state DMV site","Pay through the link","Reply to ask for details","Call the number in the email","Government agencies do not request payment through unexpected links."],
-	["An email promises to remove a virus from your computer if you click a button labeled 'Clean Now.' What do you do?","Ignore it; real antivirus does not work this way","Click Clean Now","Download the file","Call the number","Fake alerts install harmful software."],
-	["A coworker you do not know sends a link saying 'You have to see this' on a company chat. What do you do?","Verify who it is before clicking","Click it quickly","Share it with the team","Reply with a thumbs up","Messages from unknown accounts can carry harmful links."],
-	["A person claiming to be a military officer sends you friendly messages and asks you to buy him an international phone card. What do you do?","Stop messaging; it is a romance scam","Buy the card","Send a small amount","Ask for his base address and then send","Real service members do not ask strangers for money."],
-	["A person messages on LinkedIn offering a remote job paying $60 an hour, and asks you to buy software with your card first. What do you do?","Decline; real employers do not charge you to start","Buy the software","Use a debit card","Ask for a refund promise","Job scams often ask for money upfront."],
-	["You get a message from a 'recruiter' who says you were selected for a job after a single chat. They want your SSN and bank details to set up pay. What do you do?","Decline until you verify the company independently","Share the details","Share the SSN only","Share the bank only","Fake employers steal identity."],
-	["A website tells you your computer is infected and offers a free scan. The scan finds 87 viruses and offers a paid cleanup. What do you do?","Close the page; the scan is fake","Pay for the cleanup","Call the number","Download the file","Fake scans are designed to scare you."],
-	["An ad offers you a free sample of a product, only costing shipping. Later, you are charged monthly. What is this called?","A subscription trap","A refund","A rebate","A guarantee","Always read the fine print on free trials."],
-	["You are asked to pay for a prize with an iTunes card. What do you do?","Refuse; it is a scam","Pay","Pay half","Buy a different card","No real prize requires gift cards."],
-	["A man hands you a flyer for a free security system and says he must come in to check your windows. What do you do?","Decline and do not let him in","Let him in","Let him in with a neighbor","Sign his form","Some sales crews case homes."],
-	["A person at the bank asks you to move money to a cryptocurrency ATM, saying it is safe. What do you do?","Refuse; crypto ATMs are a scam favorite","Deposit the cash","Deposit half","Bring a friend and deposit","Scammers use crypto ATMs because transfers are irreversible."],
-	["A person offers to buy your gold jewelry at triple the price but wants you to bring it to a hotel room. What do you do?","Decline; use a reputable jeweler","Go with it","Bring a friend","Bring only part","Hotel buyers are often scammers."],
-	["A Wi-Fi hotspot at the airport called 'Free Airport Wi-Fi' asks for your credit card for access. What do you do?","Do not connect","Enter your card","Enter a debit card","Use it for banking","Fake hotspots steal data."],
-	["A caller says a relative died and left a debt you must pay. What do you do?","Ask for written proof; contact an attorney","Pay","Pay half","Give your card","Debt collectors cannot demand relatives pay."],
-	["Your family agrees on a secret code word for emergencies. Why is that useful?","It lets you confirm a caller is really your relative, even if the voice is cloned","It makes phone calls cheaper","It keeps your phone from being hacked","It blocks spam calls","AI can copy a voice from a short clip. A code word only your family knows can't be faked."],
-	["You are asked to wire money to a stranger overseas. Why do scammers prefer wire transfers and gift cards?","Because the money is very hard to trace or get back","Because they are cheaper","Because they are faster for the victim","Because banks encourage them","Once sent, the money is nearly impossible to recover."],
-	["A caller says to keep the call secret because 'the bank staff are involved.' What should you do?","Hang up and tell your bank and your family","Keep the secret","Withdraw cash","Ask staff in the bank","Secrecy isolates victims. Talk to someone you trust."],
-	["How can you protect your social media from scammers?","Set your profile to private and accept only people you know","Accept all friend requests","Share your birthday publicly","Post trips in advance","Scammers study your posts for details."],
-	["What does the Click With Confidence Chrome extension do for you?","Scores emails for scam risk and explains it in plain language","Blocks all email","Stores your passwords","Sends emails for you","It helps you decide before you click."],
-	["Why is a short text from a boss asking for a favor suspicious?","Scammers impersonate bosses to ask for gift cards","Bosses never text","It is normal","It is always real","Verify with a call."],
-	["How can you check if a charity text is genuine?","Visit the charity's official website directly","Click the link","Reply with your card","Call the number","Go to the source."],
-	["You get an email with an unfamiliar attachment from a known contact. What do you do?","Confirm with the contact before opening","Open it","Download it","Forward it","Accounts can be hacked."],
-	["Which phrase is a good motto when you suspect a scam?","Stop, think, and check before you click or pay","Click now, ask later","Pay quickly","Trust the caller","Pausing is your best defense."],
-	["A caller from the IRS says you owe back taxes and will be arrested within the hour unless you pay by gift card. What do you do?","Hang up; the IRS does not demand gift cards or threaten arrest by phone","Buy the gift cards to avoid arrest","Ask for a payment plan over the phone","Give your Social Security number to confirm your identity","The IRS contacts people by mail first and never accepts gift cards as payment."],
-	["A caller from a charity says they are raising money for local police and wants your card number over the phone right now. What do you do?","Say you will donate through the charity's official website after checking it","Give your card number since the cause is good","Donate only a small amount by gift card","Ask for a courier to pick up cash","Check charities on a trusted site before giving, and never hand card numbers to an unexpected caller."],
-	["A voicemail says a warrant has been issued for your arrest and to call a number right away. What do you do?","Ignore it, or look up the court on your own and call the official number","Call back immediately","Call back and give your SSN to clear it up","Pay what they ask to cancel the warrant","Real arrest warrants are not delivered by voicemail. Fear is the scammer's main tool."],
-	["A call says you are eligible for student loan forgiveness and need to pay $500 to apply today. What do you do?","Hang up; federal programs do not charge application fees","Pay the $500 fee","Give your FSA ID to apply faster","Pay half now and half later","Real student aid help is free through the official government website."],
-	["A recorded message from your 'bank' says your debit card has been blocked. Press 1 to unlock it. What do you do?","Hang up and call the number on your card","Press 1 to unlock","Enter your card number on the keypad","Enter your PIN","Fake automated calls collect card numbers and PINs from the keypad."],
-	["A man claims to be from an energy company, offers a refund, and says to read your account number. What do you do?","Hang up and call the number on your bill","Read the number to claim it","Read the number and your PIN","Send a copy of the bill","Never share account numbers on calls you did not start."],
-	["You receive a call from 'your landlord' saying to send rent to a new account because the old one is closed. What do you do?","Verify in person or by a number you already have","Send rent to the new account","Send half to each","Ask for a text confirmation","Rent redirection scams steal rent payments."],
-	["A text says your Apple ID will be disabled and gives a link. You have no issues with your account. What do you do?","Ignore it and check your settings on your own device","Click the link to avoid losing access","Reply with your Apple ID","Call the number in the text","Phishing texts create fake urgency. Verify in the app or settings."],
-	["You receive an email that appears to come from a family member, but the address is slightly different, and it asks you to open a shared photo link. What do you do?","Check with the family member by phone before clicking","Click the photo link","Reply asking for more photos","Forward the email to your contacts","Hacked or spoofed addresses are used to deliver harmful links."],
-	["You notice an email that says 'Dear Customer' and has several spelling mistakes, claiming to be from your bank. What does that suggest?","It is likely phishing","It is probably real but rushed","It is safe if the logo looks right","It is safe if it comes from a .com address","Genuine banks address you by name and proofread carefully. Logos are easy to copy."],
-	["A text says your Medicare benefits have increased and to click for details. What do you do?","Ignore it; Medicare does not text offers","Click for details","Reply YES","Call the phone number","Texts promising new benefits are scams to steal identity."],
-	["You get an email asking you to update your direct deposit information, supposedly from HR. The email address is a free Gmail account. What do you do?","Verify with HR in person or by known phone number","Update the details","Reply with your bank details","Reply asking for more information","Payroll diversion scams use fake HR messages."],
-	["An email says your subscription to antivirus software auto-renewed for $289 and to call to cancel. You do not have that subscription. What do you do?","Ignore it and check your bank statements","Call the number to cancel","Reply with your account details","Click the cancellation link","Fake invoices lead to phone scams."],
-	["Someone on a gaming site offers a free 'gift' if you give your parent's credit card number. What do you do?","Refuse and tell a trusted adult","Give the number","Give only the last four digits","Ask them to send a code first","Never share a card number with strangers online."],
-	["You receive a friendly message from a woman claiming to be a widow in need of help to transfer money from her late husband's account. What do you do?","Delete it; it is an advance fee scam","Offer to help for a share","Send your bank details","Send your ID","Advance fee scams promise big shares to get your money and data."],
-	["A seller offers a puppy free, you only pay shipping with your card. What do you do?","Ignore; it is likely a scam","Pay shipping","Pay with PayPal friends and family","Pay half","Pet scams ask for repeated payments."],
-	["An online ad shows a miracle cure for arthritis with a limited-time offer and many testimonials. What do you do?","Check with your doctor; be skeptical","Order it","Share it","Buy multiple bottles","Miracle cures are marketing scams."],
-	["A caller from a charity thanks you for last year's donation, which you do not remember, and asks you to renew it. What do you do?","Check your records and give only to verified charities","Renew right away","Give card details","Pay by gift card","Fake pledge reminders are common."],
-	["A stranger asks you to join a WhatsApp group that shares stock tips. What do you do?","Decline; many are pump-and-dump scams","Join and invest","Invite friends","Share personal info","Stock tip groups are used to manipulate prices."],
-	["A person at your door is collecting for a charity you do not recognize and wants cash. What do you do?","Decline and give only to charities you have checked","Give cash","Give your card number","Give gift cards","Fake charities collect money door to door."],
-	["A man says he is from the Social Security Administration and asks to meet you at a bank to help with your benefits. What do you do?","Refuse and report him","Meet him","Bring cash","Give your PIN","SSA does not meet people at banks."],
-	["A relative you rarely see offers to manage your finances and asks you to sign a power of attorney. What do you do?","Consult a lawyer or trusted advisor first","Sign immediately","Sign after a week","Sign in blank","Elder financial abuse is often by someone close."],
-	["A person at a coffee shop offers to help you with your phone and asks for your passcode. What do you do?","Decline","Share the passcode","Share half","Share your PIN","Never share your passcode with strangers."],
-	["A caller offers a free back brace after you answer a few health questions and give your Medicare number. What do you do?","Hang up","Answer the questions","Give the number","Give your doctor's name","Medicare fraud often begins with free items."],
-	["Someone offers a free vacation if you listen to a timeshare pitch for 90 minutes. What do you do?","Be wary; pressure and hidden fees are common","Attend and sign","Pay a deposit","Skip the pitch","Timeshare sales are high pressure."],
-	["A friend asks if they can borrow your phone to make a quick call. They are a stranger in the parking lot. What do you do?","Offer to make the call for them while you hold the phone","Hand over the phone and your passcode","Let them walk off with it","Unlock it first for them","Thieves can steal an unlocked phone. Hold it yourself."],
-	["You are asked to buy gift cards to pay a bill. Who accepts payment by gift card?","Almost no legitimate business or agency","The IRS","Your bank","Your utility company","Gift card payment demands are a hallmark of scams."],
-	["What is a 'romance scam'?","When someone pretends to love you to get your money","A dating app feature","A greeting card offer","A movie","Victims lose billions each year."],
-	["Why is it a bad idea to be embarrassed about being scammed?","Anyone can be fooled and reporting helps others","It does not matter","It means you are not careful","It is a secret","Shame keeps victims silent and helps scammers."],
-	["What should you do with old documents containing personal information?","Shred them before discarding","Throw them in the trash","Recycle them whole","Burn them in a bin","Dumpster diving can lead to identity theft."],
-	["Which payment method can usually be reversed if you dispute it?","A credit card charge","A wire transfer","A gift card","A cryptocurrency transfer","Dispute rights make cards safer."],
-	["Why is a smishing text dangerous?","It may link to a fake site or install harmful software","It is only an advertisement","It costs money to receive","It deletes your messages","Smishing is phishing by text."],
-	["After you pause and think, you still are not sure whether a message is a scam. What is the best next step?","Ask a trusted person or use an official channel to check","Click to see","Reply to test","Share it","When in doubt, check it out."]
-	]
-};
+/*
+ * Click With Confidence - "Scam Stopper" daily game: content and game builder.
+ *
+ * Every day has one game: a fake scam message cut into 16 pieces (two columns by
+ * eight rows). Each piece is either a red flag or safe. make(n) builds game number
+ * n (0 = the first day) from the pools below with a seeded random generator, so
+ * every visitor gets the same game on the same day, and the games never run out.
+ * Games 0-364 are the first year and are checked by the tests described in the README.
+ *
+ * To add a scam type or a line, edit TYPES (or the shared pools) below.
+ * Text tokens like {name} or {phone} are filled in per game (see makeVars).
+ *
+ * Tile layout (index): 0 sender, 1 subject, 2 greeting, 3 opening line,
+ * 4-13 body (shuffled), 14 link or contact, 15 sign-off.
+ */
+(function (root) {
+	'use strict';
+
+	/* Reasons shown to the player. Reused so the wording stays consistent. */
+	var W = {
+		urg: "Scammers rush you so you won't stop to think or ask anyone.",
+		gift: 'Real companies and agencies never ask for payment in gift cards.',
+		wire: 'Wire transfers, cash apps and crypto are hard to undo, which is why scammers ask for them.',
+		secret: 'Scammers keep you quiet so no one can warn you.',
+		threat: 'Threats are meant to scare you into acting before you think.',
+		info: 'Never give personal or account details to someone who contacted you first.',
+		pw: 'No honest company or bank will ask for your password or PIN.',
+		code: 'A code sent to you is the key to your account. Sharing it hands the account over.',
+		spoof: 'Names and caller IDs can be faked, so they prove nothing.',
+		domain: 'A look-alike web address is a classic trick. Real organizations use their own exact address.',
+		gov: 'Government agencies use .gov addresses, never free email accounts.',
+		link: 'Links in unexpected messages can lead to fake sites. Go to the real site yourself.',
+		phone: "Don't call a number from an unexpected message. Look up the real number yourself.",
+		remote: 'Never let someone who contacted you take control of your computer.',
+		greet: 'A generic greeting is a sign of a mass message. Real companies that know you use your name.',
+		caps: 'Shouting in capitals and extra exclamation marks are common in scam messages.',
+		gram: 'Odd wording and typos often show up in mass-produced scam messages.',
+		fee: "Real prizes, grants and refunds are free. If you have to pay a fee to get money, it's a scam.",
+		good: 'If it sounds too good to be true, it is. Nothing is guaranteed and nothing is risk-free.',
+		short: 'Shortened links hide where they really lead.',
+		stay: 'Scammers keep you on the line so you cannot check with anyone.',
+		avoid: 'Scammers steer you away from the people and places who could help you spot the scam.',
+		vague: 'A vague title or team name makes it sound official without anything you can check.',
+		badge: 'A badge number or title sounds official, but you cannot check it.',
+		cash: 'Demanding cash up front is a warning sign.',
+		love: 'Strong feelings very fast, from someone you have never met, is a classic romance-scam move.',
+		video: 'Someone who never appears on a live video call may not be who they say they are.',
+		fake: 'A scammer sends a fake check, then asks for real money back before the bank finds the fake.',
+		lic: 'Honest advisors and contractors are licensed, and you can check that with the state.'
+	};
+
+	var KINDS = {
+		email: { name: 'Email', l: ['From', 'Subject', 'Link or contact', 'Sign-off'] },
+		text: { name: 'Text message', l: ['From', 'Starts with', 'Link or contact', 'Sign-off'] },
+		voicemail: { name: 'Voicemail', l: ['Caller ID', 'Opens with', 'Asks you to', 'Sign-off'] },
+		popup: { name: 'Pop-up on a website', l: ['Website', 'Headline', 'Button', 'Footer'] },
+		dm: { name: 'Online chat message', l: ['From', 'Opens with', 'Link or contact', 'Sign-off'] }
+	};
+
+	/* ---------- Shared pools ---------- */
+
+	var NAMES = ['Margaret', 'Robert', 'Linda', 'James', 'Patricia', 'Harold', 'Dorothy', 'George', 'Barbara', 'Walter', 'Helen', 'Frank', 'Ruth', 'Arthur', 'Joan', 'Eugene', 'Shirley', 'Raymond', 'Betty', 'Lawrence', 'Evelyn', 'Donald', 'Carol', 'Leonard', 'Nancy', 'Howard', 'Janet', 'Charles'];
+
+	var GREET_SAFE = ['Hello {name},', 'Hi {name},', 'Dear {name},', 'Good morning {name},', 'Good afternoon {name},'];
+	var GREET_FLAG = [['Dear Valued Customer,', W.greet], ['Dear Sir or Madam,', W.greet], ['Dear Account Holder,', W.greet], ['Dear Customer,', W.greet], ['Attention: Dear User!!', W.greet]];
+
+	/* Harmless filler lines that fit any message. */
+	var GS = [
+		'Thank you for your time and patience.',
+		'We appreciate your business.',
+		'Please review the details below.',
+		'Your reference number is {ref}.',
+		'This notice is for your information.',
+		'We are here to help with any questions.',
+		'Please keep this message for your records.',
+		'Our team works Monday to Friday.',
+		'This message was sent on {date}.',
+		'Thank you for choosing us.',
+		'We value your trust.',
+		'Details are listed below.',
+		'This message is about your account.',
+		'Have a wonderful day.'
+	];
+
+	/* Filler for chatty messages (texts, chats, personal emails). */
+	var GS_CASUAL = ['Please let me know.', 'Thank you for reading this.', 'I hope this reaches you.', 'I appreciate your time.', 'Let me know if you have questions.', 'I will explain more soon.', 'Thanks for your patience.', 'I hope you are well.'];
+
+	/* Shared red flags that fit any message. c = category (at most one per game). */
+	var GF = [
+		{ c: 'u', t: 'You must respond within {hrs} hours.', w: W.urg },
+		{ c: 'u', t: 'Act now before it is too late!', w: W.urg },
+		{ c: 'u', t: 'This is your FINAL notice.', w: W.urg },
+		{ c: 'u', t: 'Please respond right away to avoid problems.', w: W.urg },
+		{ c: 's', t: 'Do not tell anyone about this, not even your family.', w: W.secret },
+		{ c: 's', t: 'Please keep this between us for now.', w: W.secret },
+		{ c: 's', t: 'This matter is confidential. Do not discuss it with others.', w: W.secret },
+		{ c: 'p', t: 'Pay using gift cards from any store.', w: W.gift },
+		{ c: 'p', t: 'Payment must be made by wire transfer.', w: W.wire },
+		{ c: 'p', t: 'We can only accept payment in Bitcoin.', w: W.wire },
+		{ c: 'p', t: 'Send the money today through a cash app.', w: W.wire },
+		{ c: 't', t: 'Otherwise, your account will be closed for good.', w: W.threat },
+		{ c: 't', t: 'Failure to comply may lead to legal action.', w: W.threat },
+		{ c: 't', t: 'Your funds will be frozen if you ignore this.', w: W.threat },
+		{ c: 'i', t: 'Please confirm your Social Security number.', w: W.info },
+		{ c: 'i', t: 'We will need your full card number and security code.', w: W.info },
+		{ c: 'i', t: 'Verify your password to continue.', w: W.pw },
+		{ c: 'i', t: 'Send us a photo of your driver license.', w: W.info },
+		{ c: 'g', t: 'Your account have been flagged for review!!', w: W.gram },
+		{ c: 'g', t: 'Please to respond this message with urgency.', w: W.gram },
+		{ c: 'y', t: 'Guaranteed results with zero risk.', w: W.good },
+		{ c: 'y', t: 'This special offer was chosen just for you!', w: W.good }
+	];
+
+	/*
+	 * Scam types. Fields:
+	 *   kind    one of KINDS
+	 *   vars    values for tokens that differ by type
+	 *   from    [text, isFlag, why]   subj [text, isFlag, why]   link [text, isFlag, why]   sign [text, isFlag, why]
+	 *   open    safe opening lines    safe  safe lines
+	 *   flag    [text, why]           tip   what to do (shown after the game)
+	 *   greet / greetF  optional personal greetings; ng = never use a generic (flagged) greeting
+	 */
+	var TYPES = [
+
+		{ id: 'tech-support', kind: 'popup', gc: 'u', gs: 'none', ng: 1,
+			vars: { amt: ['199', '299', '349', '499'], mins: ['10', '15', '30'] },
+			greet: ['System notice:', 'Device status:', 'Notice for this computer:'],
+			greetF: [['Dear User, WARNING!!', W.caps]],
+			from: [['secure-windows-help.net', 1, W.domain], ['support-alert-center.com', 1, W.domain], ['Windows Defender Security Center', 1, 'A web page cannot scan your computer. It only borrows an official name.']],
+			subj: [['WARNING: Your computer is infected!', 1, 'A website cannot tell if your computer has a virus. The fake alarm is the scam.'], ['Security Alert: 3 viruses found', 1, 'A website cannot tell if your computer has a virus. The fake alarm is the scam.'], ['Important notice about your device', 0, '']],
+			open: ['We detected unusual activity on this device.', 'A problem was found on this computer.', 'Your system may be at risk.'],
+			safe: ['Error code: DLL-0x8007.', 'Your files and photos could be affected.', 'Several programs are running slowly.', 'Support agents are available now.', 'Reference ID: {ref}.', 'Last scan: today at {time}.', 'Your browser version is out of date.'],
+			flag: [['Call our certified technician at {phone} now.', 'Real companies do not put phone numbers in pop-up alerts.'], ['Do not restart or shut down your computer.', 'Telling you not to close the page keeps you scared and trapped.'], ['A technician will need remote access to fix this.', W.remote], ['The repair fee is ${amt}, payable by gift card.', W.gift], ['Your bank passwords may be stolen if you wait.', W.threat], ['Your computer will be locked in {mins} minutes.', 'A countdown timer is pressure, not security.'], ['This alert cannot be closed. Call immediately.', W.urg]],
+			link: [['Button: Call Now {phone}', 1, W.phone], ['Button: Fix My Computer Now', 1, 'Clicking can install harmful software.']],
+			sign: [['Microsoft Technical Department', 1, W.vague], ['Windows Support Team', 1, W.vague], ['Error ID: {ref}', 0, '']],
+			tip: "Close the tab, or hold the power button if it will not close. Real companies never show a phone number in a pop-up. Never call it or let a stranger control your computer." },
+
+		{ id: 'grandparent', kind: 'text', gc: '-', gs: 'none', ng: 1,
+			vars: { amt: ['2,500', '3,800', '4,500', '6,000'] },
+			greet: ['Hi {gp}!', '{gp}? It is me.', 'Hi {gp}, are you there?'],
+			from: [['{cell} (a number you do not know)', 1, 'A grandchild texting from an unknown number should be checked before anything else.'], ['{cell}, saved under no name', 1, 'A grandchild texting from an unknown number should be checked before anything else.'], ['A new number, not saved in your phone', 1, 'A grandchild texting from an unknown number should be checked before anything else.']],
+			subj: [['{gp} it is me, I am in trouble', 1, "Scammers say 'it's me' so you'll supply the name for them."], ['Hi {gp}, I got a new number', 1, "'New number' explains away why you do not recognize it."], ['Hi {gp}, are you there?', 0, '']],
+			open: ['I was in a car accident and I am a little hurt.', 'I have been arrested and need your help.', 'I am stuck in another country and lost my wallet.'],
+			safe: ['My phone is broken, so I am using a friend\'s.', 'I am okay, but I am really scared.', 'The lawyer says I need to pay bail.', 'I cannot talk long.', 'I feel terrible asking you.', 'Please, I need your help.', 'Everything happened so fast.', 'I do not have my wallet with me.', 'I will explain everything later.'],
+			flag: [["Please do not tell Mom or Dad, they will be so upset.", W.secret], ['I need ${amt} sent today for bail.', 'A rushed request for money from a relative should always be checked first.'], ['Buy gift cards and text me the numbers.', W.gift], ['You can wire it to my lawyer, he will call you.', W.wire], ['Do not call me, my phone is about to die.', 'Scammers avoid a call because you would hear it is not your grandchild.'], ['Just send it fast, I am so scared.', W.urg], ['A man named Mr. {agent} will come to pick up cash.', 'A courier collecting cash from your home is a known scam.']],
+			link: [['Pay here: bit.ly/help-{n}', 1, W.short], ['Reply YES and I will send the details', 0, '']],
+			sign: [['Your favorite grandchild', 1, 'Scammers stay vague so you will fill in a name.'], ['Love you!!', 0, ''], ['Thank you so much', 0, '']],
+			tip: "Stop texting and call your grandchild, or their parents, on the number you already have. Agree on a family code word that only real family would know." },
+
+		{ id: 'irs', kind: 'email', gc: 'ustpi', gs: 'formal',
+			vars: { amt: ['1,840', '2,315', '3,490', '4,260'], yr: ['2023', '2024', '2025'] },
+			from: [['IRS Tax Refunds <refund@irs-gov-claims.com>', 1, W.gov], ['Internal Revenue Service <noreply@irs-taxdesk.net>', 1, W.gov], ['tax.compliance.dept@gmail.com', 1, W.gov]],
+			subj: [['FINAL NOTICE: Unpaid taxes, legal action pending', 1, W.caps], ['Your tax refund of ${amt} is waiting', 1, 'A surprise refund email is bait. The IRS contacts you by mail first.'], ['Tax account notice', 0, '']],
+			open: ['Our records show an unpaid balance on your {yr} tax return.', 'We are writing about a problem with your {yr} tax return.', 'A review of your account found a balance due.'],
+			safe: ['The amount owed is ${amt}.', 'Your case number is {ref}.', 'Interest and penalties may apply.', 'Please keep this notice for your records.', 'This notice concerns tax year {yr}.', 'You can review your balance in your online account.'],
+			flag: [['Pay immediately with gift cards to avoid arrest.', W.gift], ['A warrant will be issued if you do not call within {hrs} hours.', 'The IRS does not threaten arrest by email.'], ['Pay by wire transfer or prepaid cards only.', W.wire], ['Do not discuss this case with your accountant.', W.secret], ['Confirm your Social Security number to release your refund.', W.info], ['Your assets will be seized today.', W.threat]],
+			link: [['Click here to pay: irs-payments-secure.com', 1, W.domain], ['Call Agent {agent} at {phone}', 1, W.phone]],
+			sign: [['Officer {agent}, Badge #{n}', 1, W.badge], ['IRS Enforcement Division', 1, W.vague], ['Taxpayer Services', 0, '']],
+			tip: "The IRS first writes to you by mail and never demands gift cards, wires or instant payment. Do not click. Look up the real number at irs.gov." },
+
+		{ id: 'social-security', kind: 'voicemail', gc: 'ust', gs: 'none', ng: 1,
+			vars: {},
+			greet: ['Hello, this message is for {name}.', 'Good afternoon, this is a message for {name}.', 'Hello, I am calling for {name}.'],
+			greetF: [['This message is for the account holder.', W.greet], ['Hello, this is an important message for the customer.', W.greet]],
+			from: [['Caller ID shows: Social Security Administration', 1, W.spoof], ['Caller ID shows a real government number', 1, 'Scammers copy real numbers to look official. This is called spoofing.'], ['Caller ID: Unknown', 1, W.spoof]],
+			subj: [['This is an urgent message from the Social Security office.', 1, 'Real agencies do not leave urgent threatening voicemails.'], ['This is Officer {agent} about your Social Security number.', 1, W.badge], ['This message concerns your Social Security account.', 0, '']],
+			open: ['Your Social Security number has been linked to suspicious activity.', 'A problem was found with your Social Security account.', 'Several accounts were opened in your name.'],
+			safe: ['This message is about case number {ref}.', 'We have tried to reach you before.', 'Your benefits may be affected.', 'Please listen carefully.', 'This is the second time we are calling.', 'Your file shows a recent review.', 'Our office hours are on weekdays.', 'We are calling from the main office.'],
+			flag: [['Your number will be suspended in {hrs} hours.', "A Social Security number cannot be 'suspended'. That is a scare tactic."], ['Press 1 now to speak to an agent.', 'Pressing buttons on a robocall connects you to the scammer.'], ['Do not discuss this call with anyone.', W.secret], ['You will need to confirm your Social Security number.', W.info], ['To protect your money, we will tell you where to move it.', 'No agency will ever ask you to move your money.'], ['A warrant is being issued in your name.', W.threat], ['Do not hang up the phone.', W.stay]],
+			link: [['Call back at {phone}', 1, W.phone], ['Press 1 to speak with an agent', 1, 'Pressing buttons on a robocall connects you to the scammer.']],
+			sign: [['Thank you, Officer {agent}', 1, W.badge], ['Social Security Department', 1, W.vague], ['Goodbye.', 0, '']],
+			tip: "Social Security will not threaten you or suspend your number. Hang up, then call the number on ssa.gov yourself if you are worried." },
+
+		{ id: 'medicare', kind: 'text', gc: 'usi', gs: 'formal',
+			vars: {},
+			from: [['Medicare Benefits (from {cell})', 1, 'Medicare does not text you first, and the sender name can be faked.'], ['{cell}', 1, 'Medicare does not text you from a personal-looking number.'], ['Benefits Center, short code 48{n}', 1, W.spoof]],
+			subj: [['New Medicare card: confirm your details', 1, 'Medicare cards are mailed free. You never have to confirm anything by text.'], ['You qualify for free medical supplies', 1, 'Free supplies tied to your Medicare number is a common fraud.'], ['Medicare update for {name}', 0, '']],
+			open: ['Medicare is issuing new cards this month.', 'Your coverage may be changing this year.', 'You may be eligible for extra benefits.'],
+			safe: ['Plan details are usually mailed to you.', 'Coverage year: {yr}.', 'Your reference number is {ref}.', 'You may have questions about your plan.', 'Benefits can change each year.', 'Reply HELP for help.'],
+			flag: [['To receive it, reply with your Medicare number.', W.info], ['There is a $25 processing fee, paid by gift card.', W.gift], ['Your coverage ends if you do not confirm today.', W.threat], ['We also need your bank account number for deposits.', W.info], ['This offer ends in {hrs} hours.', W.urg], ['No doctor visit needed, we ship it free.', 'Free supplies for your Medicare number is a common fraud.'], ['Do not call Medicare, we handle everything for you.', 'Scammers discourage you from checking with the real Medicare.']],
+			link: [['Verify here: medicare-update-center.com', 1, W.domain], ['Text YES to confirm now', 1, 'Replying tells the scammer your number is real and active.']],
+			sign: [['Medicare Benefits Team', 1, W.vague], ['Plan Enrollment Dept.', 1, W.vague], ['Reference: {ref}', 0, '']],
+			tip: "Medicare will never contact you first to ask for your number or a fee. New cards are free and come by mail. Call 1-800-MEDICARE yourself if you are unsure." },
+
+		{ id: 'bank-alert', kind: 'text', gc: 'uti', gs: 'formal',
+			vars: { bank: ['Summit Trust Bank', 'Heritage National Bank', 'Liberty First Bank', 'Pioneer Savings Bank'], amt: ['249.99', '389.00', '512.40', '1,099.00'] },
+			from: [['{cell}', 1, 'A bank texts from its own short code, not a personal-looking number, and even that can be faked.'], ['Alerts from {bank} (via email: alerts@secure-mail.co)', 1, W.domain], ['From: Bank Security, no number shown', 1, W.spoof]],
+			subj: [['Fraud alert on your debit card', 0, ''], ['ALERT!! Account LOCKED', 1, W.caps], ['Your {bank} account needs attention', 0, '']],
+			open: ['We noticed a ${amt} purchase on your card ending in {last4}.', 'A sign-in to your account came from a new device.', 'A payment of ${amt} was attempted from your account.'],
+			safe: ['Card ending in {last4}.', 'The attempt was made today at {time}.', 'Location: {city}.', 'If this was you, no action is needed.', 'Your account number is partly hidden for safety.', 'Reference: {ref}.'],
+			flag: [['Reply with your full card number to cancel it.', W.info], ['Share the code we text you to verify your identity.', W.code], ['Your account will be locked in {hrs} hours.', W.urg], ['Do not visit a branch, this is faster.', W.avoid], ['Move your money to this safe account now.', "No bank asks you to move money to a 'safe account'."], ['Confirm your PIN and online password.', W.pw], ['Our fraud agent will call you from a private number.', 'Real fraud teams do not call from hidden numbers asking for details.']],
+			link: [['Secure your account: {b}-verify.co/login', 1, W.domain], ['Call our fraud line at {phone}', 1, 'Use the number on the back of your card, not one from a text.']],
+			sign: [['{bank} Security', 0, ''], ['Fraud Prevention Team', 1, W.vague], ['Msg and data rates may apply.', 0, '']],
+			tip: "Do not tap links in texts about your account. Call the number on the back of your card. A bank never asks for your PIN, password or codes." },
+
+		{ id: 'package', kind: 'text', gc: 'ui', gs: 'formal',
+			vars: { brand: ['USPS', 'FedEx', 'UPS', 'DHL'], amt: ['1.99', '2.95', '3.40', '4.50'] },
+			from: [['{cell}', 1, 'Delivery companies do not text from personal-looking numbers.'], ['{brand} Tracking <tracking@mail-delivery.info>', 1, W.domain], ['From: Delivery Notice, no company named', 1, W.vague]],
+			subj: [['{brand}: Delivery attempt failed', 0, ''], ['Package on hold: action required', 1, 'A vague action-required notice is the hook. Real carriers name the item and sender.'], ['Your parcel is waiting!!', 1, W.caps]],
+			open: ['We tried to deliver your package today.', 'Your parcel is being held at our depot.', 'We could not complete your delivery.'],
+			safe: ['Tracking number: {trk}.', 'The address on file was incomplete.', 'Your parcel weighs 2.4 lbs.', 'Delivery was attempted at {time}.', 'Items are held for 10 days.', 'This is an automated message.'],
+			flag: [['Pay a ${amt} redelivery fee to release it.', 'Real carriers do not ask for fees by text to redeliver.'], ['Your package will be returned in {hrs} hours.', W.urg], ['Enter your card details to schedule delivery.', W.info], ['Reply Y to activate the link below.', "Texts that ask you to reply so the link 'works' are fishing for a response."], ['Confirm your address, birthday and card number.', W.info], ['We cannot deliver without a payment on file.', 'Carriers do not need your card to bring you a package.']],
+			link: [['Reschedule: {b}-redelivery.top/{n}', 1, W.domain], ['Track here: bit.ly/trk{n}', 1, W.short]],
+			sign: [['{brand} Delivery Team', 0, ''], ['Customer Care', 1, W.vague], ['Msg ID {ref}', 0, '']],
+			tip: "If you are not expecting a package, ignore it. If you are, go to the carrier's real website or app and type in the tracking number yourself. Carriers never ask for your card by text." },
+
+		{ id: 'gift-card-boss', kind: 'email', gc: '-', gs: 'casual', ng: 1,
+			vars: { last: ['Collins', 'Bennett', 'Foster', 'Murray', 'Hughes'], amt: ['100', '200', '250', '500'], n: ['4', '5', '6'] },
+			greet: ['Hi {name},', 'Hello {name},', '{name},'],
+			from: [['Pastor {last} <pastor.{last}@gmail.com>', 1, "A free email account that looks right is a trick. Your pastor or boss has an official address."], ['{last}, Director <director.{last}@outlook-mail.com>', 1, "A free email account that looks right is a trick. Your pastor or boss has an official address."], ['Mr. {last} <{last}.office@gmail.com>', 1, 'A free email account that looks right is a trick. Real leaders use their official address.']],
+			subj: [['Quick favor, are you available?', 1, "A vague 'quick favor' subject is a common scam opener."], ['Urgent request', 1, W.urg], ['Hello', 0, '']],
+			open: ['I am in a meeting and cannot talk, but I need your help.', 'I am traveling and cannot take calls right now.', 'I need someone I can trust with a small task.'],
+			safe: ['It is for a few people in our community.', 'I would do it myself if I could.', 'It is a surprise gift.', 'I know you are busy.', 'I am counting on you.', 'Thank you so much, you are a blessing.'],
+			flag: [['Please buy {n} gift cards worth ${amt} each.', W.gift], ['Scratch off the back and send me the codes.', W.gift], ['Keep it a secret, it is a surprise.', W.secret], ['I will pay you back later, but please do it today.', W.urg], ['Text me back only, do not call.', 'Scammers avoid calls because your voice would expose them.'], ['Do not mention this to anyone else.', W.secret], ['Take a photo of the card numbers and email it.', W.gift]],
+			link: [['Reply-to: urgent.reply@mail.com', 1, "A reply address that differs from the sender's is a trick."], ['Send the codes to {cell}', 1, W.gift]],
+			sign: [['Sent from my iPhone', 0, ''], ['Thanks, {last}', 0, ''], ['Blessings, your friend', 1, 'A vague closing instead of a name you can check.']],
+			tip: "Real leaders do not ask for gift cards by email. Call them on a number you already have. Nobody legitimate will ever need gift card codes." },
+
+		{ id: 'romance', kind: 'dm', gc: '-', gs: 'none', ng: 1,
+			vars: { amt: ['1,800', '2,400', '3,500', '5,000'] },
+			greet: ['Good morning, {name}.', 'Hello again, {name}.', 'Hi {name}, how was your day?'],
+			from: [['Profile: Dr. Daniel Hart, engineer working overseas', 1, 'Overseas professionals who message strangers are a very common romance-scam profile.'], ['Profile: soldier stationed far from home', 1, 'Overseas professionals who message strangers are a very common romance-scam profile.'], ['Profile: widower, new friend (met online)', 1, 'Someone you met only online and have never seen in person should not be asking for money.']],
+			subj: [['I have never felt this way about anyone', 1, W.love], ['Good morning, how did you sleep?', 0, ''], ['I miss our chats so much', 0, '']],
+			open: ['I wish we could meet in person.', 'I have told you more than I have told anyone.', 'I had a hard week at work.'],
+			safe: ['How was your garden this week?', 'I saw a sunset today and thought of you.', 'I hope your family is well.', 'Tell me about your day.', 'I am so glad we found each other.', 'You always make me smile.', 'I have been thinking about our chats.', 'You are the first person I tell good news to.', 'I cannot wait to hear back from you.'],
+			flag: [['I cannot video call, my camera is broken.', W.video], ['I need ${amt} for a plane ticket to visit you.', 'Asking for money to come meet you is a classic romance-scam move.'], ['My business partner has frozen my account.', "A sudden money problem that only you can solve is the setup."], ['Please wire it, and do not tell your children.', W.secret], ['I will pay you back as soon as I get home.', 'Promises of repayment are never kept.'], ['Please send it as gift cards or crypto.', W.gift], ['It is an emergency, I am in the hospital abroad.', W.urg]],
+			link: [['Message me on WhatsApp: wa.me/{n}77', 1, 'Moving a chat to a private app avoids the dating site\'s safety checks.'], ['Send it to this account: {n}-{n}-{n}', 1, W.wire]],
+			sign: [['Forever yours, D.', 1, W.love], ['Your friend, Daniel', 0, ''], ['xo', 0, '']],
+			tip: "Never send money to someone you have not met in person, however close you feel. Try a reverse image search of their photos, and talk it over with a friend or family member." },
+
+		{ id: 'lottery', kind: 'email', gc: 'usyi', gs: 'formal',
+			vars: { amt: ['250,000', '500,000', '1,500,000', '2,000,000'], fee: ['85', '149', '250', '395'] },
+			from: [['Mega Prize Board <claims@global-prize-winners.com>', 1, W.domain], ['Winner Notification <noreply@sweeps-claims.net>', 1, W.domain], ['Customer Rewards <rewards@gmail.com>', 1, W.gov]],
+			subj: [['CONGRATULATIONS!! You won ${amt}', 1, W.caps], ['You have been selected as a winner', 1, 'You cannot win a contest you never entered.'], ['Prize notification for {name}', 0, '']],
+			open: ['Your email was randomly chosen in this month\'s drawing.', 'You are the grand prize winner of our international drawing.', 'Your name was drawn from millions of entries.'],
+			safe: ['The prize amount is ${amt}.', 'Your claim number is {ref}.', 'The drawing took place on {date}.', 'This message is for the winner only.', 'Please read the steps below.', 'Claim period: 14 days.'],
+			flag: [['First, pay a ${fee} processing fee by gift card.', W.fee], ['Send your bank account number so we can deposit it.', W.info], ['Do not share this win with anyone until you collect.', W.secret], ['You must claim within {hrs} hours or lose the prize.', W.urg], ['You did not have to enter. You were selected.', 'You cannot win a contest you never entered.'], ['Taxes must be paid up front to our agent.', W.fee], ['Send a copy of your ID and a voided check.', W.info]],
+			link: [['Claim your prize: winner-claim-center.com', 1, W.domain], ['Reply to claims agent {agent} at claims@gmail.com', 1, W.gov]],
+			sign: [['Prize Coordinator, {agent}', 1, W.badge], ['Global Sweepstakes Board', 1, W.vague], ['Congratulations again!', 0, '']],
+			tip: "If you did not enter, you did not win. Real contests never charge fees or taxes up front. Delete it." },
+
+		{ id: 'utility', kind: 'text', gc: 'ut', gs: 'formal',
+			vars: { util: ['Piedmont Power', 'Triangle Electric', 'Capital Gas and Water'], amt: ['187.40', '264.15', '312.80', '455.00'] },
+			from: [['{cell}', 1, 'Utility companies do not text from personal-looking numbers.'], ['{util} Billing <billing@{b}-payments.net>', 1, W.domain], ['From: Utility Billing, no company named', 1, W.vague]],
+			subj: [['{util}: Your bill is past due', 0, ''], ['FINAL NOTICE: Power shutoff today', 1, W.caps], ['Service interruption notice', 0, '']],
+			open: ['Your account shows a past-due balance of ${amt}.', 'We have not received your last payment.', 'Your service is scheduled for disconnection.'],
+			safe: ['Account ending in {last4}.', 'Your service address is on file.', 'Our records show a missed payment.', 'Reference number {ref}.', 'Billing period: last month.', 'Your last bill was mailed on {date}.'],
+			flag: [['Pay ${amt} within {hrs} hours or power will be shut off.', W.urg], ['Only gift cards or a cash app will be accepted now.', W.gift], ['A technician will be at your door in one hour.', W.urg], ['Do not call the number on your bill, it is closed.', W.avoid], ['Late fees will double today.', W.threat], ['Pay the technician in cash when he arrives.', W.cash], ['Reply with your account number and card info.', W.info]],
+			link: [['Pay now: {b}-billing.pay/{n}', 1, W.domain], ['Call {phone} to pay by phone', 1, W.phone]],
+			sign: [['{util} Collections Dept.', 1, 'Real utilities mail written notices and give you time before cutting service.'], ['Customer Billing', 0, ''], ['Thank you, Billing Office', 0, '']],
+			tip: "Utilities send written notices and give you time. Call the number on your own bill (not the message) before paying anything, and never pay by gift card." },
+
+		{ id: 'invoice', kind: 'email', gc: 'ut', gs: 'formal',
+			vars: { brand: ['Amazon', 'PayPal', 'Apple'], amt: ['499.99', '699.00', '849.95', '1,249.00'] },
+			from: [['{brand} Support <billing@{b}-orders.net>', 1, W.domain], ['{brand} Billing <no-reply@gmail.com>', 1, W.gov], ['Order Confirmation <orders@{b}-secure.co>', 1, W.domain]],
+			subj: [['Your order of ${amt} has been confirmed', 0, ''], ['Invoice #{n}: payment received', 0, ''], ['URGENT: unauthorized charge on your account', 1, W.caps]],
+			open: ['Thank you for your recent purchase.', 'A payment of ${amt} was processed on your account.', 'Your order was placed today at {time}.'],
+			safe: ['Order number {ref}.', 'Item: 65-inch television.', 'Quantity: 1.', 'Payment method: card on file.', 'Billed to {name}.', 'Estimated delivery: 5 days.'],
+			flag: [['If you did not make this purchase, call {phone} right away.', 'A phone number in an unexpected invoice leads straight to a scammer.'], ['Cancel within {hrs} hours or you will be charged.', W.urg], ['Our agent will ask to access your computer to cancel.', W.remote], ['We will refund you, just confirm your bank login.', W.pw], ['The refund will be sent as gift card codes.', W.gift], ['Do not use the official website, it is under maintenance.', W.avoid], ['Never share this email with your bank.', W.secret]],
+			link: [['Cancel order: {b}-help-center.com', 1, W.domain], ['Call billing: {phone}', 1, W.phone]],
+			sign: [['{brand} Customer Service', 0, ''], ['Billing Dept.', 1, W.vague], ['This is an automated message.', 0, '']],
+			tip: "If you do not recognize a charge, sign in through the official app or website (not the email) and check. Never call a number from an unexpected invoice." },
+
+		{ id: 'investment', kind: 'dm', gc: 'sy', gs: 'casual',
+			vars: { handle: ['wealth_mentor', 'profit_guide', 'secure_gains'], n: ['12', '8', '15'] },
+			greet: ['Hello {name},', 'Hi {name},', 'Good afternoon {name},'],
+			from: [['Alex Morgan, Wealth Advisor <alex@invest-gains.io>', 1, 'You never asked for this advisor. Check anyone with your state securities office first.'], ['Crypto Club <hello@cryptoclub-gains.com>', 1, W.domain], ['A stranger from a group chat', 1, 'Unsolicited investment tips from strangers are a warning sign.']],
+			subj: [['Limited spots: earn 20% a week', 1, W.good], ['Exclusive investment opportunity', 1, W.vague], ['Market update for {name}', 0, '']],
+			open: ['I help retirees grow their savings safely.', 'My clients have been earning steady returns.', 'I wanted to share an opportunity with you.'],
+			safe: ['It all happens through a simple app.', 'I have been investing for over ten years.', 'Thousands of people are already in.', 'You can start with a small amount.', 'Many people retire early this way.', 'It is easy to get started.'],
+			flag: [['Guaranteed 20% returns every month, no risk.', W.good], ['You must invest today, only {n} spots left.', W.urg], ['Send payment in Bitcoin to this wallet.', W.wire], ['Pull money from your retirement account to join.', 'Pushing you to drain your savings is a warning sign.'], ['Do not tell your family, they will not understand.', W.secret], ['I am not licensed, but I am very successful.', W.lic], ['Wire the funds and I will handle the rest.', W.wire]],
+			link: [['Join here: wealth-gain-club.io/join', 1, W.domain], ['Message me on Telegram @{handle}', 1, 'Moving to a private chat avoids any safety checks.']],
+			sign: [['Best regards, Alex Morgan, CEO', 1, W.vague], ['Alex', 0, ''], ['Investing in your future', 0, '']],
+			tip: "Be wary of promised returns and pressure. Check any advisor with your state securities office or FINRA BrokerCheck, and never invest because a stranger contacted you." },
+
+		{ id: 'fake-check', kind: 'email', gc: '-', gs: 'casual', ng: 1,
+			vars: { amt: ['800', '1,200', '1,500', '2,000'], last: ['Reed', 'Dawson', 'Ellis', 'Grant'] },
+			greet: ['Hello,', 'Hi there,', 'Hello {name},'],
+			from: [['Interested Buyer <rick.buyer88@gmail.com>', 1, 'A buyer who writes from a free account, far away, and offers more than you asked is suspect.'], ['{last} Purchasing <purchasing.{last}@outlook-mail.com>', 1, 'A buyer who writes from a free account, far away, and offers more than you asked is suspect.'], ['Mr. {last} <{last}.buyer@gmail.com>', 1, 'A buyer who writes from a free account, far away, and offers more than you asked is suspect.']],
+			subj: [['Re: your listing, I will take it', 0, ''], ['Interested in your item', 0, ''], ['I will pay more than your asking price!', 1, 'Offering extra money is the hook of a fake check scam.']],
+			open: ['I would like to buy the item you listed.', 'I am interested in your listing and can pay today.', 'I will send payment right away.'],
+			safe: ['Please confirm the item is still available.', 'I am out of town for work.', 'The item looks great in the photos.', 'I can pay by certified check.', 'My assistant will mail the check.', 'I will arrange my own pickup.'],
+			flag: [['I will send a check for ${amt} more than your price.', W.fake], ['Deposit it, then wire the extra to my shipper.', W.fake], ['The funds will be available right away.', "'Available' is not 'cleared'. The bank can undo it weeks later."], ['Do not wait for the check to clear.', W.fake], ['I cannot meet in person, I am overseas.', 'A buyer who cannot meet or see the item is a red flag.'], ['Send the item before the check clears.', W.fake], ['Keep our deal private for tax reasons.', W.secret]],
+			link: [['Send your full name and address to {cell}', 1, 'Giving personal details to a stranger helps them target you.'], ['Pay my shipper through a cash app: {cell}', 1, W.wire]],
+			sign: [['Thanks, Rick', 0, ''], ['Sent from my phone', 0, ''], ['Regards, Mr. {last}', 0, '']],
+			tip: "Never send money back from a check you deposited. Banks can take weeks to discover a fake. When you sell something, prefer cash in person at a public place." },
+
+		{ id: 'charity', kind: 'email', gc: 'us', gs: 'formal',
+			vars: { cause: ['Gulf Coast Relief Fund', 'American Heroes Alliance', 'Kids First Cancer Aid'], amt: ['50', '75', '100', '250'] },
+			from: [['Donation Team <give@relief-fund-now.com>', 1, W.domain], ['{cause} Volunteer <volunteer@gmail.com>', 1, W.gov], ['Help Center <donate@{b}-giving.net>', 1, W.domain]],
+			subj: [['Help families in need today', 0, ''], ['Your gift can save a life', 0, ''], ['EMERGENCY: they need you now', 1, W.caps]],
+			open: ['Thousands of families have lost everything.', 'Many of our veterans are in need this season.', 'Children are waiting for your help.'],
+			safe: ['Every dollar makes a difference.', 'Winter is especially hard for many.', 'Your gift supports local families.', 'Gifts are accepted online and by check.', 'Volunteers have helped many families.', 'You may also donate by mail.'],
+			flag: [['Donate by gift card or cash app only.', W.gift], ['Give ${amt} right now to be matched ten times.', W.urg], ['We cannot tell you where your money goes.', 'Real charities are open about how they use your gift.'], ['We will call every day until you give.', 'Pressure and daily calls are not how real charities work.'], ['Wire your gift directly to our volunteer.', W.wire], ['Please read us your card number over the phone.', W.info], ['The gift is not tax deductible, but give anyway.', 'Real charities tell you honestly whether your gift is deductible.']],
+			link: [['Donate: {b}-giving.top', 1, W.domain], ['Call and give now: {phone}', 1, W.phone]],
+			sign: [['Sincerely, Volunteer {agent}', 0, ''], ['The {cause} Team', 0, ''], ['Thank you for your generosity', 0, '']],
+			tip: "Give only to charities you have looked up yourself, such as through Charity Navigator or your state's charity list. Do not give to callers who pressure you, and never by gift card." },
+
+		{ id: 'contractor', kind: 'text', gc: '-', gs: 'casual', ng: 1,
+			vars: { amt: ['1,500', '2,200', '3,000', '4,500'], n: ['2', '3', '4'] },
+			greet: ['Hello,', 'Hi there,', 'Good morning,'],
+			from: [['{cell}', 1, 'An unknown number from someone you never contacted.'], ['A local number you do not recognize', 1, 'An unknown number from someone you never contacted.'], ['{cell} (no business name)', 1, 'An unknown number from someone you never contacted.']],
+			subj: [['I am working on roofs in your neighborhood', 0, ''], ['We noticed damage to your roof', 1, 'A stranger who says they spotted damage on your home is a classic scam opener.'], ['Free home inspection today only', 1, W.urg]],
+			open: ['We just finished a job near your street.', 'We have leftover materials from a nearby project.', 'Our crew is in your area today.'],
+			safe: ['Our crew has 15 years of experience.', 'We use quality materials.', 'We can give you a quote.', 'We serve this whole county.', 'Our truck is a white pickup.', 'Estimates depend on size.'],
+			flag: [['We need ${amt} in cash up front to start today.', W.cash], ['This price is only good for today.', W.urg], ['We found damage you cannot see from the ground.', 'Surprise hidden damage found by a stranger is how scammers pad the bill.'], ['We will skip the permit to save you money.', 'Skipping permits is illegal and leaves you stuck with the problem.'], ['Pay cash and we will give you a discount.', W.cash], ['Your insurance does not need to know.', W.secret], ['Sign the contract now, we will read it later.', W.urg]],
+			link: [['Reply YES and we will be at your door in 20 minutes', 1, W.urg], ['Call us for a free estimate: {phone}', 0, '']],
+			sign: [['Mike, Quick Roofing and Repair', 0, ''], ['Licensed and insured (no license number)', 1, W.lic], ['Your local contractor', 0, '']],
+			tip: "Get three written estimates, check the contractor's license with your state board, and never pay big amounts in cash up front. Take your time and ask a family member to review the contract." },
+
+		{ id: 'subscription', kind: 'email', gc: 'ut', gs: 'formal',
+			vars: { brand: ['Norton', 'McAfee', 'Geek Squad'], amt: ['299.99', '349.00', '399.99', '449.00'] },
+			from: [['{brand} Renewals <noreply@{b}-renew.net>', 1, W.domain], ['{brand} Billing <support@{b}-billing.co>', 1, W.domain], ['Auto-Renew Dept <renewals@gmail.com>', 1, W.gov]],
+			subj: [['Receipt: {brand} 2-year protection', 0, ''], ['Auto-renewal confirmation', 0, ''], ['Your payment of ${amt} was successful!!', 1, W.caps]],
+			open: ['Thank you for renewing your protection plan.', 'Your subscription has been renewed for two years.', 'Your annual plan was just charged.'],
+			safe: ['Invoice number: {ref}.', 'Plan: Total Protection, 2 years.', 'Charged to your card on file.', 'Renewal date: {date}.', 'The charge will appear within 2 days.', 'Billed to: {name}.'],
+			flag: [['If you did not authorize this, call {phone}.', W.phone], ['To cancel and get a refund, we need to access your computer.', W.remote], ['Refunds are given only as gift cards.', W.gift], ['You must call within {hrs} hours to stop the charge.', W.urg], ['Do not contact your bank, we handle disputes.', W.avoid], ['We will refund too much, then you send back the difference.', W.fake], ['Confirm your bank login to receive the refund.', W.pw]],
+			link: [['Cancel subscription: {b}-cancel.co', 1, W.domain], ['Call billing: {phone}', 1, W.phone]],
+			sign: [['{brand} Billing Department', 0, ''], ['Auto-billing team', 1, W.vague], ['Thank you for your loyalty!', 0, '']],
+			tip: "A surprise 'receipt' you did not ask for is bait. Do not call the number. Check your real subscriptions in your account or on your bank statement." },
+
+		{ id: 'jury-duty', kind: 'voicemail', gc: 'ust', gs: 'none', ng: 1,
+			vars: { amt: ['950', '1,200', '1,800', '2,300'] },
+			greet: ['Hello, this message is for {name}.', 'Good morning, I am calling for {name}.', 'Hello, this is a message for {name}.'],
+			greetF: [['This message is for the person named on the case.', W.greet], ['Hello, this message is for the resident.', W.greet]],
+			from: [["Caller ID: County Sheriff's Office", 1, W.spoof], ['Caller ID: Court Clerk', 1, W.spoof], ['Caller ID: Unknown', 1, W.spoof]],
+			subj: [["This is Deputy {agent} with the Sheriff's Office.", 1, 'Real officers do not leave voicemails demanding money.'], ['This message is about a missed jury duty.', 0, ''], ['I am calling about a legal matter for {name}.', 0, '']],
+			open: ['You missed jury duty last month.', 'A court order was issued in your name.', 'There is a warrant regarding your case.'],
+			safe: ['Your case number is {ref}.', 'This is about a county court matter.', 'A notice was mailed to your address.', 'The date was {date}.', 'The fine is ${amt}.', 'Please listen carefully.', 'We are calling from the county office.', 'Our office is open on weekdays.'],
+			flag: [['You will be arrested today unless you pay the fine.', W.threat], ['Pay the fine with gift cards at a nearby store.', W.gift], ['Do not tell anyone about this call.', W.secret], ['Stay on the line while you go buy them.', W.stay], ['Confirm your Social Security number to clear your name.', W.info], ['Officers will arrive at your home in one hour.', W.threat], ['You can avoid arrest by paying a bond right now.', W.urg]],
+			link: [['Call back {phone} and ask for Deputy {agent}', 1, W.phone], ['Press 2 to speak with the clerk', 1, 'Pressing buttons on a robocall connects you to the scammer.']],
+			sign: [['Deputy {agent}, Badge #{n}', 1, W.badge], ['County Court Services', 1, W.vague], ['Goodbye.', 0, '']],
+			tip: "Courts do not call to demand fines or take payment by phone or gift card. Hang up and call the court clerk using the number on the official county website." },
+
+		{ id: 'wrong-code', kind: 'text', gc: '-', gs: 'none', ng: 1,
+			vars: {},
+			greet: ['Hi!', 'Hello!', 'Hey there,'],
+			from: [['{cell}', 1, 'A stranger texting you out of the blue.'], ['A number you do not know', 1, 'A stranger texting you out of the blue.'], ['{cell} (no name)', 1, 'A stranger texting you out of the blue.']],
+			subj: [['Hi, I accidentally sent you a code', 1, "Codes are never sent 'by accident' to a stranger. It is a trap."], ['Hey, did you get my text?', 0, ''], ['Oops, wrong number?', 0, '']],
+			open: ['I think I typed the wrong number.', 'Sorry to bother you.', 'I am trying to reach my friend.'],
+			safe: ['I am locked out of my account.', 'It is just a six-digit code.', 'I will delete it after.', 'It is my first time using this.', 'I am in a hurry.', 'I do not want to bother my family.', 'I am really sorry about this.', 'I think I wrote the number down wrong.', 'This is so awkward.'],
+			flag: [['Can you read me the code that was just sent to you?', W.code], ['It is a harmless verification, it will not affect your phone.', W.code], ['Please send it quickly, my account is locked.', W.urg], ['I will pay you $20 if you forward the code.', 'Paying you for a code is a bribe to get you to hand over an account.'], ['Do not worry, it is only a verification.', W.code]],
+			link: [['Reply with the 6-digit code', 1, W.code], ['Forward the code to this number', 1, W.code]],
+			sign: [['Thanks a lot!', 0, ''], ['- a friend', 1, 'A vague sign-off with no name.'], ['Sorry again', 0, '']],
+			tip: "Never share a verification code that was sent to you. If you get one you did not ask for, ignore it. Codes are the keys to your accounts." },
+
+		{ id: 'grant', kind: 'email', gc: 'usyi', gs: 'formal',
+			vars: { amt: ['9,000', '12,500', '15,000', '20,000'], fee: ['89', '149', '199', '249'] },
+			from: [['Federal Grant Office <grants@us-grants-center.com>', 1, W.gov], ['Senior Benefits <benefits@gmail.com>', 1, W.gov], ['Grant Approval <noreply@federal-awards.net>', 1, W.gov]],
+			subj: [['You qualify for a free government grant', 1, "Government grants are not handed out by unsolicited email."], ['Grant approved: ${amt}', 1, 'You cannot be approved for a grant you never applied for.'], ['Grant program notice', 0, '']],
+			open: ['Seniors in your area are receiving grant money.', 'You have been approved for a federal grant.', 'A grant fund has been set aside for you.'],
+			safe: ['No repayment is required.', 'Your grant ID is {ref}.', 'Funds are limited this year.', 'The application takes five minutes.', 'There is no credit check.', 'Thousands of people have received grants.'],
+			flag: [['Pay a ${fee} processing fee to release the money.', W.fee], ['Send the fee by gift card or wire.', W.gift], ['We need your bank account and routing number.', W.info], ['Act today before the funds run out.', W.urg], ['Do not apply through the official website.', W.avoid], ['You are guaranteed to receive the funds.', W.good], ['A government agent will call you, say yes to everything.', 'Scammers script what you should say to hide the scam.']],
+			link: [['Claim: us-senior-grants.org', 1, W.gov], ['Call {agent} at {phone}', 1, W.phone]],
+			sign: [['Federal Grants Office', 1, W.vague], ['Program Director {agent}', 1, W.badge], ['Have a great day', 0, '']],
+			tip: "The government does not contact you out of the blue to give you a grant, and it never charges a fee to receive money. Real grants are listed at grants.gov." }
+	];
+
+	/* ---------- Builder ---------- */
+
+	var STAT = {
+		hrs: ['2', '12', '24', '48'],
+		amt: ['149', '249', '399', '899', '1,250', '2,400'],
+		fee: ['85', '149', '250', '395'],
+		time: ['9:14 AM', '11:32 AM', '1:42 PM', '4:08 PM', '6:05 PM', '8:47 PM'],
+		date: ['March 3', 'April 18', 'May 22', 'June 9', 'July 14', 'August 30', 'September 12', 'October 5', 'November 20'],
+		yr: ['2023', '2024', '2025'],
+		city: ['Dallas, TX', 'Tampa, FL', 'Phoenix, AZ', 'Denver, CO', 'Atlanta, GA', 'Portland, OR'],
+		agent: ['Johnson', 'Miller', 'Carter', 'Brooks', 'Reynolds', 'Hayes', 'Powell'],
+		last: ['Collins', 'Bennett', 'Foster', 'Murray', 'Hughes'],
+		gp: ['Grandma', 'Grandpa'],
+		bank: ['Summit Trust Bank', 'Heritage National Bank', 'Liberty First Bank'],
+		util: ['Piedmont Power', 'Triangle Electric', 'Capital Gas and Water'],
+		cause: ['Gulf Coast Relief Fund', 'American Heroes Alliance', 'Kids First Cancer Aid'],
+		brand: ['Amazon', 'PayPal', 'Apple'],
+		handle: ['wealth_mentor', 'profit_guide', 'secure_gains'],
+		n: ['12', '48', '73', '305', '618', '942']
+	};
+
+	function rngFrom(seed) {
+		var a = seed >>> 0;
+		return function () {
+			a = (a + 0x6D2B79F5) | 0;
+			var t = Math.imul(a ^ (a >>> 15), 1 | a);
+			t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+			return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+		};
+	}
+	function seedFor(n, salt) { return (Math.imul(n + 1, 2654435761) ^ Math.imul(salt + 7, 40503) ^ 0x5bd1e995) >>> 0; }
+	function pick(r, a) { return a[Math.floor(r() * a.length)]; }
+	function shuffle(r, a) {
+		var b = a.slice();
+		for (var i = b.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)); var t = b[i]; b[i] = b[j]; b[j] = t; }
+		return b;
+	}
+	function digits(r, k) { var s = ''; for (var i = 0; i < k; i++) { s += Math.floor(r() * 10); } return s; }
+
+	/* Which scam type is on day n: every type once per round, in a different order each round. */
+	function typeFor(n) {
+		var T = TYPES.length, block = Math.floor(n / T), pos = n % T;
+		function order(b) { return shuffle(rngFrom(seedFor(b, 991)), TYPES.map(function (_, i) { return i; })); }
+		var p = order(block);
+		if (block > 0 && p[0] === order(block - 1)[T - 1]) { var t = p[0]; p[0] = p[1]; p[1] = t; }
+		return TYPES[p[pos]];
+	}
+
+	function makeVars(r, type) {
+		var cache = {};
+		var tv = type.vars || {};
+		var gen = {
+			name: function () { return pick(r, NAMES); },
+			ref: function () { return 'CS-' + digits(r, 5); },
+			phone: function () { return '1-' + pick(r, ['800', '888', '877', '866']) + '-555-01' + digits(r, 2); },
+			cell: function () { return '(' + pick(r, ['919', '984', '336', '704', '252', '615']) + ') 555-01' + digits(r, 2); },
+			last4: function () { return digits(r, 4); },
+			trk: function () { return '9400 ' + digits(r, 4) + ' ' + digits(r, 4) + ' ' + digits(r, 2); },
+			b: function () { return String(vars('brand') || vars('bank') || vars('util') || vars('cause') || 'secure').toLowerCase().replace(/[^a-z]/g, ''); }
+		};
+		function vars(key) {
+			if (cache[key] !== undefined) { return cache[key]; }
+			var v = null;
+			if (tv[key]) { v = pick(r, tv[key]); }
+			else if (gen[key]) { v = gen[key](); }
+			else if (STAT[key]) { v = pick(r, STAT[key]); }
+			if (v !== null) { cache[key] = v; }
+			return v;
+		}
+		return vars;
+	}
+	function fill(text, vars) {
+		return text.replace(/\{(\w+)\}/g, function (m, k) { var v = vars(k); return v === null ? m : v; });
+	}
+
+	function build(n, attempt) {
+		var r = rngFrom(seedFor(n, attempt));
+		var type = typeFor(n);
+
+		var from = pick(r, type.from), subj = pick(r, type.subj), link = pick(r, type.link), sign = pick(r, type.sign);
+		var open = pick(r, type.open);
+
+		var greet;
+		var gFlag = !type.ng && r() < 0.3;
+		if (gFlag) { greet = pick(r, type.greetF || GREET_FLAG); greet = [greet[0], 1, greet[1]]; }
+		else { greet = [pick(r, type.greet || GREET_SAFE), 0, '']; }
+		if (type.ng && type.greetF && r() < 0.22) { var gf = pick(r, type.greetF); greet = [gf[0], 1, gf[1]]; }
+
+		/* Body: bf red flags among 10 pieces. Mostly from this scam type, some shared. */
+		var bf = pick(r, [3, 3, 4, 4, 5]);
+		var own = shuffle(r, type.flag);
+		var nShared = Math.min(bf, r() < 0.5 ? 1 : 2);
+		var nOwn = bf - nShared;
+		var flags = own.slice(0, nOwn).map(function (f) { return { t: f[0], f: 1, w: f[1] }; });
+		var cats = {}, pool = shuffle(r, GF.filter(function (g) { return (type.gc === undefined ? 'us' : type.gc).indexOf(g.c) !== -1; }));
+		for (var i = 0; i < pool.length && flags.length < bf; i++) {
+			if (cats[pool[i].c]) { continue; }
+			cats[pool[i].c] = 1;
+			flags.push({ t: pool[i].t, f: 1, w: pool[i].w });
+		}
+		for (var k = nOwn; flags.length < bf && k < own.length; k++) { flags.push({ t: own[k][0], f: 1, w: own[k][1] }); }
+		var safeNeeded = 10 - flags.length;
+		var safes = shuffle(r, type.safe).slice(0, Math.min(safeNeeded, type.gs === 'none' ? safeNeeded : 4 + Math.floor(r() * 2)));
+		var rest = shuffle(r, type.safe).filter(function (x) { return safes.indexOf(x) === -1; });
+		var shared = type.gs === 'none' ? rest : shuffle(r, type.gs === 'casual' ? GS_CASUAL : GS);
+		for (var j = 0; safes.length < safeNeeded && j < shared.length; j++) { safes.push(shared[j]); }
+		var body = flags.concat(safes.map(function (s) { return { t: s, f: 0, w: '' }; }));
+		body = shuffle(r, body);
+
+		var tiles = [
+			{ t: from[0], f: from[1], w: from[2] },
+			{ t: subj[0], f: subj[1], w: subj[2] },
+			{ t: greet[0], f: greet[1], w: greet[2] },
+			{ t: open, f: 0, w: '' }
+		].concat(body, [
+			{ t: link[0], f: link[1], w: link[2] },
+			{ t: sign[0], f: sign[1], w: sign[2] }
+		]);
+
+		var total = 0;
+		tiles.forEach(function (t) { total += t.f ? 1 : 0; });
+
+		var vars = makeVars(rngFrom(seedFor(n, attempt + 500)), type);
+		tiles.forEach(function (t) { t.t = fill(t.t, vars); t.w = t.w ? fill(t.w, vars) : ''; });
+
+		var seen = {}, dup = false;
+		tiles.forEach(function (t) { if (seen[t.t]) { dup = true; } seen[t.t] = 1; });
+
+		return { type: type, tiles: tiles, total: total, dup: dup, r: r, vars: vars };
+	}
+
+	/* Neighbors of tile i in the 2-column grid, corners included. */
+	function neighbors(i) {
+		var row = i >> 1, col = i & 1, out = [];
+		for (var dr = -1; dr <= 1; dr++) {
+			for (var dc = -1; dc <= 1; dc++) {
+				if (!dr && !dc) { continue; }
+				var rr = row + dr, cc = col + dc;
+				if (rr < 0 || rr > 7 || cc < 0 || cc > 1) { continue; }
+				out.push(rr * 2 + cc);
+			}
+		}
+		return out;
+	}
+
+	function make(n) {
+		n = Math.max(0, Math.floor(n));
+		var g = null;
+		for (var attempt = 0; attempt < 80; attempt++) {
+			g = build(n, attempt);
+			if (g.total >= 5 && g.total <= 7 && !g.dup) { break; }
+		}
+		var kind = KINDS[g.type.kind];
+		var tiles = g.tiles.map(function (t, i) {
+			var count = 0;
+			neighbors(i).forEach(function (j) { if (g.tiles[j].f) { count++; } });
+			var label = i === 0 ? kind.l[0] : i === 1 ? kind.l[1] : i === 14 ? kind.l[2] : i === 15 ? kind.l[3] : '';
+			return { t: t.t, f: t.f, w: t.w, c: count, l: label };
+		});
+		/* The tile that starts cleared: a safe tile with a small, useful number. */
+		var cands = [];
+		tiles.forEach(function (t, i) { if (!t.f && t.c >= 1 && t.c <= 2) { cands.push(i); } });
+		if (!cands.length) { tiles.forEach(function (t, i) { if (!t.f) { cands.push(i); } }); }
+		var start = pick(g.r, cands);
+		return { n: n, id: g.type.id, kind: g.type.kind, kindName: kind.name, tiles: tiles, total: g.total, start: start, tip: g.type.tip };
+	}
+
+	var api = { start: [2026, 11, 26], make: make, neighbors: neighbors, types: TYPES.length, strikes: 3 };
+	root.CWC_GAME = api;
+	if (typeof module !== 'undefined' && module.exports) { module.exports = api; }
+})(typeof window !== 'undefined' ? window : globalThis);

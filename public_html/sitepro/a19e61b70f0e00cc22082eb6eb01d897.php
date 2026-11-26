@@ -49,14 +49,14 @@ cwc_page_start(array(
 	</div>
 </section>
 
-<section class="section quiz" id="scam-stopper" aria-labelledby="quiz-title">
+<section class="section game" id="scam-stopper" aria-labelledby="game-title">
 	<div class="container">
-		<div class="quiz-card reveal" data-quiz>
-			<p class="label quiz__label">Question of the day</p>
-			<h2 class="quiz__title" id="quiz-title">Scam Stopper</h2>
-			<p class="quiz__date"></p>
-			<div class="quiz__body"></div>
-			<noscript><p>Turn on JavaScript to see today's Scam Stopper question.</p></noscript>
+		<div class="game-card reveal" data-game>
+			<p class="label game__label">Daily game</p>
+			<h2 class="game__title" id="game-title">Scam Stopper</h2>
+			<p class="game__lede">A new scam message every day. Can you find every red flag hiding in it?</p>
+			<div class="game__body"></div>
+			<noscript><p>Turn on JavaScript to play today's Scam Stopper game.</p></noscript>
 		</div>
 	</div>
 </section>
