@@ -22,6 +22,47 @@
 	var ICON_CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 	var ICON_SHIELD = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7.5 3v5.5c0 4.6-3.1 8.2-7.5 9.5-4.4-1.3-7.5-4.9-7.5-9.5V6L12 3z"/></svg>';
 
+	/* Role of each piece (see the tile layout in scam-stopper-data.js); styles key off it. */
+	function ROLE(i) { return i === 0 ? 'from' : i === 1 ? 'subj' : i === 2 ? 'greet' : i === 3 ? 'open' : i === 14 ? 'link' : i === 15 ? 'sign' : 'body'; }
+
+	/* Decorative app chrome around the message, one per kind. Static markup, hidden from screen readers. */
+	function ico(d, cls) { return '<svg class="' + (cls || 'ico') + '" viewBox="0 0 24 24" aria-hidden="true">' + d + '</svg>'; }
+	var CHROME = {
+		email: {
+			head: ico('<path d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20z"/>') +
+				'<span class="app__sp"></span>' +
+				ico('<path d="M20.5 6.5l-1.4-1.9A1.5 1.5 0 0 0 18 4H6c-.5 0-.9.2-1.2.6L3.5 6.5C3.2 6.8 3 7.200 3 7.600V19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7.600c0-.4-.2-.8-.5-1.100zM12 17.500 6.500 12H10v-2h4v2h3.500L12 17.500zM5.100 6l.8-1h12l.9 1H5.100z"/>') +
+				ico('<path d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12zM19 4h-3.500l-1-1h-5l-1 1H5v2h14V4z"/>') +
+				ico('<path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>') +
+				ico('<path d="M12 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>'),
+			foot: '<span class="gm-pill">' + ico('<path d="M10 9V5l-7 7 7 7v-4.100c5 0 8.500 1.600 11 5.100-1-5-4-10-11-11z"/>') + 'Reply</span><span class="gm-pill">' + ico('<path d="M14 9V5l7 7-7 7v-4.100c-5 0-8.500 1.600-11 5.100 1-5 4-10 11-11z"/>') + 'Forward</span>'
+		},
+		text: {
+			head: '<span class="im-back">' + ico('<path d="M15.400 5.400 14 4l-8 8 8 8 1.400-1.400L8.800 12z"/>') + '</span>' +
+				'<span class="im-who"><span class="im-avatar">' + ico('<path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.300 0-8 1.700-8 5v1h16v-1c0-3.300-4.700-5-8-5z"/>') + '</span><span class="im-name">New message <span class="im-chev">&rsaquo;</span></span></span>' +
+				'<span class="im-vid">' + ico('<path d="M17 10.500V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.500l4 4v-11l-4 4z"/>') + '</span>',
+			foot: '<span class="im-plus">+</span><span class="im-field">Text Message</span>'
+		},
+		voicemail: {
+			head: '<span class="vm-back">' + ico('<path d="M15.400 5.400 14 4l-8 8 8 8 1.400-1.400L8.800 12z"/>') + 'Voicemail</span><span class="vm-edit">Share</span>',
+			foot: '<span class="vm-play">' + ico('<path d="M8 5v14l11-7z"/>') + '</span><span class="vm-bar"><span class="vm-fill"></span></span><span class="vm-time">0:42</span>' +
+				'<span class="vm-acts"><span class="vm-act">' + ico('<path d="M6.600 10.800a15.100 15.100 0 0 0 6.600 6.600l2.200-2.200c.3-.3.700-.4 1-.2 1.100.4 2.300.6 3.600.6.600 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.400-1 1-1h3.500c.6 0 1 .4 1 1 0 1.300.2 2.500.6 3.600.1.300 0 .7-.2 1l-2.300 2.200z"/>') + 'Call Back</span><span class="vm-act">' + ico('<path d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12zM19 4h-3.500l-1-1h-5l-1 1H5v2h14V4z"/>') + 'Delete</span></span>'
+		},
+		popup: {
+			head: '<span class="br-dots"><i></i><i></i><i></i></span><span class="br-tab">Alert</span>' +
+				'<span class="br-bar">' + ico('<path d="M12 1 3 5v6c0 5.500 3.800 10.700 9 12 5.200-1.300 9-6.500 9-12V5l-9-4zm0 10.900h7c-.5 4.200-3.400 8-7 9.100V12H5V6.300l7-3.100v8.700z"/>') + '<span>https://</span></span>',
+			foot: ''
+		},
+		dm: {
+			head: '<span class="wa-back">' + ico('<path d="M20 11H7.800l5.600-5.600L12 4l-8 8 8 8 1.400-1.400L7.800 13H20z"/>') + '</span>' +
+				'<span class="wa-avatar">' + ico('<path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.300 0-8 1.700-8 5v1h16v-1c0-3.300-4.700-5-8-5z"/>') + '</span>' +
+				'<span class="wa-who"><b>New chat</b><small>online</small></span>' +
+				'<span class="app__sp"></span>' + ico('<path d="M17 10.500V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.500l4 4v-11l-4 4z"/>') +
+				ico('<path d="M12 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>'),
+			foot: '<span class="wa-field">Type a message</span><span class="wa-mic">' + ico('<path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.900V21h2v-3.100A7 7 0 0 0 19 11h-2z"/>') + '</span>'
+		}
+	};
+
 	function pad(n) { return (n < 10 ? '0' : '') + n; }
 	function dayKey(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
 
@@ -187,10 +228,11 @@
 			body.appendChild(status);
 
 			/* The message. */
-			var msg = el('div', 'game__msg');
-			var head = el('div', 'game__msghead');
-			head.appendChild(el('span', 'game__msgdots'));
-			head.appendChild(el('span', '', "Today's message · " + game.kindName));
+			var msg = el('div', 'game__msg app app--' + game.kind);
+			var chrome = CHROME[game.kind] || CHROME.email;
+			var head = el('div', 'app__head');
+			head.setAttribute('aria-hidden', 'true');
+			head.innerHTML = chrome.head;
 			msg.appendChild(head);
 			var grid = el('div', 'game__grid');
 			grid.setAttribute('role', 'group');
@@ -199,8 +241,9 @@
 			game.tiles.forEach(function (t, i) {
 				var x = d.res[i];
 				var show = x || d.lost;
-				var b = el('button', 'tile');
+				var b = el('button', 'tile tile--' + ROLE(i));
 				b.type = 'button';
+				if (i === 0) { b.setAttribute('data-initial', (t.t.replace(/[^A-Za-z]/g, '').charAt(0) || '?').toUpperCase()); }
 				b.setAttribute('data-i', i);
 				var state = '';
 				if (x) {
@@ -242,6 +285,12 @@
 				buttons.push(b);
 			});
 			msg.appendChild(grid);
+			if (chrome.foot) {
+				var foot = el('div', 'app__foot');
+				foot.setAttribute('aria-hidden', 'true');
+				foot.innerHTML = chrome.foot;
+				msg.appendChild(foot);
+			}
 			body.appendChild(msg);
 
 			/* Safe / Red flag bar. */

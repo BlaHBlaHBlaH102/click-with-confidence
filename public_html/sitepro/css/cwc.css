@@ -28,6 +28,16 @@
 @font-face { font-family: "CWC Minion"; src: url(../fonts/MinionPro-Bold.woff2) format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
 @font-face { font-family: "CWC Minion"; src: url(../fonts/MinionPro-BoldIt.woff2) format("woff2"); font-weight: 700; font-style: italic; font-display: swap; }
 
+/* Scam Stopper only: fonts of Gmail (Google Sans for the subject and sender, Roboto for the body) and iMessage (Inter stands in for Apple's SF). */
+@font-face { font-family: "CWC Roboto"; src: url(../fonts/roboto-latin-400-normal.woff2) format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "CWC Roboto"; src: url(../fonts/roboto-latin-500-normal.woff2) format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "CWC Roboto"; src: url(../fonts/roboto-latin-700-normal.woff2) format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "CWC Google Sans"; src: url(../fonts/google-sans-latin-400-normal.woff2) format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "CWC Google Sans"; src: url(../fonts/google-sans-latin-500-normal.woff2) format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "CWC Google Sans"; src: url(../fonts/google-sans-latin-700-normal.woff2) format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "CWC Inter"; src: url(../fonts/inter-latin-400-normal.woff2) format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "CWC Inter"; src: url(../fonts/inter-latin-600-normal.woff2) format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+
 @font-face { font-family: "CWC Minion Display"; src: url(../fonts/MinionDisplay-Regular.woff2) format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: "CWC Minion Display"; src: url(../fonts/MinionDisplay-Italic.woff2) format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
 
@@ -1286,6 +1296,136 @@ html[data-mode="readable"][data-text="3"] { font-size: 140%; }
 [data-mode="readable"] .game__bar { box-shadow: none; border-color: var(--blue-700); }
 [data-mode="readable"] .game__prompt { font-size: 1.1875rem; }
 [data-mode="readable"] .gbtn { min-height: 60px; font-size: 1.25rem; }
+
+/* ---------- Scam Stopper: the message looks like the real app (Gmail, iMessage, voicemail, a web pop-up, WhatsApp) ---------- */
+
+.app { --a-bg: #fff; --a-grid: #fff; --a-tile: #fff; --a-bar: #fff; --a-ink: #202124; --a-ink2: #5f6368; --a-line: #dadce0; --a-accent: #1a73e8; --a-r: 8px; border: 1px solid var(--a-line); border-radius: 14px; background: var(--a-bg); color: var(--a-ink); font-family: var(--a-font); overflow: hidden; }
+.app .ico { flex: none; width: 22px; height: 22px; fill: currentColor; }
+.app__sp { flex: 1; }
+.app__head, .app__foot { display: flex; align-items: center; gap: 14px; padding: 10px 14px; background: var(--a-bar); color: var(--a-ink2); }
+.app__head { border-bottom: 1px solid var(--a-line); }
+.app__foot { border-top: 1px solid var(--a-line); }
+.app .game__grid { background: var(--a-grid); }
+
+.app .tile { min-height: 0; border: 2px dashed color-mix(in srgb, var(--a-ink2) 30%, transparent); border-radius: var(--a-r); background: var(--a-tile); color: var(--a-ink); font-family: inherit; line-height: 1.45; }
+.app .tile:hover:not([aria-disabled="true"]) { border-color: var(--blue-500); background: color-mix(in srgb, var(--a-accent) 10%, var(--a-tile)); }
+.app .tile.is-selected { border-style: solid; border-color: var(--blue-500); background: color-mix(in srgb, var(--a-accent) 14%, var(--a-tile)); box-shadow: 0 0 0 3px rgba(31, 128, 255, 0.35); }
+.app .tile.is-safe { border-style: solid; border-color: #1E8A4C; background: var(--ok-bg); color: var(--ink); }
+.app .tile.is-flag { border-style: solid; border-color: #C0392B; background: var(--bad-bg); color: var(--ink); }
+.app .tile.is-miss { border-style: dashed; border-color: #C77C00; }
+.app .tile__label { font-family: inherit; font-weight: 500; letter-spacing: 0.06em; color: var(--a-ink2); }
+.app .tile.is-safe .tile__label, .app .tile.is-flag .tile__label { color: var(--ink-2); }
+.app .tile__why strong, .app .tile__note { font-family: inherit; }
+
+/* Gmail */
+.app--email { --a-font: "CWC Roboto", Roboto, "Google Sans", Arial, sans-serif; --a-r: 4px; }
+.app--email .app__head { gap: 22px; }
+.app--email .tile { font-size: 1.0625rem; letter-spacing: 0.005em; }
+.app--email .tile--subj, .app--email .tile--from, .gm-pill { font-family: "CWC Google Sans", "Google Sans", Roboto, Arial, sans-serif; }
+.app--email .tile--subj { font-size: 1.3125rem; line-height: 1.3; }
+.app--email .tile--from { display: grid; grid-template-columns: 40px minmax(0, 1fr); column-gap: 12px; align-content: start; font-weight: 500; }
+.app--email .tile--from::before { content: attr(data-initial); grid-row: 1 / span 6; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #7B1FA2; color: #fff; font-size: 1.25rem; font-weight: 500; }
+.app--email .tile--from > * { grid-column: 2; }
+.app--email .tile--link { color: var(--a-accent); }
+.gm-pill { display: inline-flex; align-items: center; gap: 8px; padding: 9px 20px; border: 1px solid #747775; border-radius: 999px; color: var(--a-ink); font-weight: 500; font-size: 0.9375rem; }
+.gm-pill .ico { width: 18px; height: 18px; }
+.app--email .app__foot { padding: 12px 14px; background: var(--a-bg); border-top: 0; }
+
+/* iMessage */
+.app--text, .app--voicemail { --a-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "CWC Inter", "Segoe UI", system-ui, sans-serif; --a-ink: #000; --a-ink2: #8e8e93; --a-line: #d1d1d6; --a-accent: #007aff; --a-bar: #f6f6f6; }
+.app--text { --a-tile: #e9e9eb; --a-r: 20px; }
+.app--text .tile { font-size: 1.0625rem; padding: 10px 14px 12px; }
+.app--text .tile--from, .app--text .tile--link { font-weight: 600; }
+.im-back, .im-vid { color: var(--a-accent); display: inline-flex; }
+.im-back .ico { width: 28px; height: 28px; }
+.im-who { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.im-avatar { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(#a6abb8, #858a96); color: #fff; }
+.im-avatar .ico { width: 24px; height: 24px; }
+.im-name { font-size: 0.75rem; color: var(--a-ink); }
+.im-chev { color: var(--a-ink2); }
+.app--text .app__foot { background: var(--a-bg); border-top: 0; }
+.im-plus { display: grid; place-items: center; flex: none; width: 32px; height: 32px; border-radius: 50%; background: #e9e9eb; color: #8e8e93; font-size: 1.5rem; line-height: 1; }
+.im-field { flex: 1; padding: 7px 14px; border: 1px solid #c7c7cc; border-radius: 999px; color: #8e8e93; font-size: 1rem; }
+
+/* Voicemail (iPhone) */
+.app--voicemail { --a-tile: #f2f2f7; --a-r: 12px; }
+.app--voicemail .tile { font-size: 1.0625rem; }
+.app--voicemail .tile--from { font-weight: 600; }
+.vm-back { display: inline-flex; align-items: center; color: var(--a-accent); font-size: 1.0625rem; }
+.vm-back .ico { width: 28px; height: 28px; margin-left: -6px; }
+.app--voicemail .app__head { justify-content: space-between; }
+.vm-edit { color: var(--a-accent); font-size: 1.0625rem; }
+.app--voicemail .app__foot { flex-wrap: wrap; gap: 10px 12px; padding: 12px 16px; background: var(--a-bg); }
+.vm-play { display: grid; place-items: center; width: 36px; height: 36px; color: var(--a-ink); }
+.vm-play .ico { width: 30px; height: 30px; }
+.vm-bar { flex: 1; height: 4px; border-radius: 2px; background: #d1d1d6; }
+.vm-fill { display: block; width: 18%; height: 100%; border-radius: 2px; background: #8e8e93; }
+.vm-time { font-size: 0.875rem; color: var(--a-ink2); font-variant-numeric: tabular-nums; }
+.vm-acts { flex-basis: 100%; display: flex; justify-content: space-around; padding-top: 10px; border-top: 1px solid var(--a-line); }
+.vm-act { display: inline-flex; align-items: center; gap: 6px; color: var(--a-accent); font-size: 1rem; }
+.vm-act .ico { width: 20px; height: 20px; }
+
+/* Web pop-up (browser window, Windows-style alert) */
+.app--popup { --a-font: "Segoe UI", "Segoe UI Variable", system-ui, -apple-system, Roboto, sans-serif; --a-bg: #f3f3f3; --a-grid: #f3f3f3; --a-bar: #dee1e6; --a-ink: #1b1b1b; --a-ink2: #5f6368; --a-line: #c8c8c8; --a-accent: #0067c0; --a-r: 2px; }
+.app--popup .app__head { gap: 12px; padding: 8px 12px; border-bottom: 0; }
+.br-dots { display: inline-flex; gap: 6px; }
+.br-dots i { width: 11px; height: 11px; border-radius: 50%; background: #9aa0a6; }
+.br-tab { padding: 6px 14px; border-radius: 8px; background: #fff; color: #202124; font-size: 0.8125rem; }
+.br-bar { flex: 1; display: flex; align-items: center; gap: 8px; min-width: 0; padding: 6px 12px; border-radius: 999px; background: #fff; color: #5f6368; font-size: 0.875rem; }
+.br-bar .ico { width: 16px; height: 16px; }
+.app--popup .tile { background: #fff; border-color: #c8c8c8; border-style: solid; font-size: 1.0625rem; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12); }
+.app--popup .tile--subj { color: #c42b1c; font-weight: 600; font-size: 1.1875rem; }
+.app--popup .tile--from { font-weight: 600; }
+.app--popup .tile--link { border-color: #0067c0; color: #0067c0; font-weight: 600; text-align: center; }
+.app--popup .tile--link .tile__top { justify-content: center; }
+.app--popup .tile:hover:not([aria-disabled="true"]) { border-color: var(--blue-500); }
+
+/* Chat message (WhatsApp style) */
+.app--dm { --a-font: "Segoe UI", "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif; --a-bg: #efeae2; --a-grid: #efeae2; --a-tile: #fff; --a-bar: #008069; --a-ink: #111b21; --a-ink2: #667781; --a-line: #d1d7db; --a-accent: #00a884; --a-r: 10px; }
+.app--dm .app__head { gap: 12px; color: #fff; border-bottom: 0; }
+.app--dm .app__foot { background: #f0f2f5; border-top: 0; gap: 10px; }
+.wa-back { display: inline-flex; }
+.wa-avatar { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: #dfe5e7; color: #fff; }
+.wa-avatar .ico { width: 24px; height: 24px; fill: #aebac1; }
+.wa-who { display: flex; flex-direction: column; line-height: 1.2; }
+.wa-who b { font-weight: 600; font-size: 1.0625rem; color: #fff; }
+.wa-who small { font-size: 0.75rem; color: rgba(255, 255, 255, 0.8); }
+.wa-field { flex: 1; padding: 10px 16px; border-radius: 999px; background: #fff; color: #667781; font-size: 1rem; }
+.wa-mic { display: grid; place-items: center; flex: none; width: 42px; height: 42px; border-radius: 50%; background: #00a884; color: #fff; }
+.app--dm .tile { font-size: 1.0625rem; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13); }
+.app--dm .tile--from, .app--dm .tile--sign { font-weight: 600; }
+
+/* Dark theme: the apps follow the page, as they do on a phone in dark mode. */
+html[data-theme="dark"] .app--email { --a-bg: #1f1f1f; --a-grid: #1f1f1f; --a-tile: #1f1f1f; --a-bar: #1f1f1f; --a-ink: #e3e3e3; --a-ink2: #c4c7c5; --a-line: #444746; --a-accent: #8ab4f8; }
+html[data-theme="dark"] .gm-pill { border-color: #8e918f; }
+html[data-theme="dark"] .app--text, html[data-theme="dark"] .app--voicemail { --a-bg: #000; --a-grid: #000; --a-bar: #1c1c1e; --a-ink: #fff; --a-line: #38383a; --a-accent: #0a84ff; }
+html[data-theme="dark"] .app--text { --a-tile: #26252a; }
+html[data-theme="dark"] .app--voicemail { --a-tile: #1c1c1e; }
+html[data-theme="dark"] .im-field, html[data-theme="dark"] .im-plus { border-color: #3a3a3c; background: transparent; }
+html[data-theme="dark"] .vm-bar { background: #48484a; }
+html[data-theme="dark"] .app--popup { --a-bg: #202020; --a-grid: #202020; --a-bar: #35363a; --a-ink: #fff; --a-ink2: #c4c7c5; --a-line: #444; --a-accent: #60cdff; }
+html[data-theme="dark"] .app--popup .tile { background: #2b2b2b; border-color: #444; }
+html[data-theme="dark"] .app--popup .tile--subj { color: #ff99a4; }
+html[data-theme="dark"] .app--popup .tile--link { border-color: #60cdff; color: #60cdff; }
+html[data-theme="dark"] .app--popup .br-tab, html[data-theme="dark"] .app--popup .br-bar { background: #202124; color: #e8eaed; }
+html[data-theme="dark"] .app--dm { --a-bg: #0b141a; --a-grid: #0b141a; --a-tile: #202c33; --a-bar: #202c33; --a-ink: #e9edef; --a-ink2: #8696a0; --a-line: #2a3942; }
+html[data-theme="dark"] .app--dm .app__foot { background: #202c33; }
+html[data-theme="dark"] .app--dm .wa-field { background: #2a3942; color: #8696a0; }
+html[data-theme="dark"] .app .tile:hover:not([aria-disabled="true"]) { border-color: var(--blue-500); }
+
+[data-mode="readable"] .app .tile { font-size: 1.1875rem; line-height: 1.55; border-color: color-mix(in srgb, var(--a-ink2) 55%, transparent); }
+[data-mode="readable"] .app .tile.is-safe { border-color: #1E8A4C; }
+[data-mode="readable"] .app .tile.is-flag { border-color: #C0392B; }
+[data-mode="readable"] .app--email .tile--subj { font-size: 1.375rem; }
+@media (max-width: 560px) {
+	.app__head, .app__foot { padding: 8px 10px; gap: 10px; }
+	.app--email .app__head { gap: 14px; }
+	.app--email .tile--from { grid-template-columns: 32px minmax(0, 1fr); column-gap: 8px; }
+	.app--email .tile--from::before { width: 32px; height: 32px; font-size: 1rem; }
+	.br-tab { display: none; }
+	.app .tile { font-size: 0.9875rem; }
+	.app--email .tile--subj { font-size: 1.125rem; }
+}
 
 @media (max-width: 560px) {
 	.game__grid { gap: 6px; padding: 8px; }
